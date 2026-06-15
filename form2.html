@@ -246,7 +246,7 @@
             background: #eaf7ef;
             padding: 0.25rem 0.7rem;
             border-radius: 20px;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 8px;
             width: 100%;
@@ -573,7 +573,6 @@
             min-width: 180px;
             white-space: nowrap;
         }
-        /* نمایش لوگو در فیلد انتخاب شده */
         .selected-logo {
             width: 24px;
             height: 24px;
@@ -597,6 +596,9 @@
             color: white;
             font-size: 10px;
             font-weight: bold;
+        }
+        #tokenInfo {
+            display: none;
         }
     </style>
 </head>
@@ -680,7 +682,7 @@
     <div class="bottom-popup-body" id="bottomPopupBody"></div>
 </div>
 
-<!-- Exchange Dropdown با لوگو -->
+<!-- Exchange Dropdown -->
 <div id="exchangePopup" class="dropdown">
     <div class="option-list">
         <div class="option-item" data-value="SushiSwap" data-logo="imgs/sushi.png">
@@ -709,7 +711,7 @@
     <div class="option-list" id="poolOptionsList"></div>
 </div>
 
-<!-- Pair Dropdown با لوگو -->
+<!-- Pair Dropdown -->
 <div id="pairPopup" class="dropdown">
     <div class="option-list" id="pairOptionsList"></div>
 </div>
@@ -772,6 +774,7 @@
     async function fetchUSDTBalance() {
         if (!currentAccount) {
             usdtBalance = 0;
+            updatePairInfoBalance();
             updatePairPopupBalances();
             return;
         }
@@ -779,10 +782,12 @@
             const decimals = await readContract(wagmiConfig, { address: USDT_ADDRESS, abi: USDT_ABI, functionName: 'decimals', chainId: polygon.id });
             const balance = await readContract(wagmiConfig, { address: USDT_ADDRESS, abi: USDT_ABI, functionName: 'balanceOf', args: [currentAccount], chainId: polygon.id });
             usdtBalance = parseFloat(formatUnits(balance, decimals));
+            updatePairInfoBalance();
             updatePairPopupBalances();
         } catch (error) {
             console.error("Failed to fetch USDT balance:", error);
             usdtBalance = 0;
+            updatePairInfoBalance();
             updatePairPopupBalances();
         }
     }
@@ -790,17 +795,41 @@
     async function fetchPOLBalance() {
         if (!currentAccount) {
             polBalance = 0;
+            updatePairInfoBalance();
             updatePairPopupBalances();
             return;
         }
         try {
             const balance = await readContract(wagmiConfig, { address: "0x0000000000000000000000000000000000001010", abi: [{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"}], functionName: 'balanceOf', args: [currentAccount], chainId: polygon.id });
             polBalance = parseFloat(formatUnits(balance, 18));
+            updatePairInfoBalance();
             updatePairPopupBalances();
         } catch (error) {
             console.error("Failed to fetch POL balance:", error);
             polBalance = 0;
+            updatePairInfoBalance();
             updatePairPopupBalances();
+        }
+    }
+
+    function updatePairInfoBalance() {
+        const pairInfoDiv = document.getElementById('pairInfo');
+        if (!pairInfoDiv || pairInfoDiv.style.display === 'none') return;
+        
+        if (currentPair === 'USDT') {
+            const logoUrl = 'imgs/usdt.png';
+            const balanceText = usdtBalance > 0 ? usdtBalance.toLocaleString() : '0';
+            pairInfoDiv.innerHTML = `
+                <img src="${logoUrl}" onerror="this.style.display='none'" style="width:20px;height:20px;border-radius:50%;">
+                <span>USDT Balance: ${balanceText} USDT</span>
+            `;
+        } else if (currentPair === 'Polygon') {
+            const logoUrl = 'imgs/polygan.png';
+            const balanceText = polBalance > 0 ? polBalance.toLocaleString() : '0';
+            pairInfoDiv.innerHTML = `
+                <img src="${logoUrl}" onerror="this.style.display='none'" style="width:20px;height:20px;border-radius:50%;">
+                <span>Polygon Balance: ${balanceText} POL</span>
+            `;
         }
     }
 
@@ -810,7 +839,7 @@
         
         const pairs = [
             { value: 'USDT', label: 'USDT', logo: 'imgs/usdt.png' },
-            { value: 'Polygon', label: 'Polygon (POL)', logo: 'imgs/polygan.png' }
+            { value: 'Polygon', label: 'Polygon', logo: 'imgs/polygan.png' }
         ];
         
         pairs.forEach(pair => {
@@ -891,6 +920,7 @@
                 usdtBalance = 0;
                 polBalance = 0;
                 buildPairPopup();
+                updatePairInfoBalance();
             }
         }
     });
@@ -1426,20 +1456,6 @@
         }
     }
     
-    function updateTokenInfoDisplay() {
-        if (currentTokenData.symbol && currentTokenData.symbol !== '') {
-            const letter = getLogoLetter(currentTokenData.symbol);
-            const balanceText = currentTokenData.balance > 0 ? ` | Balance: ${currentTokenData.balance.toLocaleString()}` : '';
-            tokenInfo.style.display = 'flex';
-            tokenInfo.innerHTML = `
-                <div class="token-logo-small" style="background:#000000; width:20px; height:20px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold;">${letter}</div>
-                <span>${currentTokenData.symbol}${balanceText}</span>
-            `;
-        } else {
-            tokenInfo.style.display = 'none';
-        }
-    }
-    
     function isReady() {
         return currentToken !== '' && currentPair !== '' && currentExchange !== '';
     }
@@ -1515,7 +1531,6 @@
             currentToken = '';
             currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
             tokenLabel.innerText = 'Select token';
-            tokenInfo.style.display = 'none';
             tokenRewardInfo.style.display = 'none';
             
             rebuildPoolPopup();
@@ -1536,9 +1551,10 @@
     
     function updatePairDisplay(value, logoUrl) {
         currentPair = value;
-        pairLabel.innerHTML = `<div class="selected-content"><img class="selected-logo" src="${logoUrl}" onerror="this.style.display='none'">${value}</div>`;
-        pairInfo.style.display = 'block';
-        pairInfo.innerHTML = value;
+        const displayName = value === 'Polygon' ? 'Polygon' : value;
+        pairLabel.innerHTML = `<div class="selected-content"><img class="selected-logo" src="${logoUrl}" onerror="this.style.display='none'">${displayName}</div>`;
+        pairInfo.style.display = 'flex';
+        updatePairInfoBalance();
         updatePairAmountLabel();
         pairAmountInput.value = '';
         updateUSDTBonus();
@@ -1566,15 +1582,12 @@
             let shortSymbol = displaySymbol.length > 16 ? displaySymbol.slice(0,10)+'...'+displaySymbol.slice(-6) : displaySymbol;
             const letter = getLogoLetter(currentTokenData.symbol);
             tokenLabel.innerHTML = `<div class="selected-content"><div class="token-logo-small" style="background:#000000; width:20px; height:20px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold;">${letter}</div>${shortSymbol}</div>`;
-            updateTokenInfoDisplay();
             updateTokenReward();
         } else if (currentToken && !currentTokenData.symbol) {
             tokenLabel.innerText = 'Token Selected';
-            tokenInfo.style.display = 'none';
             tokenRewardInfo.style.display = 'none';
         } else {
             tokenLabel.innerText = 'Select token';
-            tokenInfo.style.display = 'none';
             tokenRewardInfo.style.display = 'none';
         }
         updateTokenAmountLabel();
@@ -1690,4 +1703,4 @@
     checkReviewButton();
 </script>
 </body>
-      </html>
+    </html>
