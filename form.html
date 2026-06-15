@@ -1371,17 +1371,24 @@
         updateUSDTBonus();
     }
     
-    // Dropdown functions
+    // Dropdown functions - FIXED VERSION
     function closeAllDropdowns() {
-        document.querySelectorAll('.dropdown').forEach(drop => {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(drop => {
             drop.style.display = 'none';
         });
     }
     
     function openDropdown(dropdownElement, triggerElement) {
-        closeAllDropdowns();
         if (!triggerElement) return;
+        
+        // Close all dropdowns first
+        closeAllDropdowns();
+        
+        // Get position of trigger element
         const rect = triggerElement.getBoundingClientRect();
+        
+        // Set dropdown position
         dropdownElement.style.position = 'fixed';
         dropdownElement.style.top = (rect.bottom + 5) + 'px';
         dropdownElement.style.left = rect.left + 'px';
@@ -1391,23 +1398,31 @@
     
     function closeAllPopups() {
         closeAllDropdowns();
-        tokenPopup.style.display = 'none';
+        if (tokenPopup) tokenPopup.style.display = 'none';
     }
     
     function openPopup(popup) {
         closeAllPopups();
-        popup.style.display = 'block';
+        if (popup) popup.style.display = 'block';
     }
     
-    exchangeBtn.onclick = (e) => {
-        e.stopPropagation();
-        openDropdown(exchangePopup, exchangeBtn);
-    };
-    
-    document.querySelectorAll('#exchangePopup .option-item').forEach(opt => {
-        opt.onclick = (e) => {
+    // Exchange button click handler - FIXED
+    if (exchangeBtn) {
+        exchangeBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            currentExchange = opt.getAttribute('data-value');
+            e.preventDefault();
+            console.log('Exchange button clicked'); // Debug log
+            openDropdown(exchangePopup, exchangeBtn);
+        });
+    }
+    
+    // Exchange options click handlers
+    const exchangeOptions = document.querySelectorAll('#exchangePopup .option-item');
+    exchangeOptions.forEach(opt => {
+        opt.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const selectedExchange = this.getAttribute('data-value');
+            currentExchange = selectedExchange;
             exchangeLabel.innerText = currentExchange;
             unlockPoolType();
             enableTradingPairAndToken();
@@ -1435,16 +1450,19 @@
             updateBottomValues();
             checkReviewButton();
             logState();
-        };
+        });
     });
     
-    poolBtn.onclick = (e) => {
-        e.stopPropagation();
-        if (currentExchange) {
-            rebuildPoolPopup();
-            openDropdown(poolPopup, poolBtn);
-        }
-    };
+    // Pool button click handler
+    if (poolBtn) {
+        poolBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (currentExchange) {
+                rebuildPoolPopup();
+                openDropdown(poolPopup, poolBtn);
+            }
+        });
+    }
     
     function updatePairDisplay(value) {
         currentPair = value;
@@ -1464,13 +1482,16 @@
         }
     }
     
-    pairBtn.onclick = (e) => {
-        e.stopPropagation();
-        if (currentExchange) {
-            buildPairPopup();
-            openDropdown(pairPopup, pairBtn);
-        }
-    };
+    // Pair button click handler
+    if (pairBtn) {
+        pairBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (currentExchange) {
+                buildPairPopup();
+                openDropdown(pairPopup, pairBtn);
+            }
+        });
+    }
     
     function updateTokenDisplay() {
         if (currentTokenData.symbol && currentTokenData.symbol !== '') {
@@ -1495,56 +1516,73 @@
         checkReviewButton();
     }
     
-    tokenBtn.onclick = () => {
-        if (currentExchange) {
-            openPopup(tokenPopup);
-            if (currentToken) {
-                contractInput.value = currentToken;
-            } else {
-                contractInput.value = '';
+    if (tokenBtn) {
+        tokenBtn.onclick = () => {
+            if (currentExchange) {
+                openPopup(tokenPopup);
+                if (currentToken) {
+                    contractInput.value = currentToken;
+                } else {
+                    contractInput.value = '';
+                }
+                document.getElementById('tokenResult').innerHTML = '';
+                document.getElementById('confirmBtn').disabled = true;
+                setTimeout(() => contractInput.focus(), 50);
             }
+        };
+    }
+    
+    if (confirmBtn) {
+        confirmBtn.onclick = () => {
+            let address = contractInput.value.trim();
+            if (address !== '' && currentTokenData.symbol) {
+                currentToken = address;
+                updateTokenDisplay();
+            }
+            closeAllPopups();
+        };
+    }
+    
+    if (clearBtn) {
+        clearBtn.onclick = () => {
+            currentToken = '';
+            currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
+            contractInput.value = '';
+            tokenAmountInput.value = '';
             document.getElementById('tokenResult').innerHTML = '';
             document.getElementById('confirmBtn').disabled = true;
-            setTimeout(() => contractInput.focus(), 50);
-        }
-    };
-    
-    confirmBtn.onclick = () => {
-        let address = contractInput.value.trim();
-        if (address !== '' && currentTokenData.symbol) {
-            currentToken = address;
             updateTokenDisplay();
-        }
-        closeAllPopups();
-    };
-    
-    clearBtn.onclick = () => {
-        currentToken = '';
-        currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
-        contractInput.value = '';
-        tokenAmountInput.value = '';
-        document.getElementById('tokenResult').innerHTML = '';
-        document.getElementById('confirmBtn').disabled = true;
-        updateTokenDisplay();
-        disableAmountFields();
-        closeAllPopups();
-        checkReviewButton();
-    };
-    
-    maxTokenBtn.onclick = () => {
-        if (currentToken !== '' && currentPair !== '' && currentTokenData.balance > 0) {
-            tokenAmountInput.value = currentTokenData.balance;
-            updateTokenReward();
+            disableAmountFields();
+            closeAllPopups();
             checkReviewButton();
-            logState();
-        }
-    };
+        };
+    }
     
-    reviewBtn.onclick = showBottomPopup;
-    closeBottomPopupBtn.onclick = closeBottomPopup;
-    overlay.onclick = closeBottomPopup;
+    if (maxTokenBtn) {
+        maxTokenBtn.onclick = () => {
+            if (currentToken !== '' && currentPair !== '' && currentTokenData.balance > 0) {
+                tokenAmountInput.value = currentTokenData.balance;
+                updateTokenReward();
+                checkReviewButton();
+                logState();
+            }
+        };
+    }
     
-    document.addEventListener('click', (e) => {
+    if (reviewBtn) {
+        reviewBtn.onclick = showBottomPopup;
+    }
+    
+    if (closeBottomPopupBtn) {
+        closeBottomPopupBtn.onclick = closeBottomPopup;
+    }
+    
+    if (overlay) {
+        overlay.onclick = closeBottomPopup;
+    }
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
         if (!e.target.closest('.dropdown') && !e.target.closest('.fake-select')) {
             closeAllDropdowns();
         }
@@ -1557,27 +1595,31 @@
         }
     });
     
-    pairAmountInput.addEventListener('input', () => {
-        updateUSDTBonus();
-        checkReviewButton();
-        logState();
-    });
+    if (pairAmountInput) {
+        pairAmountInput.addEventListener('input', () => {
+            updateUSDTBonus();
+            checkReviewButton();
+            logState();
+        });
+    }
     
-    tokenAmountInput.addEventListener('input', () => {
-        updateTokenReward();
-        checkReviewButton();
-        logState();
-    });
+    if (tokenAmountInput) {
+        tokenAmountInput.addEventListener('input', () => {
+            updateTokenReward();
+            checkReviewButton();
+            logState();
+        });
+    }
     
     function logState() {
         console.log({
             exchange: currentExchange || 'not selected',
             poolType: currentPool || 'not selected',
             pair: currentPair || 'not selected',
-            pairAmount: pairAmountInput.value,
+            pairAmount: pairAmountInput ? pairAmountInput.value : '',
             token: currentTokenData.symbol || currentToken || 'no token',
             tokenBalance: currentTokenData.balance,
-            tokenAmount: tokenAmountInput.value,
+            tokenAmount: tokenAmountInput ? tokenAmountInput.value : '',
             usdtValue: getUsdtValue(),
             polygonPrice: polygonPrice
         });
@@ -1601,4 +1643,4 @@
     checkReviewButton();
 </script>
 </body>
-  </html>
+    </html>
