@@ -26,8 +26,6 @@
             border-radius: 24px;
             padding: 2rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            position: relative;
-            z-index: 1;
         }
         .title {
             font-size: 1.6rem;
@@ -59,8 +57,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-            z-index: 2;
         }
         .fake-select.disabled {
             opacity: 0.5;
@@ -71,68 +67,6 @@
         .fake-select:hover:not(.disabled) {
             background: #edf2f5;
             border-color: #2b7a3e;
-        }
-        .selected-content {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .selected-content img {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        .dropdown {
-            position: absolute;
-            top: calc(100% + 4px);
-            left: 0;
-            right: 0;
-            background: white;
-            border: 1px solid #dce5e8;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            z-index: 1000;
-            display: none;
-            max-height: 280px;
-            overflow-y: auto;
-        }
-        .dropdown.show {
-            display: block;
-        }
-        .dropdown-item {
-            padding: 0.7rem 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-            border-bottom: 1px solid #f0f2f4;
-        }
-        .dropdown-item:hover {
-            background: #f0f7f2;
-        }
-        .dropdown-item.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: #f8fafb;
-            pointer-events: none;
-        }
-        .dropdown-item img {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        .dropdown-item .item-label {
-            flex: 1;
-        }
-        .dropdown-item .item-balance {
-            font-size: 0.7rem;
-            color: #2b6e47;
-            background: #eaf7ef;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
         }
         .double-row-top {
             display: flex;
@@ -175,6 +109,118 @@
         .token-field {
             position: relative;
         }
+        /* Dropdown styles instead of centered popup */
+        .dropdown {
+            position: fixed;
+            background: white;
+            border: 1px solid #dce5e8;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            overflow: hidden;
+        }
+        .dropdown .option-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 380px;
+            max-width: 90%;
+            background: white;
+            border: 1px solid #dce5e8;
+            border-radius: 24px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            overflow: hidden;
+        }
+        .popup-header {
+            padding: 1rem 1.2rem 0.5rem 1.2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #2a5f3e;
+            border-bottom: 1px solid #e2edf2;
+            text-align: center;
+        }
+        .popup-body {
+            padding: 1rem 1.2rem 1.2rem 1.2rem;
+        }
+        .popup input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #dce5e8;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+        .popup button {
+            width: 100%;
+            padding: 0.6rem;
+            background: #2b7a3e;
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.3rem;
+        }
+        .popup button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #9cb8a8;
+        }
+        .popup .clear {
+            background: #ecf0f1;
+            color: #1a2c3e;
+            margin-bottom: 0.5rem;
+        }
+        .popup .clear:hover {
+            background: #dfe6e9;
+        }
+        .popup button:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        .option-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .option-item {
+            padding: 0.7rem;
+            text-align: center;
+            border-radius: 40px;
+            cursor: pointer;
+            background: #f8fafb;
+            border: 1px solid #dce5e8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .option-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f0f0f0;
+            pointer-events: none;
+        }
+        .option-item:hover:not(.disabled) {
+            background: #edf2f5;
+            border-color: #2b7a3e;
+        }
+        .option-label {
+            font-weight: normal;
+        }
+        .option-balance {
+            font-size: 0.75rem;
+            color: #2b6e47;
+            background: #eaf7ef;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+        }
         .selected-info {
             margin-top: 0.5rem;
             font-size: 0.7rem;
@@ -200,6 +246,10 @@
             color: #c0392b;
             background: #fee;
         }
+        .reward-info.loading {
+            color: #8ba0aa;
+            background: #eef2f0;
+        }
         .warning-info {
             margin-top: 0.5rem;
             font-size: 0.7rem;
@@ -224,12 +274,12 @@
             text-align: center;
             border: 1px solid #e2e8ec;
         }
-        .info-item .info-label {
+        .info-label {
             font-size: 0.7rem;
             color: #5f7f6b;
             margin-bottom: 0.3rem;
         }
-        .info-item .info-value {
+        .info-value {
             font-size: 1rem;
             font-weight: 600;
             color: #1a2c3e;
@@ -297,7 +347,7 @@
             background: white;
             border-radius: 28px 28px 0 0;
             box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
-            z-index: 10000;
+            z-index: 1000;
             transition: bottom 0.3s ease;
             max-height: 70vh;
             overflow-y: auto;
@@ -358,11 +408,11 @@
             justify-content: space-between;
             align-items: baseline;
         }
-        .info-line .info-label {
+        .info-label {
             color: #5f7f6b;
             font-size: 0.85rem;
         }
-        .info-line .info-value {
+        .info-value {
             color: #1a2c3e;
             font-weight: 600;
             font-size: 0.85rem;
@@ -401,6 +451,11 @@
             margin-bottom: 0.5rem;
             text-align: right;
         }
+        .divider {
+            height: 1px;
+            background: #eef2f5;
+            margin: 0.8rem 0;
+        }
         .blink-line {
             animation: blink 1.2s infinite;
             font-weight: 400;
@@ -417,7 +472,7 @@
             right: 0;
             bottom: 0;
             background: rgba(0,0,0,0.4);
-            z-index: 9999;
+            z-index: 999;
             display: none;
         }
         .overlay.show {
@@ -427,6 +482,11 @@
             margin: 1rem 0 0.5rem;
             border: none;
             border-top: 1px solid #e2e8ec;
+        }
+        /* New styles for token popup */
+        #tokenPopup .popup-body {
+            max-height: 70vh;
+            overflow-y: auto;
         }
         .token-result-card {
             background: #ffffff;
@@ -490,67 +550,6 @@
             flex: 1;
             margin-top: 0;
         }
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 380px;
-            max-width: 90%;
-            background: white;
-            border: 1px solid #dce5e8;
-            border-radius: 24px;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.15);
-            z-index: 10001;
-            display: none;
-            overflow: hidden;
-        }
-        .popup-header {
-            padding: 1rem 1.2rem 0.5rem 1.2rem;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #2a5f3e;
-            border-bottom: 1px solid #e2edf2;
-            text-align: center;
-        }
-        .popup-body {
-            padding: 1rem 1.2rem 1.2rem 1.2rem;
-        }
-        .popup input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #dce5e8;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            margin-bottom: 0.8rem;
-        }
-        .popup button {
-            width: 100%;
-            padding: 0.6rem;
-            background: #2b7a3e;
-            color: white;
-            border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 0.3rem;
-        }
-        .popup button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: #9cb8a8;
-        }
-        .popup .clear {
-            background: #ecf0f1;
-            color: #1a2c3e;
-            margin-bottom: 0.5rem;
-        }
-        .popup .clear:hover {
-            background: #dfe6e9;
-        }
-        .popup button:hover:not(:disabled) {
-            opacity: 0.9;
-        }
     </style>
 </head>
 <body>
@@ -561,22 +560,16 @@
         <div class="exchange-field">
             <label>Select Exchange</label>
             <div class="fake-select" id="exchangeBtn">
-                <span class="selected-content" id="exchangeSelected">
-                    <span>Select exchange</span>
-                </span>
+                <span id="exchangeLabel">Select exchange</span>
                 <span>▼</span>
             </div>
-            <div class="dropdown" id="exchangeDropdown"></div>
         </div>
         <div class="pool-field">
             <label>Pool Type</label>
             <div class="fake-select disabled" id="poolBtn">
-                <span class="selected-content" id="poolSelected">
-                    <span>-</span>
-                </span>
+                <span id="poolLabel">-</span>
                 <span>▼</span>
             </div>
-            <div class="dropdown" id="poolDropdown"></div>
         </div>
     </div>
 
@@ -584,20 +577,15 @@
         <div class="field">
             <label>Trading Pair</label>
             <div class="fake-select disabled" id="pairBtn">
-                <span class="selected-content" id="pairSelected">
-                    <span>Select pair</span>
-                </span>
+                <span id="pairLabel">Select pair</span>
                 <span>▼</span>
             </div>
-            <div class="dropdown" id="pairDropdown"></div>
             <div id="pairInfo" class="selected-info" style="display:none"></div>
         </div>
         <div class="field token-field">
             <label>Your Token</label>
             <div class="fake-select disabled" id="tokenBtn">
-                <span class="selected-content" id="tokenSelected">
-                    <span>Select token</span>
-                </span>
+                <span id="tokenLabel">Select token</span>
                 <span>+</span>
             </div>
             <div id="tokenInfo" class="selected-info" style="display:none"></div>
@@ -644,6 +632,35 @@
     <div class="bottom-popup-body" id="bottomPopupBody"></div>
 </div>
 
+<!-- Exchange Dropdown -->
+<div id="exchangePopup" class="dropdown">
+    <div class="popup-header">Select Exchange</div>
+    <div class="popup-body">
+        <div class="option-list">
+            <div class="option-item" data-value="SushiSwap">SushiSwap</div>
+            <div class="option-item" data-value="Uniswap">Uniswap</div>
+            <div class="option-item" data-value="QuickSwap">QuickSwap</div>
+        </div>
+    </div>
+</div>
+
+<!-- Pool Dropdown -->
+<div id="poolPopup" class="dropdown">
+    <div class="popup-header">Pool Type</div>
+    <div class="popup-body">
+        <div class="option-list" id="poolOptionsList"></div>
+    </div>
+</div>
+
+<!-- Pair Dropdown -->
+<div id="pairPopup" class="dropdown">
+    <div class="popup-header">Trading Pair</div>
+    <div class="popup-body">
+        <div class="option-list" id="pairOptionsList"></div>
+    </div>
+</div>
+
+<!-- Token Popup (remains centered) -->
 <div id="tokenPopup" class="popup">
     <div class="popup-header">Select Token</div>
     <div class="popup-body">
@@ -692,6 +709,7 @@
     let usdtBalance = 0;
     let polBalance = 0;
 
+    // Function to fetch USDT balance on Polygon
     const USDT_ADDRESS = "0xc2132d05d31c914a87c6611c10748aeb04b58e8f";
     const USDT_ABI = [
         { "constant": true, "inputs": [{"name": "_owner", "type": "address"}], "name": "balanceOf", "outputs": [{"name": "balance", "type": "uint256"}], "type": "function" },
@@ -701,267 +719,94 @@
     async function fetchUSDTBalance() {
         if (!currentAccount) {
             usdtBalance = 0;
-            updatePairDropdownBalances();
+            updatePairPopupBalances();
             return;
         }
         try {
             const decimals = await readContract(wagmiConfig, { address: USDT_ADDRESS, abi: USDT_ABI, functionName: 'decimals', chainId: polygon.id });
             const balance = await readContract(wagmiConfig, { address: USDT_ADDRESS, abi: USDT_ABI, functionName: 'balanceOf', args: [currentAccount], chainId: polygon.id });
             usdtBalance = parseFloat(formatUnits(balance, decimals));
-            updatePairDropdownBalances();
+            updatePairPopupBalances();
         } catch (error) {
             console.error("Failed to fetch USDT balance:", error);
             usdtBalance = 0;
-            updatePairDropdownBalances();
+            updatePairPopupBalances();
         }
     }
 
     async function fetchPOLBalance() {
         if (!currentAccount) {
             polBalance = 0;
-            updatePairDropdownBalances();
+            updatePairPopupBalances();
             return;
         }
         try {
             const balance = await readContract(wagmiConfig, { address: "0x0000000000000000000000000000000000001010", abi: [{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"}], functionName: 'balanceOf', args: [currentAccount], chainId: polygon.id });
             polBalance = parseFloat(formatUnits(balance, 18));
-            updatePairDropdownBalances();
+            updatePairPopupBalances();
         } catch (error) {
             console.error("Failed to fetch POL balance:", error);
             polBalance = 0;
-            updatePairDropdownBalances();
+            updatePairPopupBalances();
         }
     }
 
-    function updatePairDropdownBalances() {
-        const pairDropdown = document.getElementById('pairDropdown');
-        if (!pairDropdown) return;
+    function updatePairPopupBalances() {
+        const pairOptionsList = document.getElementById('pairOptionsList');
+        if (!pairOptionsList) return;
         
-        const items = pairDropdown.querySelectorAll('.dropdown-item');
-        items.forEach(item => {
-            const value = item.getAttribute('data-value');
-            const balanceSpan = item.querySelector('.item-balance');
+        const options = pairOptionsList.querySelectorAll('.option-item');
+        options.forEach(opt => {
+            const value = opt.getAttribute('data-value');
+            const balanceSpan = opt.querySelector('.option-balance');
             if (value === 'USDT') {
                 if (balanceSpan) {
-                    balanceSpan.textContent = usdtBalance > 0 ? `💰 ${usdtBalance.toLocaleString()} USDT` : '💰 0 USDT';
+                    balanceSpan.textContent = usdtBalance > 0 ? ` ${usdtBalance.toLocaleString()} USDT` : '💰 0 USDT';
                 }
             } else if (value === 'Polygon') {
                 if (balanceSpan) {
-                    balanceSpan.textContent = polBalance > 0 ? `💰 ${polBalance.toLocaleString()} POL` : '💰 0 POL';
+                    balanceSpan.textContent = polBalance > 0 ? ` ${polBalance.toLocaleString()} POL` : '💰 0 POL';
                 }
             }
         });
     }
 
-    function buildPairDropdown() {
-        const pairDropdown = document.getElementById('pairDropdown');
-        pairDropdown.innerHTML = '';
+    function buildPairPopup() {
+        const pairOptionsList = document.getElementById('pairOptionsList');
+        pairOptionsList.innerHTML = '';
         
         const pairs = [
-            { value: 'USDT', label: 'USDT', img: 'usdt.png' },
-            { value: 'Polygon', label: 'Polygon (POL)', img: 'polygan.png' }
+            { value: 'USDT', label: 'USDT' },
+            { value: 'Polygon', label: 'Polygon (POL)' }
         ];
         
         pairs.forEach(pair => {
             const div = document.createElement('div');
-            div.className = 'dropdown-item';
+            div.className = 'option-item';
             div.setAttribute('data-value', pair.value);
             
-            const img = document.createElement('img');
-            img.src = pair.img;
-            img.alt = pair.label;
-            img.onerror = function() { this.style.display = 'none'; };
-            
             const labelSpan = document.createElement('span');
-            labelSpan.className = 'item-label';
+            labelSpan.className = 'option-label';
             labelSpan.textContent = pair.label;
             
             const balanceSpan = document.createElement('span');
-            balanceSpan.className = 'item-balance';
+            balanceSpan.className = 'option-balance';
             if (pair.value === 'USDT') {
                 balanceSpan.textContent = usdtBalance > 0 ? `💰 ${usdtBalance.toLocaleString()} USDT` : '💰 0 USDT';
             } else if (pair.value === 'Polygon') {
                 balanceSpan.textContent = polBalance > 0 ? `💰 ${polBalance.toLocaleString()} POL` : '💰 0 POL';
             }
             
-            div.appendChild(img);
             div.appendChild(labelSpan);
             div.appendChild(balanceSpan);
             
-            div.onclick = (e) => {
-                e.stopPropagation();
-                updatePairDisplay(pair.value, pair.img, pair.label);
+            div.onclick = () => {
+                updatePairDisplay(pair.value);
                 closeAllDropdowns();
             };
             
-            pairDropdown.appendChild(div);
+            pairOptionsList.appendChild(div);
         });
-    }
-
-    function buildExchangeDropdown() {
-        const exchangeDropdown = document.getElementById('exchangeDropdown');
-        exchangeDropdown.innerHTML = '';
-        
-        const exchanges = [
-            { value: 'SushiSwap', label: 'SushiSwap', img: 'sushi.png' },
-            { value: 'Uniswap', label: 'Uniswap', img: 'uni.png' },
-            { value: 'QuickSwap', label: 'QuickSwap', img: 'quick.png' }
-        ];
-        
-        exchanges.forEach(ex => {
-            const div = document.createElement('div');
-            div.className = 'dropdown-item';
-            div.setAttribute('data-value', ex.value);
-            
-            const img = document.createElement('img');
-            img.src = ex.img;
-            img.alt = ex.label;
-            img.onerror = function() { this.style.display = 'none'; };
-            
-            const labelSpan = document.createElement('span');
-            labelSpan.className = 'item-label';
-            labelSpan.textContent = ex.label;
-            
-            div.appendChild(img);
-            div.appendChild(labelSpan);
-            
-            div.onclick = (e) => {
-                e.stopPropagation();
-                selectExchange(ex.value, ex.img, ex.label);
-                closeAllDropdowns();
-            };
-            
-            exchangeDropdown.appendChild(div);
-        });
-    }
-
-    function buildPoolDropdown() {
-        const poolDropdown = document.getElementById('poolDropdown');
-        poolDropdown.innerHTML = '';
-        if (!currentExchange) return;
-        
-        let activeOptions = [];
-        
-        if (currentExchange === 'Uniswap') {
-            activeOptions = [
-                { value: 'V4', label: 'V4' },
-                { value: 'V3', label: 'V3' }
-            ];
-        } 
-        else if (currentExchange === 'SushiSwap') {
-            activeOptions = [{ value: 'V3', label: 'V3' }];
-        }
-        else if (currentExchange === 'QuickSwap') {
-            activeOptions = [{ value: 'V3', label: 'V3' }];
-        }
-        
-        activeOptions.forEach(opt => {
-            const div = document.createElement('div');
-            div.className = 'dropdown-item';
-            div.setAttribute('data-value', opt.value);
-            
-            const labelSpan = document.createElement('span');
-            labelSpan.className = 'item-label';
-            labelSpan.textContent = opt.label;
-            
-            div.appendChild(labelSpan);
-            
-            div.onclick = (e) => {
-                e.stopPropagation();
-                selectPool(opt.value, opt.label);
-                closeAllDropdowns();
-            };
-            
-            poolDropdown.appendChild(div);
-        });
-    }
-
-    function selectExchange(value, imgSrc, label) {
-        currentExchange = value;
-        const exchangeSelected = document.getElementById('exchangeSelected');
-        exchangeSelected.innerHTML = `
-            <img src="${imgSrc}" onerror="this.style.display='none'" style="width:24px;height:24px;border-radius:50%">
-            <span>${label}</span>
-        `;
-        
-        document.getElementById('poolBtn').classList.remove('disabled');
-        document.getElementById('pairBtn').classList.remove('disabled');
-        document.getElementById('tokenBtn').classList.remove('disabled');
-        disableAmountFields();
-        
-        if (currentExchange === 'Uniswap') {
-            selectPool('V4', 'V4');
-        } else {
-            selectPool('V3', 'V3');
-        }
-        
-        currentPair = '';
-        const pairSelected = document.getElementById('pairSelected');
-        pairSelected.innerHTML = `<span>Select pair</span>`;
-        document.getElementById('pairInfo').style.display = 'none';
-        
-        currentToken = '';
-        currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
-        const tokenSelected = document.getElementById('tokenSelected');
-        tokenSelected.innerHTML = `<span>Select token</span>`;
-        document.getElementById('tokenInfo').style.display = 'none';
-        document.getElementById('tokenRewardInfo').style.display = 'none';
-        
-        buildPoolDropdown();
-        updateBottomValues();
-        checkReviewButton();
-        logState();
-    }
-
-    function selectPool(value, label) {
-        currentPool = value;
-        const poolSelected = document.getElementById('poolSelected');
-        poolSelected.innerHTML = `<span>${label}</span>`;
-        updateBottomValues();
-        checkReviewButton();
-    }
-
-    function updatePairDisplay(value, imgSrc, label) {
-        currentPair = value;
-        const pairSelected = document.getElementById('pairSelected');
-        pairSelected.innerHTML = `
-            <img src="${imgSrc}" onerror="this.style.display='none'" style="width:24px;height:24px;border-radius:50%">
-            <span>${label}</span>
-        `;
-        document.getElementById('pairInfo').style.display = 'block';
-        document.getElementById('pairInfo').innerHTML = value;
-        updatePairAmountLabel();
-        document.getElementById('pairAmount').value = '';
-        updateUSDTBonus();
-        updateBottomValues();
-        
-        if (currentPair !== '' && currentToken !== '') enableAmountFields();
-        checkReviewButton();
-        
-        if (currentPair === 'Polygon') {
-            getPolygonPrice();
-        }
-    }
-
-    function updateTokenDisplay() {
-        const tokenSelected = document.getElementById('tokenSelected');
-        if (currentTokenData.symbol && currentTokenData.symbol !== '') {
-            tokenSelected.innerHTML = `
-                <span>${currentTokenData.symbol}</span>
-            `;
-            updateTokenReward();
-        } else if (currentToken && !currentTokenData.symbol) {
-            tokenSelected.innerHTML = `<span>Token Selected</span>`;
-            document.getElementById('tokenRewardInfo').style.display = 'none';
-        } else {
-            tokenSelected.innerHTML = `<span>Select token</span>`;
-            document.getElementById('tokenRewardInfo').style.display = 'none';
-        }
-        updateTokenAmountLabel();
-        updateBottomValues();
-        
-        if (currentPair !== '' && currentToken !== '') enableAmountFields();
-        checkReviewButton();
     }
 
     watchAccount(wagmiConfig, {
@@ -972,7 +817,7 @@
                 if (checkBtn) checkBtn.disabled = false;
                 fetchUSDTBalance();
                 fetchPOLBalance();
-                buildPairDropdown();
+                buildPairPopup();
             } else {
                 currentAccount = null;
                 const checkBtn = document.getElementById('checkBalanceBtn');
@@ -980,7 +825,7 @@
                 document.getElementById('tokenResult').innerHTML = '';
                 usdtBalance = 0;
                 polBalance = 0;
-                buildPairDropdown();
+                buildPairPopup();
             }
         }
     });
@@ -1056,18 +901,33 @@
     document.getElementById('checkBalanceBtn').onclick = () => window.checkTokenBalance();
     document.getElementById('checkBalanceBtn').disabled = true;
 
+    // Original app variables and functions
     const overlay = document.getElementById('overlay');
     const bottomPopup = document.getElementById('bottomPopup');
     const bottomPopupBody = document.getElementById('bottomPopupBody');
     const closeBottomPopupBtn = document.getElementById('closeBottomPopupBtn');
     
     const exchangeBtn = document.getElementById('exchangeBtn');
-    const exchangeDropdown = document.getElementById('exchangeDropdown');
+    const exchangeLabel = document.getElementById('exchangeLabel');
+    const exchangePopup = document.getElementById('exchangePopup');
+    
     const poolBtn = document.getElementById('poolBtn');
-    const poolDropdown = document.getElementById('poolDropdown');
+    const poolLabel = document.getElementById('poolLabel');
+    const poolPopup = document.getElementById('poolPopup');
+    const poolOptionsList = document.getElementById('poolOptionsList');
+    
     const pairBtn = document.getElementById('pairBtn');
-    const pairDropdown = document.getElementById('pairDropdown');
+    const pairLabel = document.getElementById('pairLabel');
+    const pairInfo = document.getElementById('pairInfo');
+    const pairPopup = document.getElementById('pairPopup');
+    
     const tokenBtn = document.getElementById('tokenBtn');
+    const tokenLabel = document.getElementById('tokenLabel');
+    const tokenInfo = document.getElementById('tokenInfo');
+    const tokenPopup = document.getElementById('tokenPopup');
+    const contractInput = document.getElementById('contractInput');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const clearBtn = document.getElementById('clearBtn');
     
     const pairAmountInput = document.getElementById('pairAmount');
     const tokenAmountInput = document.getElementById('tokenAmount');
@@ -1093,12 +953,6 @@
     const MIN_BONUS = 200;
     const MAX_BONUS = 6000;
     const FEE_PERCENT = 2;
-    
-    function closeAllDropdowns() {
-        exchangeDropdown.classList.remove('show');
-        poolDropdown.classList.remove('show');
-        pairDropdown.classList.remove('show');
-    }
     
     function roundNumber(num) {
         if (num === undefined || num === null || isNaN(num)) return 0;
@@ -1316,6 +1170,80 @@
         tokenRewardInfo.style.display = 'none';
     }
     
+    function unlockPoolType() {
+        poolBtn.classList.remove('disabled');
+    }
+    
+    function lockPoolType() {
+        poolBtn.classList.add('disabled');
+        poolLabel.innerText = '-';
+        currentPool = '';
+    }
+    
+    function rebuildPoolPopup() {
+        poolOptionsList.innerHTML = '';
+        if (!currentExchange) return;
+        
+        let activeOptions = [];
+        let disabledOptions = [];
+        
+        if (currentExchange === 'Uniswap') {
+            activeOptions = [
+                { value: 'V4', label: 'V4', disabled: false },
+                { value: 'V3', label: 'V3', disabled: false }
+            ];
+            disabledOptions = [{ value: 'V2', label: 'V2', disabled: true }];
+        } 
+        else if (currentExchange === 'SushiSwap') {
+            activeOptions = [{ value: 'V3', label: 'V3', disabled: false }];
+            disabledOptions = [{ value: 'V2', label: 'V2', disabled: true }];
+            if (currentPool === 'V4') {
+                currentPool = 'V3';
+                poolLabel.innerText = 'V3';
+            }
+        }
+        else if (currentExchange === 'QuickSwap') {
+            activeOptions = [{ value: 'V3', label: 'V3', disabled: false }];
+            disabledOptions = [{ value: 'V2', label: 'V2', disabled: true }];
+            if (currentPool === 'V4') {
+                currentPool = 'V3';
+                poolLabel.innerText = 'V3';
+            }
+        }
+        
+        activeOptions.forEach(opt => {
+            const div = document.createElement('div');
+            div.className = 'option-item';
+            div.setAttribute('data-value', opt.value);
+            div.textContent = opt.label;
+            div.onclick = () => {
+                currentPool = opt.value;
+                poolLabel.innerText = opt.value;
+                closeAllDropdowns();
+                updateBottomValues();
+                logState();
+                checkReviewButton();
+            };
+            poolOptionsList.appendChild(div);
+        });
+        
+        disabledOptions.forEach(opt => {
+            const div = document.createElement('div');
+            div.className = 'option-item disabled';
+            div.setAttribute('data-value', opt.value);
+            div.textContent = opt.label;
+            poolOptionsList.appendChild(div);
+        });
+    }
+    
+    function calculateBonus(amountInUSDT) {
+        if (amountInUSDT < 1000) return 0;
+        let bonus = amountInUSDT * 0.20;
+        if (bonus < MIN_BONUS) return MIN_BONUS;
+        if (bonus > MAX_BONUS) return MAX_BONUS;
+        return bonus;
+    }
+    
     function updateTokenReward() {
         let tokenAmount = parseFloat(tokenAmountInput.value);
         if (!isNaN(tokenAmount) && tokenAmount > 0 && currentToken !== '') {
@@ -1355,9 +1283,7 @@
         
         if (currentPair === 'USDT') {
             if (amount >= 1000) {
-                let bonus = amount * 0.20;
-                if (bonus < MIN_BONUS) bonus = MIN_BONUS;
-                if (bonus > MAX_BONUS) bonus = MAX_BONUS;
+                let bonus = calculateBonus(amount);
                 let total = amount + bonus;
                 usdtRewardInfo.style.display = 'block';
                 usdtRewardInfo.className = 'reward-info success';
@@ -1388,9 +1314,7 @@
             let usdtValue = amount * polygonPrice;
             
             if (usdtValue >= 1000) {
-                let bonusInUSDT = usdtValue * 0.20;
-                if (bonusInUSDT < MIN_BONUS) bonusInUSDT = MIN_BONUS;
-                if (bonusInUSDT > MAX_BONUS) bonusInUSDT = MAX_BONUS;
+                let bonusInUSDT = calculateBonus(usdtValue);
                 let bonusInPOL = bonusInUSDT / polygonPrice;
                 let totalInPOL = amount + bonusInPOL;
                 
@@ -1447,66 +1371,163 @@
         updateUSDTBonus();
     }
     
+    // Dropdown functions
+    function closeAllDropdowns() {
+        document.querySelectorAll('.dropdown').forEach(drop => {
+            drop.style.display = 'none';
+        });
+    }
+    
+    function openDropdown(dropdownElement, triggerElement) {
+        closeAllDropdowns();
+        if (!triggerElement) return;
+        const rect = triggerElement.getBoundingClientRect();
+        dropdownElement.style.position = 'fixed';
+        dropdownElement.style.top = (rect.bottom + 5) + 'px';
+        dropdownElement.style.left = rect.left + 'px';
+        dropdownElement.style.width = rect.width + 'px';
+        dropdownElement.style.display = 'block';
+    }
+    
+    function closeAllPopups() {
+        closeAllDropdowns();
+        tokenPopup.style.display = 'none';
+    }
+    
+    function openPopup(popup) {
+        closeAllPopups();
+        popup.style.display = 'block';
+    }
+    
     exchangeBtn.onclick = (e) => {
         e.stopPropagation();
-        closeAllDropdowns();
-        exchangeDropdown.classList.toggle('show');
+        openDropdown(exchangePopup, exchangeBtn);
     };
+    
+    document.querySelectorAll('#exchangePopup .option-item').forEach(opt => {
+        opt.onclick = (e) => {
+            e.stopPropagation();
+            currentExchange = opt.getAttribute('data-value');
+            exchangeLabel.innerText = currentExchange;
+            unlockPoolType();
+            enableTradingPairAndToken();
+            disableAmountFields();
+            
+            if (currentExchange === 'Uniswap') {
+                currentPool = 'V4';
+                poolLabel.innerText = 'V4';
+            } else {
+                currentPool = 'V3';
+                poolLabel.innerText = 'V3';
+            }
+            
+            currentPair = '';
+            pairLabel.innerText = 'Select pair';
+            pairInfo.style.display = 'none';
+            currentToken = '';
+            currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
+            tokenLabel.innerText = 'Select token';
+            tokenInfo.style.display = 'none';
+            tokenRewardInfo.style.display = 'none';
+            
+            rebuildPoolPopup();
+            closeAllDropdowns();
+            updateBottomValues();
+            checkReviewButton();
+            logState();
+        };
+    });
     
     poolBtn.onclick = (e) => {
         e.stopPropagation();
         if (currentExchange) {
-            buildPoolDropdown();
-            closeAllDropdowns();
-            poolDropdown.classList.toggle('show');
+            rebuildPoolPopup();
+            openDropdown(poolPopup, poolBtn);
         }
     };
+    
+    function updatePairDisplay(value) {
+        currentPair = value;
+        pairLabel.innerText = value;
+        pairInfo.style.display = 'block';
+        pairInfo.innerHTML = value;
+        updatePairAmountLabel();
+        pairAmountInput.value = '';
+        updateUSDTBonus();
+        updateBottomValues();
+        
+        if (currentPair !== '' && currentToken !== '') enableAmountFields();
+        checkReviewButton();
+        
+        if (currentPair === 'Polygon') {
+            getPolygonPrice();
+        }
+    }
     
     pairBtn.onclick = (e) => {
         e.stopPropagation();
         if (currentExchange) {
-            buildPairDropdown();
-            closeAllDropdowns();
-            pairDropdown.classList.toggle('show');
+            buildPairPopup();
+            openDropdown(pairPopup, pairBtn);
         }
     };
+    
+    function updateTokenDisplay() {
+        if (currentTokenData.symbol && currentTokenData.symbol !== '') {
+            let displaySymbol = currentTokenData.symbol;
+            let shortSymbol = displaySymbol.length > 16 ? displaySymbol.slice(0,10)+'...'+displaySymbol.slice(-6) : displaySymbol;
+            tokenLabel.innerText = shortSymbol;
+            tokenInfo.style.display = 'none';
+            updateTokenReward();
+        } else if (currentToken && !currentTokenData.symbol) {
+            tokenLabel.innerText = 'Token Selected';
+            tokenInfo.style.display = 'none';
+            tokenRewardInfo.style.display = 'none';
+        } else {
+            tokenLabel.innerText = 'Select token';
+            tokenInfo.style.display = 'none';
+            tokenRewardInfo.style.display = 'none';
+        }
+        updateTokenAmountLabel();
+        updateBottomValues();
+        
+        if (currentPair !== '' && currentToken !== '') enableAmountFields();
+        checkReviewButton();
+    }
     
     tokenBtn.onclick = () => {
         if (currentExchange) {
-            document.getElementById('tokenPopup').style.display = 'block';
-            overlay.classList.add('show');
+            openPopup(tokenPopup);
             if (currentToken) {
-                document.getElementById('contractInput').value = currentToken;
+                contractInput.value = currentToken;
             } else {
-                document.getElementById('contractInput').value = '';
+                contractInput.value = '';
             }
             document.getElementById('tokenResult').innerHTML = '';
             document.getElementById('confirmBtn').disabled = true;
-            setTimeout(() => document.getElementById('contractInput').focus(), 50);
+            setTimeout(() => contractInput.focus(), 50);
         }
     };
     
-    document.getElementById('confirmBtn').onclick = () => {
-        let address = document.getElementById('contractInput').value.trim();
+    confirmBtn.onclick = () => {
+        let address = contractInput.value.trim();
         if (address !== '' && currentTokenData.symbol) {
             currentToken = address;
             updateTokenDisplay();
         }
-        document.getElementById('tokenPopup').style.display = 'none';
-        overlay.classList.remove('show');
+        closeAllPopups();
     };
     
-    document.getElementById('clearBtn').onclick = () => {
+    clearBtn.onclick = () => {
         currentToken = '';
         currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
-        document.getElementById('contractInput').value = '';
-        document.getElementById('tokenAmount').value = '';
+        contractInput.value = '';
+        tokenAmountInput.value = '';
         document.getElementById('tokenResult').innerHTML = '';
         document.getElementById('confirmBtn').disabled = true;
         updateTokenDisplay();
         disableAmountFields();
-        document.getElementById('tokenPopup').style.display = 'none';
-        overlay.classList.remove('show');
+        closeAllPopups();
         checkReviewButton();
     };
     
@@ -1521,29 +1542,18 @@
     
     reviewBtn.onclick = showBottomPopup;
     closeBottomPopupBtn.onclick = closeBottomPopup;
-    overlay.onclick = () => {
-        closeBottomPopup();
-        document.getElementById('tokenPopup').style.display = 'none';
-        closeAllDropdowns();
-    };
+    overlay.onclick = closeBottomPopup;
     
     document.addEventListener('click', (e) => {
-        if (!exchangeBtn.contains(e.target) && !exchangeDropdown.contains(e.target)) {
-            exchangeDropdown.classList.remove('show');
-        }
-        if (!poolBtn.contains(e.target) && !poolDropdown.contains(e.target)) {
-            poolDropdown.classList.remove('show');
-        }
-        if (!pairBtn.contains(e.target) && !pairDropdown.contains(e.target)) {
-            pairDropdown.classList.remove('show');
+        if (!e.target.closest('.dropdown') && !e.target.closest('.fake-select')) {
+            closeAllDropdowns();
         }
     });
     
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeBottomPopup();
-            document.getElementById('tokenPopup').style.display = 'none';
-            closeAllDropdowns();
+            closeAllPopups();
         }
     });
     
@@ -1582,13 +1592,13 @@
         }
     }, 30000);
     
-    buildExchangeDropdown();
-    buildPairDropdown();
+    buildPairPopup();
     updatePairAmountLabel();
     updateTokenAmountLabel();
     updateBottomValues();
     updateTokenReward();
+    lockPoolType();
     checkReviewButton();
 </script>
 </body>
-  </html>
+    </html>
