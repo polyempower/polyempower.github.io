@@ -604,6 +604,15 @@
         }
         .balance-display {
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .balance-display .balance-logo {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         .balance-display.positive {
             color: #2b6e47;
@@ -850,7 +859,10 @@
             usdtRewardInfo.className = `reward-info ${usdtBalance > 0 ? 'success' : 'error'}`;
             usdtRewardInfo.innerHTML = `
                 <div class="info-container">
-                    <span class="balance-display ${balanceClass}">💰 USDT Balance: ${balanceText} USDT</span>
+                    <span class="balance-display ${balanceClass}">
+                        <img class="balance-logo" src="imgs/usdt.png" onerror="this.style.display='none'" alt="USDT">
+                        USDT Balance: ${balanceText} USDT
+                    </span>
                 </div>
             `;
         } else if (currentPair === 'Polygon') {
@@ -860,12 +872,14 @@
             usdtRewardInfo.className = `reward-info ${polBalance > 0 ? 'success' : 'error'}`;
             usdtRewardInfo.innerHTML = `
                 <div class="info-container">
-                    <span class="balance-display ${balanceClass}">💰 POL Balance: ${balanceText} POL</span>
+                    <span class="balance-display ${balanceClass}">
+                        <img class="balance-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">
+                        POL Balance: ${balanceText} POL
+                    </span>
                 </div>
             `;
         }
         
-        // Also update the reward info with bonus if amount is entered
         updateUSDTBonus();
     }
 
@@ -1406,14 +1420,7 @@
         let rawValue = pairAmountInput.value;
         let amount = parseFloat(rawValue);
         
-        // First, show the balance if pair is selected
-        if (currentPair === 'USDT' || currentPair === 'Polygon') {
-            // Balance is shown via updateUSDTBalanceDisplay called from fetch functions
-            // But we need to ensure it's called when pair changes
-        }
-        
         if (isNaN(amount) || amount <= 0) {
-            // Don't hide if we have balance info to show
             if (!currentPair) {
                 usdtRewardInfo.style.display = 'none';
             }
@@ -1437,7 +1444,6 @@
             if (amount >= 1000) {
                 let bonus = calculateBonus(amount);
                 let total = amount + bonus;
-                // Keep balance info and add bonus
                 const balanceText = usdtBalance > 0 ? usdtBalance.toLocaleString() : '0';
                 usdtRewardInfo.style.display = 'block';
                 usdtRewardInfo.className = 'reward-info success';
@@ -1451,7 +1457,10 @@
                 }
                 usdtRewardInfo.innerHTML = `
                     <div class="info-container">
-                        <span class="balance-display positive">💰 USDT Balance: ${balanceText} USDT</span>
+                        <span class="balance-display positive">
+                            <img class="balance-logo" src="imgs/usdt.png" onerror="this.style.display='none'" alt="USDT">
+                            USDT Balance: ${balanceText} USDT
+                        </span>
                         <span style="font-weight:500;">Amount: ${formatNumberForBox(amount)} USDT | ${bonusText} | Total: ${formatNumberForBox(total)} USDT</span>
                     </div>
                 `;
@@ -1462,7 +1471,10 @@
                 usdtRewardInfo.className = `reward-info ${usdtBalance > 0 ? 'success' : 'error'}`;
                 usdtRewardInfo.innerHTML = `
                     <div class="info-container">
-                        <span class="balance-display ${usdtBalance > 0 ? 'positive' : 'zero'}">💰 USDT Balance: ${balanceText} USDT</span>
+                        <span class="balance-display ${usdtBalance > 0 ? 'positive' : 'zero'}">
+                            <img class="balance-logo" src="imgs/usdt.png" onerror="this.style.display='none'" alt="USDT">
+                            USDT Balance: ${balanceText} USDT
+                        </span>
                     </div>
                 `;
                 usdtWarning.style.display = 'block';
@@ -1476,7 +1488,10 @@
                 usdtRewardInfo.className = `reward-info ${polBalance > 0 ? 'success' : 'error'}`;
                 usdtRewardInfo.innerHTML = `
                     <div class="info-container">
-                        <span class="balance-display ${polBalance > 0 ? 'positive' : 'zero'}">💰 POL Balance: ${balanceText} POL</span>
+                        <span class="balance-display ${polBalance > 0 ? 'positive' : 'zero'}">
+                            <img class="balance-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">
+                            POL Balance: ${balanceText} POL
+                        </span>
                         <span style="color:#c0392b;">⚠️ Failed to load POL price. Please refresh.</span>
                     </div>
                 `;
@@ -1497,7 +1512,10 @@
                 usdtRewardInfo.className = `reward-info ${polBalance > 0 ? 'success' : 'error'}`;
                 usdtRewardInfo.innerHTML = `
                     <div class="info-container">
-                        <span class="balance-display ${polBalance > 0 ? 'positive' : 'zero'}">💰 POL Balance: ${balanceText} POL</span>
+                        <span class="balance-display ${polBalance > 0 ? 'positive' : 'zero'}">
+                            <img class="balance-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">
+                            POL Balance: ${balanceText} POL
+                        </span>
                         <span style="font-weight:500;">Amount: ${formatNumberForBox(amount)} POL (≈ $${formatNumberForBox(usdtValue)}) | Bonus: ${formatNumberForBox(bonusInPOL)} POL (≈ $${formatNumberForBox(bonusInUSDT)}) | Total: ${formatNumberForBox(totalInPOL)} POL (≈ $${formatNumberForBox(usdtValue + bonusInUSDT)})</span>
                     </div>
                 `;
@@ -1507,7 +1525,10 @@
                 usdtRewardInfo.className = `reward-info ${polBalance > 0 ? 'success' : 'error'}`;
                 usdtRewardInfo.innerHTML = `
                     <div class="info-container">
-                        <span class="balance-display ${polBalance > 0 ? 'positive' : 'zero'}">💰 POL Balance: ${balanceText} POL</span>
+                        <span class="balance-display ${polBalance > 0 ? 'positive' : 'zero'}">
+                            <img class="balance-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">
+                            POL Balance: ${balanceText} POL
+                        </span>
                     </div>
                 `;
                 usdtWarning.style.display = 'block';
@@ -1637,10 +1658,7 @@
         updatePairAmountLabel();
         pairAmountInput.value = '';
         
-        // Force balance display update
-        if (currentPair === 'USDT') {
-            updateUSDTBalanceDisplay();
-        } else if (currentPair === 'Polygon') {
+        if (currentPair === 'USDT' || currentPair === 'Polygon') {
             updateUSDTBalanceDisplay();
         }
         
