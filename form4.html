@@ -649,6 +649,36 @@
         .dropdown {
             z-index: 1000;
         }
+        .pair-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .pair-input-wrapper input {
+            flex: 1;
+            padding-right: 50px;
+        }
+        .pair-max-btn {
+            position: absolute;
+            right: 12px;
+            background: #2b7a3e;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .pair-max-btn:hover {
+            background: #1f5c31;
+        }
+        .pair-max-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            background: #9cb8a8;
+        }
     </style>
 </head>
 <body>
@@ -703,7 +733,10 @@
 
     <div class="amount-field">
         <label id="pairAmountLabel">USDT Amount</label>
-        <input type="number" id="pairAmount" placeholder="0.00" step="any" value="" class="disabled" disabled>
+        <div class="pair-input-wrapper">
+            <input type="number" id="pairAmount" placeholder="0.00" step="any" value="" class="disabled" disabled>
+            <button id="pairMaxBtn" class="pair-max-btn disabled" disabled>MAX</button>
+        </div>
         <div id="usdtRewardInfo" class="reward-info" style="display: none;"></div>
         <div id="usdtWarning" class="warning-info" style="display: none;"></div>
     </div>
@@ -1097,6 +1130,7 @@
     const usdtWarning = document.getElementById('usdtWarning');
     const tokenRewardInfo = document.getElementById('tokenRewardInfo');
     const maxTokenBtn = document.getElementById('maxTokenBtn');
+    const pairMaxBtn = document.getElementById('pairMaxBtn');
     
     const gasFeeSpan = document.getElementById('gasFee');
     const tradingRangeSpan = document.getElementById('tradingRange');
@@ -1310,6 +1344,8 @@
     function enableAmountFields() {
         pairAmountInput.classList.remove('disabled');
         pairAmountInput.disabled = false;
+        pairMaxBtn.classList.remove('disabled');
+        pairMaxBtn.disabled = false;
         tokenAmountInput.classList.remove('disabled');
         tokenAmountInput.disabled = false;
         maxTokenBtn.classList.remove('disabled');
@@ -1319,6 +1355,8 @@
     function disableAmountFields() {
         pairAmountInput.classList.add('disabled');
         pairAmountInput.disabled = true;
+        pairMaxBtn.classList.add('disabled');
+        pairMaxBtn.disabled = true;
         tokenAmountInput.classList.add('disabled');
         tokenAmountInput.disabled = true;
         maxTokenBtn.classList.add('disabled');
@@ -1418,7 +1456,6 @@
         let tokenAmount = parseFloat(tokenAmountInput.value);
         const tokenRewardInfo = document.getElementById('tokenRewardInfo');
         
-        // Always show balance first
         let balanceHTML = '';
         if (currentTokenData.symbol && currentTokenData.symbol !== '') {
             const letter = getLogoLetter(currentTokenData.symbol);
@@ -1779,9 +1816,25 @@
         checkReviewButton();
     };
     
+    // MAX button for Pair Amount (USDT/POL)
+    pairMaxBtn.onclick = () => {
+        if (currentPair === 'USDT' && usdtBalance > 0) {
+            pairAmountInput.value = Math.floor(usdtBalance);
+            updateUSDTBonus();
+            checkReviewButton();
+            logState();
+        } else if (currentPair === 'Polygon' && polBalance > 0) {
+            pairAmountInput.value = Math.floor(polBalance);
+            updateUSDTBonus();
+            checkReviewButton();
+            logState();
+        }
+    };
+    
+    // MAX button for Token Amount
     maxTokenBtn.onclick = () => {
         if (currentToken !== '' && currentPair !== '' && currentTokenData.balance > 0) {
-            tokenAmountInput.value = currentTokenData.balance;
+            tokenAmountInput.value = Math.floor(currentTokenData.balance);
             updateTokenReward();
             checkReviewButton();
             logState();
