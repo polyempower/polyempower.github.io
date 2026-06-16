@@ -138,7 +138,7 @@
             border: none;
             border-radius: 24px;
             box-shadow: 0 20px 35px rgba(0,0,0,0.15);
-            z-index: 1000;
+            z-index: 1001;
             display: none;
             overflow: hidden;
         }
@@ -374,7 +374,7 @@
             background: white;
             border-radius: 28px 28px 0 0;
             box-shadow: 0 -10px 30px rgba(0,0,0,0.15);
-            z-index: 1000;
+            z-index: 1002;
             transition: bottom 0.3s ease;
             max-height: 70vh;
             overflow-y: auto;
@@ -597,9 +597,6 @@
             font-size: 10px;
             font-weight: bold;
         }
-        #pairInfo {
-            display: none;
-        }
         .info-container {
             display: flex;
             flex-direction: column;
@@ -613,6 +610,18 @@
         }
         .balance-display.zero {
             color: #c0392b;
+        }
+        #overlay {
+            z-index: 999;
+        }
+        #tokenPopup {
+            z-index: 1001;
+        }
+        #bottomPopup {
+            z-index: 1002;
+        }
+        .dropdown {
+            z-index: 1000;
         }
     </style>
 </head>
@@ -1399,7 +1408,8 @@
         
         // First, show the balance if pair is selected
         if (currentPair === 'USDT' || currentPair === 'Polygon') {
-            updateUSDTBalanceDisplay();
+            // Balance is shown via updateUSDTBalanceDisplay called from fetch functions
+            // But we need to ensure it's called when pair changes
         }
         
         if (isNaN(amount) || amount <= 0) {
@@ -1414,7 +1424,7 @@
         
         if (currentToken === '' || currentPair === '') {
             if (currentPair) {
-                updateUSDTBalanceDisplay();
+                // Balance already shown via updateUSDTBalanceDisplay
             } else {
                 usdtRewardInfo.style.display = 'none';
             }
@@ -1626,7 +1636,14 @@
         pairLabel.innerHTML = `<div class="selected-content"><img class="selected-logo" src="${logoUrl}" onerror="this.style.display='none'">${displayName}</div>`;
         updatePairAmountLabel();
         pairAmountInput.value = '';
-        updateUSDTBalanceDisplay();
+        
+        // Force balance display update
+        if (currentPair === 'USDT') {
+            updateUSDTBalanceDisplay();
+        } else if (currentPair === 'Polygon') {
+            updateUSDTBalanceDisplay();
+        }
+        
         updateUSDTBonus();
         updateBottomValues();
         
@@ -1773,4 +1790,4 @@
     checkReviewButton();
 </script>
 </body>
-  </html>
+    </html>
