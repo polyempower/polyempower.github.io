@@ -614,11 +614,28 @@
             border-radius: 50%;
             object-fit: cover;
         }
+        .balance-display .token-logo-small {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 9px;
+            font-weight: bold;
+            background: #000000;
+            flex-shrink: 0;
+        }
         .balance-display.positive {
             color: #2b6e47;
         }
         .balance-display.zero {
             color: #c0392b;
+        }
+        .token-reward-line {
+            font-weight: 500;
+            margin-top: 2px;
         }
         #overlay {
             z-index: 999;
@@ -1399,17 +1416,41 @@
     
     function updateTokenReward() {
         let tokenAmount = parseFloat(tokenAmountInput.value);
+        const tokenRewardInfo = document.getElementById('tokenRewardInfo');
+        
+        // Always show balance first
+        let balanceHTML = '';
+        if (currentTokenData.symbol && currentTokenData.symbol !== '') {
+            const letter = getLogoLetter(currentTokenData.symbol);
+            balanceHTML = `
+                <div class="balance-display ${currentTokenData.balance > 0 ? 'positive' : 'zero'}">
+                    <div class="token-logo-small" style="background:#000000; width:18px; height:18px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:white; font-size:9px; font-weight:bold; flex-shrink:0;">${letter}</div>
+                    Balance: ${currentTokenData.balance.toLocaleString()} ${currentTokenData.symbol}
+                </div>
+            `;
+        } else if (currentToken && currentToken !== '') {
+            balanceHTML = `<div class="balance-display">Token selected</div>`;
+        }
+        
         if (!isNaN(tokenAmount) && tokenAmount > 0 && currentToken !== '') {
             let fee = tokenAmount * (FEE_PERCENT / 100);
             let toPool = tokenAmount - fee;
             tokenRewardInfo.style.display = 'block';
             tokenRewardInfo.className = 'reward-info success';
-            let balanceText = currentTokenData.balance > 0 ? ` | Balance: ${currentTokenData.balance.toLocaleString()}` : '';
-            tokenRewardInfo.innerHTML = `Amount: ${formatNumberForBox(tokenAmount)} | Fee (2%): ${formatNumberForBox(fee)} | To Pool: ${formatNumberForBox(toPool)}${balanceText}`;
+            tokenRewardInfo.innerHTML = `
+                <div class="info-container">
+                    ${balanceHTML}
+                    <div class="token-reward-line">Amount: ${formatNumberForBox(tokenAmount)} | Fee (2%): ${formatNumberForBox(fee)} | To Pool: ${formatNumberForBox(toPool)}</div>
+                </div>
+            `;
         } else if (currentTokenData.symbol && currentTokenData.symbol !== '') {
             tokenRewardInfo.style.display = 'block';
             tokenRewardInfo.className = 'reward-info success';
-            tokenRewardInfo.innerHTML = `Balance: ${currentTokenData.balance.toLocaleString()} ${currentTokenData.symbol}`;
+            tokenRewardInfo.innerHTML = `
+                <div class="info-container">
+                    ${balanceHTML}
+                </div>
+            `;
         } else {
             tokenRewardInfo.style.display = 'none';
         }
