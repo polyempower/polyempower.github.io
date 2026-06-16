@@ -411,7 +411,7 @@
         .top-row {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
             margin-bottom: 1.2rem;
             flex-wrap: wrap;
             gap: 0.5rem;
@@ -420,11 +420,29 @@
             font-weight: 700;
             font-size: 1rem;
             color: #1a2c3e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .exchange-pool .exchange-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         .pair-names {
             font-weight: 600;
             font-size: 0.95rem;
             color: #2b6e47;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pair-names .pair-logo {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         .info-block {
             margin: 1rem 0;
@@ -445,13 +463,23 @@
             margin-bottom: 0.75rem;
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
             flex-wrap: wrap;
+            gap: 4px;
         }
         .deposit-label {
             color: #5f7f6b;
             font-size: 0.85rem;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .deposit-label .deposit-logo {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         .deposit-value {
             color: #1a2c3e;
@@ -1237,15 +1265,36 @@
             tokenShort = tokenShort.slice(0, 10) + '...' + tokenShort.slice(-6);
         }
         
+        // Get exchange logo
+        let exchangeLogo = '';
+        if (currentExchange === 'SushiSwap') exchangeLogo = 'imgs/sushi.png';
+        else if (currentExchange === 'Uniswap') exchangeLogo = 'imgs/uni.png';
+        else if (currentExchange === 'QuickSwap') exchangeLogo = 'imgs/quick.png';
+        
+        // Get pair logo
+        let pairLogo = '';
+        if (currentPair === 'USDT') pairLogo = 'imgs/usdt.png';
+        else if (currentPair === 'Polygon') pairLogo = 'imgs/polygan.png';
+        
+        // Get token logo (use letter if no image)
+        let tokenLogoHtml = '';
+        if (currentTokenData.symbol) {
+            const letter = getLogoLetter(currentTokenData.symbol);
+            tokenLogoHtml = `<div class="token-logo-small" style="background:#000000; width:18px; height:18px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:white; font-size:9px; font-weight:bold; flex-shrink:0;">${letter}</div>`;
+        }
+        
         let exchangePool = `${currentExchange}/${currentPool}`;
         let pairDisplay = `${currentPair} / ${tokenShort}`;
         
         let usdtLineLeft = '';
         let usdtLineRight = '';
         let usdtSubText = '';
+        let usdtLogo = '';
+        let tokenLogoDisplay = '';
         
         if (currentPair === 'USDT') {
-            usdtLineLeft = `USDT:   ${formatNumberWithCommaForBox(pairAmount)}`;
+            usdtLogo = `<img class="deposit-logo" src="imgs/usdt.png" onerror="this.style.display='none'" alt="USDT">`;
+            usdtLineLeft = `${usdtLogo} USDT:   ${formatNumberWithCommaForBox(pairAmount)}`;
             if (bonusAmount > 0) {
                 usdtLineLeft += ` + 20%`;
                 usdtLineRight = `${formatNumberWithCommaForBox(totalValue)}`;
@@ -1253,7 +1302,8 @@
                 usdtLineRight = `${formatNumberWithCommaForBox(totalValue)}`;
             }
         } else if (currentPair === 'Polygon' && polygonPrice !== null) {
-            usdtLineLeft = `POL:   ${formatNumberWithCommaForBox(pairAmount)}`;
+            usdtLogo = `<img class="deposit-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">`;
+            usdtLineLeft = `${usdtLogo} POL:   ${formatNumberWithCommaForBox(pairAmount)}`;
             if (bonusAmount > 0) {
                 usdtLineLeft += ` + 20%`;
                 usdtLineRight = `${formatNumberWithCommaForBox(finalPolAmount)}`;
@@ -1264,7 +1314,8 @@
             }
         }
         
-        let tokenLineLeft = `${tokenShort}:   ${formatNumberWithCommaForBox(tokenAmount)} - 2%`;
+        tokenLogoDisplay = tokenLogoHtml;
+        let tokenLineLeft = `${tokenLogoDisplay} ${tokenShort}:   ${formatNumberWithCommaForBox(tokenAmount)} - 2%`;
         let tokenLineRight = `${formatNumberWithCommaForBox(tokenToPool)}`;
         
         let priceDisplay = '';
@@ -1288,8 +1339,14 @@
         
         bottomPopupBody.innerHTML = `
             <div class="top-row">
-                <span class="exchange-pool">${exchangePool}</span>
-                <span class="pair-names">${pairDisplay}</span>
+                <span class="exchange-pool">
+                    <img class="exchange-logo" src="${exchangeLogo}" onerror="this.style.display='none'" alt="${currentExchange}">
+                    ${exchangePool}
+                </span>
+                <span class="pair-names">
+                    <img class="pair-logo" src="${pairLogo}" onerror="this.style.display='none'" alt="${currentPair}">
+                    ${pairDisplay}
+                </span>
             </div>
             <div class="info-block">
                 <div class="info-line"><span class="info-label">Initial price:</span><span class="info-value">${priceDisplay}</span></div>
@@ -1816,7 +1873,6 @@
         checkReviewButton();
     };
     
-    // MAX button for Pair Amount (USDT/POL)
     pairMaxBtn.onclick = () => {
         if (currentPair === 'USDT' && usdtBalance > 0) {
             pairAmountInput.value = Math.floor(usdtBalance);
@@ -1831,7 +1887,6 @@
         }
     };
     
-    // MAX button for Token Amount
     maxTokenBtn.onclick = () => {
         if (currentToken !== '' && currentPair !== '' && currentTokenData.balance > 0) {
             tokenAmountInput.value = Math.floor(currentTokenData.balance);
