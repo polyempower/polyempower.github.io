@@ -146,19 +146,6 @@
             color: #1a5a3a;
         }
 
-        .breadcrumb-separator {
-            color: #3a7a5a;
-            font-size: 1.1rem;
-            font-weight: 300;
-            margin: 0 0.2rem;
-        }
-
-        .breadcrumb-current {
-            color: #3a7a5a;
-            font-size: 1.1rem;
-            font-weight: 400;
-        }
-
         .new-button {
             background: #1a5a3a;
             border: none;
@@ -514,6 +501,19 @@
             color: #1a5a3a;
         }
 
+        .breadcrumb-separator {
+            color: #3a7a5a;
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin: 0 0.2rem;
+        }
+
+        .breadcrumb-current {
+            color: #3a7a5a;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
         @media screen and (max-width: 600px) {
             body { padding: 0; }
             .sticky-header { padding: 0.5rem 1rem; }
@@ -578,7 +578,7 @@
             <div id="positionsSection" class="hidden">
                 <div class="positions-header">
                     <div class="positions-title">
-                        <h2 id="pageTitle">My Positions</h2>
+                        <h2 id="pageTitle">Your Positions</h2>
                         <button id="newPositionBtn" class="new-button">+ New</button>
                     </div>
                     <div class="filters">
@@ -618,7 +618,7 @@
             <div id="newPositionSection" class="new-position-section hidden">
                 <div class="new-position-header">
                     <button id="backToPositionsBtn" class="back-link">
-                        ← My Positions
+                        ← Your Positions
                     </button>
                     <span class="breadcrumb-separator">›</span>
                     <span class="breadcrumb-current">New Position</span>
@@ -743,7 +743,7 @@
                     positionsSection.classList.remove('hidden');
                     newPositionSection.classList.add('hidden');
                     heroSection.classList.remove('hidden');
-                    pageTitle.textContent = 'My Positions';
+                    pageTitle.textContent = 'Your Positions';
                     startLoadingSequence();
                 } 
                 else if (!reallyConnected && isWalletConnected) {
@@ -753,7 +753,7 @@
                     positionsSection.classList.add('hidden');
                     newPositionSection.classList.add('hidden');
                     heroSection.classList.remove('hidden');
-                    pageTitle.textContent = 'My Positions';
+                    pageTitle.textContent = 'Your Positions';
                     positionsList.innerHTML = '';
                     stopLoadingSequence();
                 }
@@ -774,7 +774,7 @@
                     positionsSection.classList.add('hidden');
                     newPositionSection.classList.remove('hidden');
                     heroSection.classList.add('hidden');
-                    pageTitle.textContent = 'My Positions › New Position';
+                    pageTitle.textContent = 'Your Positions › New Position';
                 } else {
                     alert('Please connect your wallet first');
                 }
@@ -786,7 +786,7 @@
                 newPositionSection.classList.add('hidden');
                 positionsSection.classList.remove('hidden');
                 heroSection.classList.remove('hidden');
-                pageTitle.textContent = 'My Positions';
+                pageTitle.textContent = 'Your Positions';
                 startLoadingSequence();
             });
         }
