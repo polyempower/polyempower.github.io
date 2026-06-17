@@ -437,7 +437,7 @@
             background: #f5faf7;
             border-radius: 20px;
             border: 1px solid #c8e0d4;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         .waiting-icon {
@@ -451,17 +451,22 @@
             margin-bottom: 0.5rem;
         }
 
-        .waiting-divider {
-            margin: 1.2rem 0;
-            border: 0;
-            border-top: 1px solid #c8e0d4;
+        .waiting-terms-wrapper {
+            margin-bottom: 2rem;
+            text-align: center;
+            padding: 0.5rem 0;
         }
 
-        .waiting-terms {
+        .waiting-terms-divider {
+            border: 0;
+            border-top: 1px solid #c8e0d4;
+            margin: 0 0 1rem 0;
+        }
+
+        .waiting-terms-text {
             color: #3a7a5a;
             font-size: 0.85rem;
             font-weight: 330;
-            margin-top: 0.5rem;
         }
 
         .footer-copyright {
@@ -529,8 +534,11 @@
                 <div class="waiting-icon">🔌</div>
                 <div class="waiting-title">Connect Wallet</div>
                 <div style="color: #3a7a5a; font-size: 0.9rem;">Please connect your wallet to view positions</div>
-                <hr class="waiting-divider">
-                <div class="waiting-terms">Here is the section related to the explanations and terms and conditions. This section will be revised soon.</div>
+            </div>
+
+            <div class="waiting-terms-wrapper" id="termsWrapper">
+                <hr class="waiting-terms-divider">
+                <div class="waiting-terms-text">Here is the section related to the explanations and terms and conditions. This section will be revised soon.</div>
             </div>
 
             <div id="positionsSection" class="hidden">
@@ -686,6 +694,7 @@
                 if (reallyConnected && !isWalletConnected) {
                     isWalletConnected = true;
                     waitingMessage.classList.add('hidden');
+                    document.getElementById('termsWrapper').classList.add('hidden');
                     positionsSection.classList.remove('hidden');
                     newPositionSection.classList.add('hidden');
                     startLoadingSequence();
@@ -693,6 +702,7 @@
                 else if (!reallyConnected && isWalletConnected) {
                     isWalletConnected = false;
                     waitingMessage.classList.remove('hidden');
+                    document.getElementById('termsWrapper').classList.remove('hidden');
                     positionsSection.classList.add('hidden');
                     newPositionSection.classList.add('hidden');
                     positionsList.innerHTML = '';
