@@ -370,10 +370,12 @@
             border: 1px solid #c8e0d4;
         }
 
-        .empty-icon {
-            font-size: 3rem;
+        .empty-icon-img {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
             margin-bottom: 1rem;
-            opacity: 0.5;
+            opacity: 0.6;
         }
 
         .empty-text {
@@ -388,6 +390,17 @@
             font-size: 0.9rem;
             margin-top: 0.5rem;
             text-align: center;
+        }
+
+        .empty-footer-text {
+            color: #3a7a5a;
+            font-size: 0.85rem;
+            font-weight: 330;
+            margin-top: 1.5rem;
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid #c8e0d4;
+            width: 80%;
         }
 
         .new-position-empty {
@@ -503,6 +516,7 @@
             .footer-copyright { margin: 0 -1.2rem; padding-left: 1.2rem; padding-right: 1.2rem; }
             .site-icon { width: 36px; height: 36px; font-size: 1.6rem; }
             .site-name { font-size: 0.95rem; }
+            .empty-footer-text { width: 100%; }
         }
     </style>
 </head>
@@ -599,7 +613,7 @@
         import { createWeb3Modal, defaultWagmiConfig } from "https://esm.sh/@web3modal/wagmi";
         import { mainnet, polygon, bsc } from "https://esm.sh/wagmi/chains";
 
-        const projectId = "a3cf1cc1f22d315ced71a1379ca4c292";
+        const projectId = "96f13374b0fe2f629a925617de0a2ba3";
         const chains = [mainnet, polygon, bsc];
 
         const wagmiConfig = defaultWagmiConfig({
@@ -666,9 +680,10 @@
         function renderEmpty() {
             positionsList.innerHTML = `
                 <div class="empty-container">
-                    <div class="empty-icon">🏊</div>
+                    <img src="imgs/liq.png" alt="No pools" class="empty-icon-img">
                     <div class="empty-text">No pools created yet</div>
                     <div class="empty-subtext">Click the "+ New" button to create your first liquidity pool</div>
+                    <div class="empty-footer-text">How to use and create a pool will be here soon. Be patient.</div>
                 </div>
             `;
         }
