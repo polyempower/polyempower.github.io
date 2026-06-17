@@ -404,19 +404,15 @@
             font-weight: 330;
         }
 
-        .new-position-empty {
-            background: #f5faf7;
-            border-radius: 20px;
-            border: 1px solid #c8e0d4;
+        .new-position-section {
             margin-bottom: 2rem;
             min-height: 400px;
         }
 
-        .empty-page-header {
-            padding: 1rem 1.5rem;
+        .new-position-header {
+            padding: 0 0 1rem 0;
             border-bottom: 1px solid #c8e0d4;
-            background: white;
-            border-radius: 20px 20px 0 0;
+            background: transparent;
         }
 
         .back-link {
@@ -437,8 +433,9 @@
             color: #0a3a2a;
         }
 
-        .empty-page-content {
+        .new-position-content {
             min-height: 350px;
+            padding-top: 1.5rem;
         }
 
         .hidden {
@@ -537,11 +534,14 @@
 
     <div class="page-wrapper">
         <div class="main-card">
-            <div class="hero">
-                <h1>Smart Liquidity Pool</h1>
-            </div>
-            <div class="subhead">
-                High-efficiency liquidity management · Fully transparent & fast
+            <!-- Hero section - hidden when in new position mode -->
+            <div id="heroSection">
+                <div class="hero">
+                    <h1>Smart Liquidity Pool</h1>
+                </div>
+                <div class="subhead">
+                    High-efficiency liquidity management · Fully transparent & fast
+                </div>
             </div>
 
             <div id="wallet-btn" style="display: none;"></div>
@@ -597,13 +597,15 @@
                 </div>
             </div>
 
-            <div id="newPositionSection" class="new-position-empty hidden">
-                <div class="empty-page-header">
+            <div id="newPositionSection" class="new-position-section hidden">
+                <div class="new-position-header">
                     <button id="backToPositionsBtn" class="back-link">
                         ← Your Positions
                     </button>
                 </div>
-                <div class="empty-page-content"></div>
+                <div class="new-position-content">
+                    <!-- New position form/content will go here -->
+                </div>
             </div>
 
             <div class="footer-copyright">
@@ -643,6 +645,7 @@
         const positionsList = document.getElementById('positionsList');
         const newPositionBtn = document.getElementById('newPositionBtn');
         const backToPositionsBtn = document.getElementById('backToPositionsBtn');
+        const heroSection = document.getElementById('heroSection');
 
         // Setup dropdowns
         function setupDropdown(dropdownId) {
@@ -718,6 +721,7 @@
                     document.getElementById('termsWrapper').classList.add('hidden');
                     positionsSection.classList.remove('hidden');
                     newPositionSection.classList.add('hidden');
+                    heroSection.classList.remove('hidden');
                     startLoadingSequence();
                 } 
                 else if (!reallyConnected && isWalletConnected) {
@@ -726,6 +730,7 @@
                     document.getElementById('termsWrapper').classList.remove('hidden');
                     positionsSection.classList.add('hidden');
                     newPositionSection.classList.add('hidden');
+                    heroSection.classList.remove('hidden');
                     positionsList.innerHTML = '';
                     stopLoadingSequence();
                 }
@@ -745,6 +750,7 @@
                 if (isWalletConnected) {
                     positionsSection.classList.add('hidden');
                     newPositionSection.classList.remove('hidden');
+                    heroSection.classList.add('hidden');
                 } else {
                     alert('Please connect your wallet first');
                 }
@@ -755,6 +761,7 @@
             backToPositionsBtn.addEventListener('click', () => {
                 newPositionSection.classList.add('hidden');
                 positionsSection.classList.remove('hidden');
+                heroSection.classList.remove('hidden');
                 startLoadingSequence();
             });
         }
