@@ -392,15 +392,19 @@
             text-align: center;
         }
 
+        .empty-footer-wrapper {
+            width: 100%;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #c8e0d4;
+            text-align: left;
+            padding-left: 1.5rem;
+        }
+
         .empty-footer-text {
             color: #3a7a5a;
             font-size: 0.85rem;
             font-weight: 330;
-            margin-top: 1.5rem;
-            text-align: center;
-            padding-top: 1rem;
-            border-top: 1px solid #c8e0d4;
-            width: 80%;
         }
 
         .new-position-empty {
@@ -466,14 +470,14 @@
 
         .waiting-terms-wrapper {
             margin-bottom: 2rem;
-            text-align: center;
-            padding: 0.5rem 0;
+            padding: 0.5rem 1.5rem;
+            text-align: left;
         }
 
         .waiting-terms-divider {
             border: 0;
             border-top: 1px solid #c8e0d4;
-            margin: 0 0 1rem 0;
+            margin: 0 0 0.8rem 0;
         }
 
         .waiting-terms-text {
@@ -516,7 +520,8 @@
             .footer-copyright { margin: 0 -1.2rem; padding-left: 1.2rem; padding-right: 1.2rem; }
             .site-icon { width: 36px; height: 36px; font-size: 1.6rem; }
             .site-name { font-size: 0.95rem; }
-            .empty-footer-text { width: 100%; }
+            .waiting-terms-wrapper { padding: 0.5rem 0.5rem; }
+            .empty-footer-wrapper { padding-left: 0.5rem; }
         }
     </style>
 </head>
@@ -683,7 +688,9 @@
                     <img src="imgs/liq.png" alt="No pools" class="empty-icon-img">
                     <div class="empty-text">No pools created yet</div>
                     <div class="empty-subtext">Click the "+ New" button to create your first liquidity pool</div>
-                    <div class="empty-footer-text">How to use and create a pool will be here soon. Be patient.</div>
+                    <div class="empty-footer-wrapper">
+                        <div class="empty-footer-text">How to use and create a pool will be here soon. Be patient.</div>
+                    </div>
                 </div>
             `;
         }
@@ -756,4 +763,4 @@
         setTimeout(checkAndUpdateConnection, 1000);
     </script>
 </body>
-    </html>
+                                            </html>
