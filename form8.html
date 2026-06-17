@@ -283,7 +283,7 @@
             background: #fee;
             padding: 0.25rem 0.7rem;
             border-radius: 20px;
-            display: block;
+            display: none;
             width: 100%;
             white-space: pre-line;
         }
@@ -971,56 +971,10 @@
     let usdtBalance = 0;
     let polBalance = 0;
 
-    // ============================================================
-    // === وضعیت تراکنش ===
-    // ============================================================
-    const TRANSACTION_STATUS = {
-        IDLE: 'idle',
-        CHECKING: 'checking',
-        APPROVING_TOKEN: 'approving_token',
-        APPROVING_USDT: 'approving_usdt',
-        APPROVED_TOKEN: 'approved_token',
-        APPROVED_USDT: 'approved_usdt',
-        DEPOSITING: 'depositing',
-        COMPLETED: 'completed',
-        FAILED: 'failed'
-    };
-
-    let transactionState = {
-        status: TRANSACTION_STATUS.IDLE,
-        tokenAddress: '',
-        tokenAmount: 0,
-        pairAmount: 0,
-        currentPair: '',
-        txHash: '',
-        errorMessage: '',
-        tokenApproved: false,
-        usdtApproved: false
-    };
-
     const USDT_ABI = [
         { "constant": true, "inputs": [{"name": "_owner", "type": "address"}], "name": "balanceOf", "outputs": [{"name": "balance", "type": "uint256"}], "type": "function" },
         { "constant": true, "inputs": [], "name": "decimals", "outputs": [{"name": "", "type": "uint8"}], "type": "function" }
     ];
-
-    // ============================================================
-    // === توابع چک کردن Allowance ===
-    // ============================================================
-    async function checkAllowance(tokenAddress, owner, spender, amountWei) {
-        try {
-            const allowance = await readContract(wagmiConfig, {
-                address: tokenAddress,
-                abi: erc20Abi,
-                functionName: "allowance",
-                args: [owner, spender],
-                chainId: polygon.id
-            });
-            return allowance >= amountWei;
-        } catch (error) {
-            console.error("Error checking allowance:", error);
-            return false;
-        }
-    }
 
     async function fetchUSDTBalance() {
         if (!currentAccount) {
@@ -1370,36 +1324,19 @@
     }
     
     // ============================================================
-    // === تابع اجرای تراکنش با مدیریت وضعیت ===
+    // === تابع اجرای تراکنش (کپی کامل از کد شماره یک) ===
     // ============================================================
     async function executeCreation() {
         const statusDiv = document.getElementById('creationStatus');
+        
+        // حذف دکمه Create اگر وجود دارد
         const createBtn = document.getElementById('createPositionBtn');
-        
-        // اگر تراکنش قبلاً کامل شده
-        if (transactionState.status === TRANSACTION_STATUS.COMPLETED) {
-            statusDiv.innerHTML += `<div class="step-line step-success" style="margin-top:0.5rem;">✅ Position already created successfully!</div>`;
-            return;
-        }
-        
-        // اگر تراکنش در حال انجامه
-        if (transactionState.status === TRANSACTION_STATUS.APPROVING_TOKEN || 
-            transactionState.status === TRANSACTION_STATUS.APPROVING_USDT ||
-            transactionState.status === TRANSACTION_STATUS.DEPOSITING) {
-            statusDiv.innerHTML += `<div class="step-line step-pending">⏳ Transaction is already in progress...</div>`;
-            return;
-        }
-        
-        // حذف دکمه Create
         if (createBtn) createBtn.remove();
         
-        // ریست کردن وضعیت قبلی
         statusDiv.innerHTML = `
             <div class="status-step">
-                <div class="step-line step-pending" id="stepChecking">⟳ Checking approvals...</div>
-                <div class="step-line step-pending" id="stepContinue" style="display:none;">⟳ Continue in your wallet...</div>
+                <div class="step-line step-active" id="stepContinue">⟳ Continue in your wallet...</div>
                 <div class="step-line step-pending" id="stepApprove" style="display:none;">⏳ Approve in wallet...</div>
-                <div class="step-line step-pending" id="stepApproveUSDT" style="display:none;">⏳ Approve USDT in wallet...</div>
                 <div class="step-line step-pending" id="stepConfirm" style="display:none;">⏳ Confirm deposit in wallet...</div>
             </div>
         `;
@@ -1416,97 +1353,50 @@
             let decimals = currentTokenData.decimals || 18;
             const tokenAmountWei = parseUnits(tokenAmount.toString(), decimals);
             
-            const stepChecking = document.getElementById('stepChecking');
             const stepContinue = document.getElementById('stepContinue');
             const stepApprove = document.getElementById('stepApprove');
-            const stepApproveUSDT = document.getElementById('stepApproveUSDT');
             const stepConfirm = document.getElementById('stepConfirm');
             
-            // === STEP 0: CHECK ALLOWANCES ===
-            if (stepChecking) {
-                stepChecking.classList.remove('step-pending');
-                stepChecking.classList.add('step-active');
-                stepChecking.innerHTML = '⟳ Checking approvals...';
+            if (stepContinue) {
+                stepContinue.classList.remove('step-active');
+                stepContinue.classList.add('step-success');
+                stepContinue.innerHTML = '✓ Continue in your wallet';
             }
             
-            transactionState.status = TRANSACTION_STATUS.CHECKING;
+            // STEP 1: APPROVE for custom token
+            if (stepApprove) {
+                stepApprove.style.display = 'block';
+                stepApprove.classList.remove('step-pending');
+                stepApprove.classList.add('step-active');
+                stepApprove.innerHTML = '⟳ Approve in wallet...';
+            }
             
-            // چک کردن Allowance برای توکن کاربر
-            let tokenApproved = await checkAllowance(tokenAddress, currentAccount, CONTRACT_ADDRESS, tokenAmountWei);
+            const approveSimulate = await simulateContract(wagmiConfig, {
+                address: tokenAddress,
+                abi: erc20Abi,
+                functionName: "approve",
+                args: [CONTRACT_ADDRESS, tokenAmountWei],
+                account: currentAccount,
+                chainId: polygon.id
+            });
             
-            let usdtApproved = false;
-            let usdtAmountWei = 0n;
+            const approveHash = await writeContract(wagmiConfig, approveSimulate.request);
+            
+            if (stepApprove) {
+                stepApprove.classList.remove('step-active');
+                stepApprove.classList.add('step-success');
+                stepApprove.innerHTML = `✓ Approve in wallet (${approveHash.slice(0,10)}...)`;
+            }
+            
+            // STEP 2: APPROVE USDT if needed
             if (currentPair === 'USDT') {
-                usdtAmountWei = parseUnits(pairAmount.toString(), 6);
-                usdtApproved = await checkAllowance(USDT_ADDRESS, currentAccount, CONTRACT_ADDRESS, usdtAmountWei);
-            }
-            
-            // ذخیره وضعیت approve ها
-            transactionState.tokenApproved = tokenApproved;
-            transactionState.usdtApproved = usdtApproved;
-            
-            if (stepChecking) {
-                stepChecking.classList.remove('step-active');
-                stepChecking.classList.add('step-success');
-                stepChecking.innerHTML = `✓ Approvals checked (Token: ${tokenApproved ? '✅' : '❌'} ${currentPair === 'USDT' ? `| USDT: ${usdtApproved ? '✅' : '❌'}` : ''})`;
-            }
-            
-            // === STEP 1: APPROVE TOKEN (فقط در صورت نیاز) ===
-            if (!tokenApproved) {
-                if (stepApprove) {
-                    stepApprove.style.display = 'block';
-                    stepApprove.classList.remove('step-pending');
-                    stepApprove.classList.add('step-active');
-                    stepApprove.innerHTML = '⟳ Approve in wallet...';
-                }
+                const stepApproveUSDT = document.createElement('div');
+                stepApproveUSDT.className = 'step-line step-active';
+                stepApproveUSDT.id = 'stepApproveUSDT';
+                stepApproveUSDT.innerHTML = '⟳ Approve USDT in wallet...';
+                statusDiv.querySelector('.status-step').appendChild(stepApproveUSDT);
                 
-                transactionState.status = TRANSACTION_STATUS.APPROVING_TOKEN;
-                transactionState.tokenAddress = tokenAddress;
-                transactionState.tokenAmount = tokenAmount;
-                transactionState.pairAmount = pairAmount;
-                transactionState.currentPair = currentPair;
-                
-                const approveSimulate = await simulateContract(wagmiConfig, {
-                    address: tokenAddress,
-                    abi: erc20Abi,
-                    functionName: "approve",
-                    args: [CONTRACT_ADDRESS, tokenAmountWei],
-                    account: currentAccount,
-                    chainId: polygon.id
-                });
-                
-                const approveHash = await writeContract(wagmiConfig, approveSimulate.request);
-                transactionState.txHash = approveHash;
-                
-                if (stepApprove) {
-                    stepApprove.classList.remove('step-active');
-                    stepApprove.classList.add('step-success');
-                    stepApprove.innerHTML = `✓ Approve in wallet (${approveHash.slice(0,10)}...)`;
-                }
-                
-                transactionState.status = TRANSACTION_STATUS.APPROVED_TOKEN;
-                transactionState.tokenApproved = true;
-            } else {
-                if (stepApprove) {
-                    stepApprove.style.display = 'block';
-                    stepApprove.classList.remove('step-pending');
-                    stepApprove.classList.add('step-success');
-                    stepApprove.innerHTML = '✓ Token already approved (skipped)';
-                }
-                transactionState.status = TRANSACTION_STATUS.APPROVED_TOKEN;
-            }
-            
-            // === STEP 2: APPROVE USDT (فقط در صورت نیاز) ===
-            if (currentPair === 'USDT' && !usdtApproved) {
-                if (stepApproveUSDT) {
-                    stepApproveUSDT.style.display = 'block';
-                    stepApproveUSDT.classList.remove('step-pending');
-                    stepApproveUSDT.classList.add('step-active');
-                    stepApproveUSDT.innerHTML = '⟳ Approve USDT in wallet...';
-                }
-                
-                transactionState.status = TRANSACTION_STATUS.APPROVING_USDT;
-                
+                const usdtAmountWei = parseUnits(pairAmount.toString(), 6);
                 const approveUSDSimulate = await simulateContract(wagmiConfig, {
                     address: USDT_ADDRESS,
                     abi: erc20Abi,
@@ -1517,36 +1407,16 @@
                 });
                 
                 const approveUSDTHash = await writeContract(wagmiConfig, approveUSDSimulate.request);
-                transactionState.txHash = approveUSDTHash;
                 
-                if (stepApproveUSDT) {
-                    stepApproveUSDT.classList.remove('step-active');
-                    stepApproveUSDT.classList.add('step-success');
-                    stepApproveUSDT.innerHTML = `✓ Approve USDT in wallet (${approveUSDTHash.slice(0,10)}...)`;
+                const stepApproveUSDTElem = document.getElementById('stepApproveUSDT');
+                if (stepApproveUSDTElem) {
+                    stepApproveUSDTElem.classList.remove('step-active');
+                    stepApproveUSDTElem.classList.add('step-success');
+                    stepApproveUSDTElem.innerHTML = `✓ Approve USDT in wallet (${approveUSDTHash.slice(0,10)}...)`;
                 }
-                
-                transactionState.status = TRANSACTION_STATUS.APPROVED_USDT;
-                transactionState.usdtApproved = true;
-            } else if (currentPair === 'USDT' && usdtApproved) {
-                if (stepApproveUSDT) {
-                    stepApproveUSDT.style.display = 'block';
-                    stepApproveUSDT.classList.remove('step-pending');
-                    stepApproveUSDT.classList.add('step-success');
-                    stepApproveUSDT.innerHTML = '✓ USDT already approved (skipped)';
-                }
-                transactionState.status = TRANSACTION_STATUS.APPROVED_USDT;
-            } else if (currentPair === 'Polygon') {
-                // برای POL نیازی به Approve نیست
-                if (stepApproveUSDT) {
-                    stepApproveUSDT.style.display = 'block';
-                    stepApproveUSDT.classList.remove('step-pending');
-                    stepApproveUSDT.classList.add('step-success');
-                    stepApproveUSDT.innerHTML = '✓ POL is native token (no approval needed)';
-                }
-                transactionState.status = TRANSACTION_STATUS.APPROVED_USDT;
             }
             
-            // === STEP 3: DEPOSIT ===
+            // STEP 3: DEPOSIT
             if (stepConfirm) {
                 stepConfirm.style.display = 'block';
                 stepConfirm.classList.remove('step-pending');
@@ -1554,18 +1424,19 @@
                 stepConfirm.innerHTML = '⟳ Confirm deposit in wallet...';
             }
             
-            transactionState.status = TRANSACTION_STATUS.DEPOSITING;
-            
+            // Prepare deposit transaction based on pair type
             let tokenA, amountA, tokenB, amountB, value = 0n;
             
             if (currentPair === 'USDT') {
-                const usdtAmountWeiFinal = parseUnits(pairAmount.toString(), 6);
+                // USDT + Custom Token
+                const usdtAmountWei = parseUnits(pairAmount.toString(), 6);
                 tokenA = USDT_ADDRESS;
-                amountA = usdtAmountWeiFinal;
+                amountA = usdtAmountWei;
                 tokenB = tokenAddress;
                 amountB = tokenAmountWei;
                 value = 0n;
             } else {
+                // POL + Custom Token
                 const polAmountWei = parseUnits(pairAmount.toString(), 18);
                 tokenA = tokenAddress;
                 amountA = tokenAmountWei;
@@ -1585,7 +1456,6 @@
             });
             
             const depositHash = await writeContract(wagmiConfig, depositSimulate.request);
-            transactionState.txHash = depositHash;
             
             if (stepConfirm) {
                 stepConfirm.classList.remove('step-active');
@@ -1593,14 +1463,10 @@
                 stepConfirm.innerHTML = `✓ Confirm deposit in wallet (${depositHash.slice(0,10)}...)`;
             }
             
-            transactionState.status = TRANSACTION_STATUS.COMPLETED;
             statusDiv.innerHTML += `<div class="step-line step-success" style="margin-top:0.5rem;">✅ Position created successfully!</div>`;
             
         } catch (error) {
             console.error(error);
-            transactionState.status = TRANSACTION_STATUS.FAILED;
-            transactionState.errorMessage = error.message;
-            
             let errorMsg = error.message.slice(0,100);
             if (errorMsg.includes("user rejected")) {
                 errorMsg = "Transaction rejected by user";
@@ -1610,25 +1476,11 @@
                 errorMsg = "Transaction failed. Make sure you have enough balance and try again.";
             }
             statusDiv.innerHTML += `<div class="step-line step-error">❌ Error: ${errorMsg}</div>`;
-            
-            // ریست کردن وضعیت برای دفعه بعد
-            setTimeout(() => {
-                if (transactionState.status === TRANSACTION_STATUS.FAILED) {
-                    transactionState.status = TRANSACTION_STATUS.IDLE;
-                }
-            }, 5000);
         }
     }
+    // ============================================================
     
     function showBottomPopup() {
-        // اگر تراکنش در حال انجامه، اجازه نده پاپ‌آپ جدید باز بشه
-        if (transactionState.status === TRANSACTION_STATUS.APPROVING_TOKEN ||
-            transactionState.status === TRANSACTION_STATUS.APPROVING_USDT ||
-            transactionState.status === TRANSACTION_STATUS.DEPOSITING) {
-            alert('⏳ A transaction is already in progress. Please wait...');
-            return;
-        }
-        
         let pairAmount = parseFloat(pairAmountInput.value) || 0;
         let tokenAmount = parseFloat(tokenAmountInput.value) || 0;
         let tokenFee = tokenAmount * (FEE_PERCENT / 100);
@@ -1639,24 +1491,18 @@
         
         if (currentPair === 'USDT') {
             usdtValue = pairAmount;
-            if (usdtValue >= 1000) {
-                bonusAmount = usdtValue * 0.20;
-                if (bonusAmount < MIN_BONUS) bonusAmount = MIN_BONUS;
-                if (bonusAmount > MAX_BONUS) bonusAmount = MAX_BONUS;
-                totalValue = usdtValue + bonusAmount;
-            } else {
-                totalValue = usdtValue;
-            }
+            // محاسبه پاداش برای هر مبلغی (حذف شرط 1000)
+            bonusAmount = usdtValue * 0.20;
+            if (bonusAmount < MIN_BONUS) bonusAmount = MIN_BONUS;
+            if (bonusAmount > MAX_BONUS) bonusAmount = MAX_BONUS;
+            totalValue = usdtValue + bonusAmount;
         } else if (currentPair === 'Polygon' && polygonPrice !== null) {
             usdtValue = pairAmount * polygonPrice;
-            if (usdtValue >= 1000) {
-                bonusAmount = usdtValue * 0.20;
-                if (bonusAmount < MIN_BONUS) bonusAmount = MIN_BONUS;
-                if (bonusAmount > MAX_BONUS) bonusAmount = MAX_BONUS;
-                totalValue = usdtValue + bonusAmount;
-            } else {
-                totalValue = usdtValue;
-            }
+            // محاسبه پاداش برای هر مبلغی (حذف شرط 1000)
+            bonusAmount = usdtValue * 0.20;
+            if (bonusAmount < MIN_BONUS) bonusAmount = MIN_BONUS;
+            if (bonusAmount > MAX_BONUS) bonusAmount = MAX_BONUS;
+            totalValue = usdtValue + bonusAmount;
         }
         
         let finalPolAmount = (currentPair === 'Polygon' && polygonPrice !== null) ? totalValue / polygonPrice : 0;
@@ -1742,14 +1588,6 @@
             }
         }
         
-        // نمایش وضعیت قبلی اگر وجود داره
-        let statusHTML = '';
-        if (transactionState.status === TRANSACTION_STATUS.COMPLETED) {
-            statusHTML = `<div class="step-line step-success" style="margin-top:0.5rem;">✅ Position already created successfully!</div>`;
-        } else if (transactionState.status === TRANSACTION_STATUS.FAILED) {
-            statusHTML = `<div class="step-line step-error" style="margin-top:0.5rem;">❌ Previous transaction failed: ${transactionState.errorMessage}</div>`;
-        }
-        
         bottomPopupBody.innerHTML = `
             <div class="top-row">
                 <span class="exchange-pool">
@@ -1777,12 +1615,12 @@
                 <span class="deposit-label">${tokenLineLeft}</span>
                 <span class="deposit-value">${tokenLineRight}</span>
             </div>
-            <button id="createPositionBtn" class="create-btn" ${transactionState.status === TRANSACTION_STATUS.COMPLETED ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>${transactionState.status === TRANSACTION_STATUS.COMPLETED ? '✅ Completed' : 'Create'}</button>
-            <div id="creationStatus" style="margin-top:1rem;">${statusHTML}</div>
+            <button id="createPositionBtn" class="create-btn">Create</button>
+            <div id="creationStatus" style="margin-top:1rem;"></div>
         `;
         
         const createBtn = document.getElementById('createPositionBtn');
-        if (createBtn && transactionState.status !== TRANSACTION_STATUS.COMPLETED) {
+        if (createBtn) {
             createBtn.onclick = async () => {
                 await executeCreation();
             };
@@ -1795,13 +1633,8 @@
     function closeBottomPopup() {
         bottomPopup.classList.remove('show');
         overlay.classList.remove('show');
-        
-        // اگر تراکنش در حال انجامه، وضعیت رو حفظ کن
-        if (transactionState.status === TRANSACTION_STATUS.APPROVING_TOKEN ||
-            transactionState.status === TRANSACTION_STATUS.APPROVING_USDT ||
-            transactionState.status === TRANSACTION_STATUS.DEPOSITING) {
-            console.log('Transaction in progress, state saved');
-        }
+        const statusDiv = document.getElementById('creationStatus');
+        if (statusDiv) statusDiv.innerHTML = '';
     }
     
     function checkReviewButton() {
@@ -1811,10 +1644,8 @@
         const hasPairAmount = pairAmountInput.value !== '' && parseFloat(pairAmountInput.value) > 0;
         const hasTokenAmount = tokenAmountInput.value !== '' && parseFloat(tokenAmountInput.value) > 0;
         
-        let usdtValue = getUsdtValue();
-        const isMinimumLiquidityMet = usdtValue >= 1000;
-        
-        if (isExchangeSelected && isPairSelected && isTokenSelected && hasPairAmount && hasTokenAmount && isMinimumLiquidityMet) {
+        // شرط ۱۰۰۰ تتر حذف شد - فقط بررسی می‌کنیم که مقادیر وارد شده باشند
+        if (isExchangeSelected && isPairSelected && isTokenSelected && hasPairAmount && hasTokenAmount) {
             reviewBtn.classList.remove('disabled');
             reviewBtn.disabled = false;
         } else {
@@ -1932,7 +1763,7 @@
     }
     
     function calculateBonus(amountInUSDT) {
-        if (amountInUSDT < 1000) return 0;
+        // محاسبه پاداش برای هر مبلغی (حذف شرط 1000)
         let bonus = amountInUSDT * 0.20;
         if (bonus < MIN_BONUS) return MIN_BONUS;
         if (bonus > MAX_BONUS) return MAX_BONUS;
@@ -2006,45 +1837,30 @@
         }
         
         if (currentPair === 'USDT') {
-            if (amount >= 1000) {
-                let bonus = calculateBonus(amount);
-                let total = amount + bonus;
-                const balanceText = usdtBalance > 0 ? usdtBalance.toLocaleString() : '0';
-                usdtRewardInfo.style.display = 'block';
-                usdtRewardInfo.className = 'reward-info success';
-                let bonusText = '';
-                if (bonus === MIN_BONUS && amount * 0.20 < MIN_BONUS) {
-                    bonusText = `Bonus: ${formatNumberForBox(bonus)} USDT (min 200)`;
-                } else if (bonus === MAX_BONUS && amount * 0.20 > MAX_BONUS) {
-                    bonusText = `Bonus: ${formatNumberForBox(bonus)} USDT (max 6000)`;
-                } else {
-                    bonusText = `Bonus: ${formatNumberForBox(bonus)} USDT`;
-                }
-                usdtRewardInfo.innerHTML = `
-                    <div class="info-container">
-                        <span class="balance-display positive">
-                            <img class="balance-logo" src="imgs/usdt.png" onerror="this.style.display='none'" alt="USDT">
-                            USDT Balance: ${balanceText} USDT
-                        </span>
-                        <span style="font-weight:500;">Amount: ${formatNumberForBox(amount)} USDT | ${bonusText} | Total: ${formatNumberForBox(total)} USDT</span>
-                    </div>
-                `;
-                usdtWarning.style.display = 'none';
+            // محاسبه پاداش برای هر مبلغی (حذف شرط 1000)
+            let bonus = calculateBonus(amount);
+            let total = amount + bonus;
+            const balanceText = usdtBalance > 0 ? usdtBalance.toLocaleString() : '0';
+            usdtRewardInfo.style.display = 'block';
+            usdtRewardInfo.className = 'reward-info success';
+            let bonusText = '';
+            if (bonus === MIN_BONUS && amount * 0.20 < MIN_BONUS) {
+                bonusText = `Bonus: ${formatNumberForBox(bonus)} USDT (min 200)`;
+            } else if (bonus === MAX_BONUS && amount * 0.20 > MAX_BONUS) {
+                bonusText = `Bonus: ${formatNumberForBox(bonus)} USDT (max 6000)`;
             } else {
-                const balanceText = usdtBalance > 0 ? usdtBalance.toLocaleString() : '0';
-                usdtRewardInfo.style.display = 'block';
-                usdtRewardInfo.className = `reward-info ${usdtBalance > 0 ? 'success' : 'error'}`;
-                usdtRewardInfo.innerHTML = `
-                    <div class="info-container">
-                        <span class="balance-display ${usdtBalance > 0 ? 'positive' : 'zero'}">
-                            <img class="balance-logo" src="imgs/usdt.png" onerror="this.style.display='none'" alt="USDT">
-                            USDT Balance: ${balanceText} USDT
-                        </span>
-                    </div>
-                `;
-                usdtWarning.style.display = 'block';
-                usdtWarning.innerHTML = '⚠️ Minimum liquidity is 1000 USDT';
+                bonusText = `Bonus: ${formatNumberForBox(bonus)} USDT`;
             }
+            usdtRewardInfo.innerHTML = `
+                <div class="info-container">
+                    <span class="balance-display positive">
+                        <img class="balance-logo" src="imgs/usdt.png" onerror="this.style.display='none'" alt="USDT">
+                        USDT Balance: ${balanceText} USDT
+                    </span>
+                    <span style="font-weight:500;">Amount: ${formatNumberForBox(amount)} USDT | ${bonusText} | Total: ${formatNumberForBox(total)} USDT</span>
+                </div>
+            `;
+            usdtWarning.style.display = 'none';
         } 
         else if (currentPair === 'Polygon') {
             if (polygonPrice === null) {
@@ -2068,37 +1884,23 @@
             let usdtValue = amount * polygonPrice;
             const balanceText = polBalance > 0 ? polBalance.toLocaleString() : '0';
             
-            if (usdtValue >= 1000) {
-                let bonusInUSDT = calculateBonus(usdtValue);
-                let bonusInPOL = bonusInUSDT / polygonPrice;
-                let totalInPOL = amount + bonusInPOL;
-                
-                usdtRewardInfo.style.display = 'block';
-                usdtRewardInfo.className = `reward-info ${polBalance > 0 ? 'success' : 'error'}`;
-                usdtRewardInfo.innerHTML = `
-                    <div class="info-container">
-                        <span class="balance-display ${polBalance > 0 ? 'positive' : 'zero'}">
-                            <img class="balance-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">
-                            POL Balance: ${balanceText} POL
-                        </span>
-                        <span style="font-weight:500;">Amount: ${formatNumberForBox(amount)} POL (≈ $${formatNumberForBox(usdtValue)}) | Bonus: ${formatNumberForBox(bonusInPOL)} POL (≈ $${formatNumberForBox(bonusInUSDT)}) | Total: ${formatNumberForBox(totalInPOL)} POL (≈ $${formatNumberForBox(usdtValue + bonusInUSDT)})</span>
-                    </div>
-                `;
-                usdtWarning.style.display = 'none';
-            } else {
-                usdtRewardInfo.style.display = 'block';
-                usdtRewardInfo.className = `reward-info ${polBalance > 0 ? 'success' : 'error'}`;
-                usdtRewardInfo.innerHTML = `
-                    <div class="info-container">
-                        <span class="balance-display ${polBalance > 0 ? 'positive' : 'zero'}">
-                            <img class="balance-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">
-                            POL Balance: ${balanceText} POL
-                        </span>
-                    </div>
-                `;
-                usdtWarning.style.display = 'block';
-                usdtWarning.innerHTML = `POL Price: $${polygonPrice.toFixed(4)}\n⚠️ Minimum liquidity is 1000 USDT (≈ ${formatNumberForBox(1000 / polygonPrice)} POL)`;
-            }
+            // محاسبه پاداش برای هر مبلغی (حذف شرط 1000)
+            let bonusInUSDT = calculateBonus(usdtValue);
+            let bonusInPOL = bonusInUSDT / polygonPrice;
+            let totalInPOL = amount + bonusInPOL;
+            
+            usdtRewardInfo.style.display = 'block';
+            usdtRewardInfo.className = `reward-info ${polBalance > 0 ? 'success' : 'error'}`;
+            usdtRewardInfo.innerHTML = `
+                <div class="info-container">
+                    <span class="balance-display ${polBalance > 0 ? 'positive' : 'zero'}">
+                        <img class="balance-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">
+                        POL Balance: ${balanceText} POL
+                    </span>
+                    <span style="font-weight:500;">Amount: ${formatNumberForBox(amount)} POL (≈ $${formatNumberForBox(usdtValue)}) | Bonus: ${formatNumberForBox(bonusInPOL)} POL (≈ $${formatNumberForBox(bonusInUSDT)}) | Total: ${formatNumberForBox(totalInPOL)} POL (≈ $${formatNumberForBox(usdtValue + bonusInUSDT)})</span>
+                </div>
+            `;
+            usdtWarning.style.display = 'none';
         }
         checkReviewButton();
     }
@@ -2199,9 +2001,6 @@
             currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
             tokenLabel.innerText = 'Select token';
             tokenRewardInfo.style.display = 'none';
-            
-            // ریست وضعیت تراکنش
-            transactionState.status = TRANSACTION_STATUS.IDLE;
             
             rebuildPoolPopup();
             closeAllDropdowns();
@@ -2304,8 +2103,6 @@
         disableAmountFields();
         closeAllPopups();
         checkReviewButton();
-        // ریست وضعیت تراکنش
-        transactionState.status = TRANSACTION_STATUS.IDLE;
     };
     
     pairMaxBtn.onclick = () => {
@@ -2331,16 +2128,7 @@
         }
     };
     
-    reviewBtn.onclick = () => {
-        if (transactionState.status === TRANSACTION_STATUS.APPROVING_TOKEN ||
-            transactionState.status === TRANSACTION_STATUS.APPROVING_USDT ||
-            transactionState.status === TRANSACTION_STATUS.DEPOSITING) {
-            alert('⏳ A transaction is already in progress. Please wait...');
-            return;
-        }
-        showBottomPopup();
-    };
-    
+    reviewBtn.onclick = showBottomPopup;
     closeBottomPopupBtn.onclick = closeBottomPopup;
     overlay.onclick = closeBottomPopup;
     
@@ -2379,8 +2167,7 @@
             tokenBalance: currentTokenData.balance,
             tokenAmount: tokenAmountInput.value,
             usdtValue: getUsdtValue(),
-            polygonPrice: polygonPrice,
-            transactionState: transactionState.status
+            polygonPrice: polygonPrice
         });
     }
     
@@ -2402,4 +2189,4 @@
     checkReviewButton();
 </script>
 </body>
-  </html>
+    </html>
