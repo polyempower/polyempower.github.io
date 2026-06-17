@@ -146,6 +146,19 @@
             color: #1a5a3a;
         }
 
+        .breadcrumb-separator {
+            color: #3a7a5a;
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin: 0 0.2rem;
+        }
+
+        .breadcrumb-current {
+            color: #3a7a5a;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
         .new-button {
             background: #1a5a3a;
             border: none;
@@ -413,18 +426,21 @@
             padding: 0 0 1rem 0;
             border-bottom: 1px solid #c8e0d4;
             background: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .back-link {
             background: transparent;
             border: none;
             color: #1a5a3a;
-            font-size: 0.95rem;
+            font-size: 1.3rem;
+            font-weight: 620;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            font-weight: 500;
             padding: 0.3rem 0;
             transition: color 0.2s;
         }
@@ -516,6 +532,8 @@
             .site-name { font-size: 0.95rem; }
             .waiting-terms-wrapper { padding: 0.5rem 0.5rem 0 0.5rem; }
             .empty-footer-wrapper { padding: 0.5rem 0.5rem 0 0.5rem; }
+            .back-link { font-size: 1.1rem; }
+            .breadcrumb-current { font-size: 1rem; }
         }
     </style>
 </head>
@@ -560,7 +578,7 @@
             <div id="positionsSection" class="hidden">
                 <div class="positions-header">
                     <div class="positions-title">
-                        <h2>My Positions</h2>
+                        <h2 id="pageTitle">My Positions</h2>
                         <button id="newPositionBtn" class="new-button">+ New</button>
                     </div>
                     <div class="filters">
@@ -600,8 +618,10 @@
             <div id="newPositionSection" class="new-position-section hidden">
                 <div class="new-position-header">
                     <button id="backToPositionsBtn" class="back-link">
-                        ← Your Positions
+                        ← My Positions
                     </button>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-current">New Position</span>
                 </div>
                 <div class="new-position-content">
                     <!-- New position form/content will go here -->
@@ -646,6 +666,7 @@
         const newPositionBtn = document.getElementById('newPositionBtn');
         const backToPositionsBtn = document.getElementById('backToPositionsBtn');
         const heroSection = document.getElementById('heroSection');
+        const pageTitle = document.getElementById('pageTitle');
 
         // Setup dropdowns
         function setupDropdown(dropdownId) {
@@ -722,6 +743,7 @@
                     positionsSection.classList.remove('hidden');
                     newPositionSection.classList.add('hidden');
                     heroSection.classList.remove('hidden');
+                    pageTitle.textContent = 'My Positions';
                     startLoadingSequence();
                 } 
                 else if (!reallyConnected && isWalletConnected) {
@@ -731,6 +753,7 @@
                     positionsSection.classList.add('hidden');
                     newPositionSection.classList.add('hidden');
                     heroSection.classList.remove('hidden');
+                    pageTitle.textContent = 'My Positions';
                     positionsList.innerHTML = '';
                     stopLoadingSequence();
                 }
@@ -751,6 +774,7 @@
                     positionsSection.classList.add('hidden');
                     newPositionSection.classList.remove('hidden');
                     heroSection.classList.add('hidden');
+                    pageTitle.textContent = 'My Positions › New Position';
                 } else {
                     alert('Please connect your wallet first');
                 }
@@ -762,6 +786,7 @@
                 newPositionSection.classList.add('hidden');
                 positionsSection.classList.remove('hidden');
                 heroSection.classList.remove('hidden');
+                pageTitle.textContent = 'My Positions';
                 startLoadingSequence();
             });
         }
