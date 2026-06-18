@@ -1704,26 +1704,13 @@
         setTimeout(checkAndUpdateConnection, 1000);
 
         // ============================================================
-        // کد دوم - فرم New Position
+        // کد دوم - فرم New Position (با استفاده از wagmiConfig موجود)
         // ============================================================
         import { polygon as dexPolygon } from "https://esm.sh/wagmi/chains";
         import { watchAccount, writeContract, readContract, simulateContract } from "https://esm.sh/wagmi/actions";
         import { formatUnits, parseUnits, erc20Abi } from "https://esm.sh/viem";
 
-        const dexProjectId = "a3cf1cc1f22d315ced71a1379ca4c292";
-        const dexChains = [dexPolygon];
-
-        const dexWagmiConfig = defaultWagmiConfig({
-            chains: dexChains,
-            projectId: dexProjectId,
-            metadata: { name: "DeFi Swap", description: "", url: window.location.href, icons: [] }
-        });
-
-        createWeb3Modal({ wagmiConfig: dexWagmiConfig, projectId: dexProjectId, chains: dexChains });
-        
-        const dexWalletContainer = document.getElementById('dex-wallet-btn-container');
-        const dexBtn = document.createElement("w3m-button");
-        dexWalletContainer.appendChild(dexBtn);
+        // استفاده از wagmiConfig موجود به جای ایجاد نمونه جدید
 
         const DEX_CONTRACT_ADDRESS = "0xD045a55a067aE1a65Cfe836CcCb194a40cB04CF2";
         const DEX_USDT_ADDRESS = "0xc2132d05d31c914a87c6611c10748aeb04b58e8f";
@@ -1768,8 +1755,8 @@
                 return;
             }
             try {
-                const decimals = await readContract(dexWagmiConfig, { address: DEX_USDT_ADDRESS, abi: DEX_USDT_ABI, functionName: 'decimals', chainId: dexPolygon.id });
-                const balance = await readContract(dexWagmiConfig, { address: DEX_USDT_ADDRESS, abi: DEX_USDT_ABI, functionName: 'balanceOf', args: [dexCurrentAccount], chainId: dexPolygon.id });
+                const decimals = await readContract(wagmiConfig, { address: DEX_USDT_ADDRESS, abi: DEX_USDT_ABI, functionName: 'decimals', chainId: dexPolygon.id });
+                const balance = await readContract(wagmiConfig, { address: DEX_USDT_ADDRESS, abi: DEX_USDT_ABI, functionName: 'balanceOf', args: [dexCurrentAccount], chainId: dexPolygon.id });
                 dexUsdtBalance = parseFloat(formatUnits(balance, decimals));
                 dexUpdateUSDTBalanceDisplay();
                 dexUpdatePairPopupBalances();
@@ -1789,7 +1776,7 @@
                 return;
             }
             try {
-                const balance = await readContract(dexWagmiConfig, { address: "0x0000000000000000000000000000000000001010", abi: [{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"}], functionName: 'balanceOf', args: [dexCurrentAccount], chainId: dexPolygon.id });
+                const balance = await readContract(wagmiConfig, { address: "0x0000000000000000000000000000000000001010", abi: [{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"}], functionName: 'balanceOf', args: [dexCurrentAccount], chainId: dexPolygon.id });
                 dexPolBalance = parseFloat(formatUnits(balance, 18));
                 dexUpdateUSDTBalanceDisplay();
                 dexUpdatePairPopupBalances();
@@ -1911,7 +1898,7 @@
             });
         }
 
-        watchAccount(dexWagmiConfig, {
+        watchAccount(wagmiConfig, {
             onChange(account) {
                 if (account?.address) {
                     dexCurrentAccount = account.address;
@@ -1959,10 +1946,10 @@
             
             try {
                 const [name, symbol, decimals, balance] = await Promise.all([
-                    readContract(dexWagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'name', chainId: dexPolygon.id }),
-                    readContract(dexWagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'symbol', chainId: dexPolygon.id }),
-                    readContract(dexWagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'decimals', chainId: dexPolygon.id }),
-                    readContract(dexWagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'balanceOf', args: [dexCurrentAccount], chainId: dexPolygon.id })
+                    readContract(wagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'name', chainId: dexPolygon.id }),
+                    readContract(wagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'symbol', chainId: dexPolygon.id }),
+                    readContract(wagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'decimals', chainId: dexPolygon.id }),
+                    readContract(wagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'balanceOf', args: [dexCurrentAccount], chainId: dexPolygon.id })
                 ]);
                 
                 const formattedBalance = formatUnits(balance, decimals);
@@ -2139,7 +2126,7 @@
                     stepApprove.innerHTML = '⟳ Approve in wallet...';
                 }
                 
-                const approveSimulate = await simulateContract(dexWagmiConfig, {
+                const approveSimulate = await simulateContract(wagmiConfig, {
                     address: tokenAddress,
                     abi: erc20Abi,
                     functionName: "approve",
@@ -2148,7 +2135,7 @@
                     chainId: dexPolygon.id
                 });
                 
-                const approveHash = await writeContract(dexWagmiConfig, approveSimulate.request);
+                const approveHash = await writeContract(wagmiConfig, approveSimulate.request);
                 
                 if (stepApprove) {
                     stepApprove.classList.remove('dex-step-active');
@@ -2164,7 +2151,7 @@
                     statusDiv.querySelector('.dex-status-step').appendChild(stepApproveUSDT);
                     
                     const usdtAmountWei = parseUnits(pairAmount.toString(), 6);
-                    const approveUSDSimulate = await simulateContract(dexWagmiConfig, {
+                    const approveUSDSimulate = await simulateContract(wagmiConfig, {
                         address: DEX_USDT_ADDRESS,
                         abi: erc20Abi,
                         functionName: "approve",
@@ -2173,7 +2160,7 @@
                         chainId: dexPolygon.id
                     });
                     
-                    const approveUSDTHash = await writeContract(dexWagmiConfig, approveUSDSimulate.request);
+                    const approveUSDTHash = await writeContract(wagmiConfig, approveUSDSimulate.request);
                     
                     const stepApproveUSDTElem = document.getElementById('dexStepApproveUSDT');
                     if (stepApproveUSDTElem) {
@@ -2208,7 +2195,7 @@
                     value = polAmountWei;
                 }
                 
-                const depositSimulate = await simulateContract(dexWagmiConfig, {
+                const depositSimulate = await simulateContract(wagmiConfig, {
                     address: DEX_CONTRACT_ADDRESS,
                     abi: DEX_ROUTER_ABI,
                     functionName: "depositPair",
@@ -2218,7 +2205,7 @@
                     value: value
                 });
                 
-                const depositHash = await writeContract(dexWagmiConfig, depositSimulate.request);
+                const depositHash = await writeContract(wagmiConfig, depositSimulate.request);
                 
                 if (stepConfirm) {
                     stepConfirm.classList.remove('dex-step-active');
@@ -2963,4 +2950,4 @@
         // ============================================================
     </script>
 </body>
-  </html>
+    </html>
