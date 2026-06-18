@@ -17,7 +17,7 @@
 
         body {
             font-family: 'Inter', 'Vazirmatn', sans-serif;
-            background: #ffffff;
+            background: #f5f7fa;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -99,422 +99,21 @@
             border-radius: 24px;
             box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            padding: 2rem 2rem 0 2rem;
+            padding: 2rem;
             border: 1px solid #c8e0d4;
         }
 
-        .hero {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 2.5rem);
-            font-weight: 650;
-            color: #1a5a3a;
-        }
-
-        .subhead {
-            font-size: 0.95rem;
-            font-weight: 350;
-            color: #2a6a4a;
-            max-width: 580px;
-            margin: 0 auto 1.5rem auto;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #c8e0d4;
-            text-align: center;
-        }
-
-        .positions-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .positions-title {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .positions-title h2 {
-            font-size: 1.1rem;
-            font-weight: 400;
-            color: #1a5a3a;
-        }
-
-        .new-button {
-            background: #1a5a3a;
-            border: none;
-            border-radius: 30px;
-            padding: 0.4rem 1.2rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            border: 1px solid #0a3a2a;
-        }
-
-        .new-button:hover {
-            background: #2a6a4a;
-        }
-
-        .filters {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .filter-dropdown {
-            position: relative;
-        }
-
-        .filter-dropdown > button {
-            background: white;
-            border: 1px solid #c8e0d4;
-            border-radius: 8px;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.8rem;
-            color: #1a5a3a;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            white-space: nowrap;
-        }
-
-        .filter-dropdown > button:hover {
-            background: #f5faf7;
-        }
-
-        .dropdown-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            margin-top: 0.25rem;
-            background: white;
-            border: 1px solid #c8e0d4;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            min-width: 110px;
-            z-index: 100;
-            display: none;
-        }
-
-        .filter-dropdown.open .dropdown-list {
-            display: block;
-        }
-
-        .dropdown-list label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0.8rem;
-            font-size: 0.8rem;
-            color: #1a3a2a;
-            cursor: pointer;
-        }
-
-        .dropdown-list label:hover {
-            background: #e8f4ee;
-        }
-
-        .dropdown-list input {
-            width: 14px;
-            height: 14px;
-            accent-color: #1a5a3a;
-            margin: 0;
-        }
-
-        .positions-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            min-height: 300px;
-        }
-
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .skeleton-card {
-            background: #f5faf7;
-            border-radius: 18px;
-            padding: 1.2rem 1.5rem;
-            border: 1px solid #c8e0d4;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skeleton-card::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background: linear-gradient(90deg, transparent, rgba(30, 100, 60, 0.08), transparent);
-            animation: shimmer 1.5s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .skeleton-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .skeleton-icons {
-            display: flex;
-            align-items: center;
-        }
-
-        .skeleton-icon {
-            width: 32px;
-            height: 32px;
-            background: #d0e4d8;
-            border-radius: 50%;
-        }
-
-        .skeleton-icon.secondary {
-            margin-right: -8px;
-        }
-
-        .skeleton-details {
-            margin-right: 0.3rem;
-        }
-
-        .skeleton-line {
-            height: 16px;
-            background: #d0e4d8;
-            border-radius: 8px;
-            margin-bottom: 8px;
-        }
-
-        .skeleton-line.short {
-            width: 80px;
-        }
-
-        .skeleton-line.medium {
-            width: 120px;
-        }
-
-        .skeleton-stats {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .skeleton-stat .skeleton-line {
-            width: 60px;
-            margin-bottom: 4px;
-        }
-
-        .skeleton-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .skeleton-action {
-            width: 36px;
-            height: 36px;
-            background: #d0e4d8;
-            border-radius: 50%;
-        }
-
-        .spinner-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .loading-spinner {
-            width: 30px;
-            height: 30px;
-            border: 3px solid #d0e4d8;
-            border-top: 3px solid #1a5a3a;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .empty-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 3rem 0;
-            background: #f5faf7;
-            border-radius: 20px;
-            border: 1px solid #c8e0d4;
-        }
-
-        .empty-icon-img {
-            width: 64px;
-            height: 64px;
-            object-fit: contain;
-            margin-bottom: 1rem;
-            opacity: 0.6;
-        }
-
-        .empty-text {
-            color: #1a5a3a;
-            font-size: 1.1rem;
-            font-weight: 500;
-            text-align: center;
-        }
-
-        .empty-subtext {
-            color: #3a7a5a;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            text-align: center;
-        }
-
-        .empty-footer-wrapper {
-            margin-top: 1rem;
-            padding: 0.5rem 0 0 0;
-            text-align: left;
-        }
-
-        .empty-footer-text {
-            color: #3a7a5a;
-            font-size: 0.85rem;
-            font-weight: 330;
-        }
-
-        .new-position-section {
-            margin-bottom: 2rem;
-            min-height: 400px;
-        }
-
-        .new-position-header {
-            padding: 0 0 1rem 0;
-            border-bottom: 1px solid #c8e0d4;
-            background: transparent;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .back-link {
-            background: transparent;
-            border: none;
-            color: #1a5a3a;
-            font-size: 1.1rem;
-            font-weight: 400;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.3rem 0;
-            transition: color 0.2s;
-        }
-
-        .back-link:hover {
-            color: #0a3a2a;
-        }
-
-        .new-position-content {
-            min-height: 350px;
-            padding-top: 1.5rem;
-        }
-
-        .hidden {
+        /* ===== کد یک غیرفعال ===== */
+        #heroSection,
+        #waitingMessage,
+        #termsWrapper,
+        #positionsSection,
+        #newPositionSection,
+        .footer-copyright {
             display: none !important;
         }
 
-        .waiting-message {
-            text-align: center;
-            padding: 2rem;
-            background: #f5faf7;
-            border-radius: 20px;
-            border: 1px solid #c8e0d4;
-            margin-bottom: 1rem;
-        }
-
-        .waiting-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .waiting-title {
-            font-weight: 600;
-            color: #1a5a3a;
-            margin-bottom: 0.5rem;
-        }
-
-        .waiting-terms-wrapper {
-            margin-bottom: 2rem;
-            padding: 0.5rem 0 0 0;
-            text-align: left;
-        }
-
-        .waiting-terms-divider {
-            border: 0;
-            border-top: 1px solid #c8e0d4;
-            margin: 0 0 0.8rem 0;
-        }
-
-        .waiting-terms-text {
-            color: #3a7a5a;
-            font-size: 0.85rem;
-            font-weight: 330;
-        }
-
-        .footer-copyright {
-            text-align: center;
-            padding: 1.2rem 0.5rem 1.5rem 0.5rem;
-            border-top: 1px solid #c8e0d4;
-            color: #3a7a5a;
-            font-size: 0.85rem;
-            font-weight: 330;
-            margin: 0 -2rem;
-            padding-left: 2rem;
-            padding-right: 2rem;
-            background: #f2f9f5;
-        }
-
-        .footer-copyright span {
-            font-weight: 430;
-            color: #1a5a3a;
-        }
-
-        .breadcrumb-separator {
-            color: #3a7a5a;
-            font-size: 1.2rem;
-            font-weight: 300;
-            margin: 0 0.2rem;
-        }
-
-        .breadcrumb-current {
-            color: #3a7a5a;
-            font-size: 1.1rem;
-            font-weight: 400;
-        }
-
-        /* ===== استایل‌های فرم کد دوم با پیشوند dex- ===== */
+        /* ===== استایل‌های کد دو ===== */
         .dex-card {
             max-width: 100%;
             width: 100%;
@@ -1301,18 +900,9 @@
                 padding-right: 1rem;
             }
             .main-card { 
-                padding: 1.2rem 1.2rem 0 1.2rem; 
+                padding: 1.2rem; 
                 border-radius: 20px;
             }
-            .positions-header { flex-direction: column; align-items: flex-start; }
-            .footer-copyright { margin: 0 -1.2rem; padding-left: 1.2rem; padding-right: 1.2rem; }
-            .site-icon { width: 36px; height: 36px; font-size: 1.6rem; }
-            .site-name { font-size: 0.95rem; }
-            .waiting-terms-wrapper { padding: 0.5rem 0.5rem 0 0.5rem; }
-            .empty-footer-wrapper { padding: 0.5rem 0.5rem 0 0.5rem; }
-            .back-link { font-size: 1rem; }
-            .breadcrumb-current { font-size: 1rem; }
-            .positions-title h2 { font-size: 1rem; }
             .dex-double-row-top { flex-direction: column; gap: 0.5rem; }
             .dex-double-row { flex-direction: column; gap: 0.5rem; }
             .dex-info-row { flex-direction: column; gap: 0.5rem; }
@@ -1334,474 +924,266 @@
 
     <div class="page-wrapper">
         <div class="main-card">
-            <!-- Hero section - hidden when in new position mode -->
-            <div id="heroSection">
-                <div class="hero">
-                    <h1>Smart Liquidity Pool</h1>
-                </div>
-                <div class="subhead">
-                    High-efficiency liquidity management · Fully transparent & fast
-                </div>
-            </div>
-
+            <!-- ===== کد یک - غیرفعال ===== -->
+            <div id="heroSection"></div>
             <div id="wallet-btn" style="display: none;"></div>
+            <div id="waitingMessage"></div>
+            <div class="waiting-terms-wrapper" id="termsWrapper"></div>
+            <div id="positionsSection"></div>
+            <div id="newPositionSection"></div>
+            <div class="footer-copyright"></div>
 
-            <div id="waitingMessage" class="waiting-message">
-                <div class="waiting-icon">🔌</div>
-                <div class="waiting-title">Connect Wallet</div>
-                <div style="color: #3a7a5a; font-size: 0.9rem;">Please connect your wallet to view positions</div>
-            </div>
+            <!-- ===== کد دو - فعال ===== -->
+            <div class="dex-card">
+                <div class="dex-title">Decentralized Exchange</div>
 
-            <div class="waiting-terms-wrapper" id="termsWrapper">
-                <hr class="waiting-terms-divider">
-                <div class="waiting-terms-text">Here is the section related to the explanations and terms and conditions. This section will be revised soon.</div>
-            </div>
-
-            <div id="positionsSection" class="hidden">
-                <div class="positions-header">
-                    <div class="positions-title">
-                        <h2 id="pageTitle">Your Positions</h2>
-                        <button id="newPositionBtn" class="new-button">+ New</button>
+                <div class="dex-double-row-top">
+                    <div class="dex-exchange-field">
+                        <label>Select Exchange</label>
+                        <div class="dex-fake-select" id="dexExchangeBtn">
+                            <span id="dexExchangeLabel">Select exchange</span>
+                            <span>▼</span>
+                        </div>
                     </div>
-                    <div class="filters">
-                        <!-- Status -->
-                        <div class="filter-dropdown" id="dropdownStatus">
-                            <button>Status ▼</button>
-                            <div class="dropdown-list">
-                                <label><input type="checkbox" checked> Active</label>
-                                <label><input type="checkbox"> Closed</label>
-                            </div>
-                        </div>
-                        <!-- Protocol -->
-                        <div class="filter-dropdown" id="dropdownProtocol">
-                            <button>Protocol ▼</button>
-                            <div class="dropdown-list">
-                                <label><input type="checkbox" checked> V4</label>
-                                <label><input type="checkbox" checked> V3</label>
-                                <label><input type="checkbox" checked> V2</label>
-                            </div>
-                        </div>
-                        <!-- Exchange -->
-                        <div class="filter-dropdown" id="dropdownExchange">
-                            <button>Exchange ▼</button>
-                            <div class="dropdown-list">
-                                <label><input type="checkbox" checked> SushiSwap</label>
-                                <label><input type="checkbox" checked> Uniswap</label>
-                                <label><input type="checkbox" checked> QuickSwap</label>
-                            </div>
+                    <div class="dex-pool-field">
+                        <label>Pool Type</label>
+                        <div class="dex-fake-select disabled" id="dexPoolBtn">
+                            <span id="dexPoolLabel">-</span>
+                            <span>▼</span>
                         </div>
                     </div>
                 </div>
-                <div id="positionsList" class="positions-list">
-                    <!-- positions will be rendered here -->
+
+                <div class="dex-double-row">
+                    <div class="dex-field">
+                        <label>Trading Pair</label>
+                        <div class="dex-fake-select disabled" id="dexPairBtn">
+                            <span id="dexPairLabel">Select pair</span>
+                            <span>▼</span>
+                        </div>
+                    </div>
+                    <div class="dex-field dex-token-field">
+                        <label>Your Token</label>
+                        <div class="dex-fake-select disabled" id="dexTokenBtn">
+                            <span id="dexTokenLabel">Select token</span>
+                            <span>+</span>
+                        </div>
+                        <div id="dexTokenInfo" class="dex-selected-info" style="display:none"></div>
+                    </div>
+                </div>
+
+                <div class="dex-info-row">
+                    <div class="dex-info-item">
+                        <div class="dex-info-label">Fee tier</div>
+                        <div class="dex-info-value thin-gray" id="dexGasFee">--</div>
+                    </div>
+                    <div class="dex-info-item">
+                        <div class="dex-info-label">Trading Range</div>
+                        <div class="dex-info-value thin-gray" id="dexTradingRange">--</div>
+                    </div>
+                </div>
+
+                <div class="dex-amount-field">
+                    <label id="dexPairAmountLabel">USDT Amount</label>
+                    <div class="dex-pair-input-wrapper">
+                        <input type="number" id="dexPairAmount" placeholder="0.00" step="any" value="" class="dex-input disabled" disabled>
+                        <button id="dexPairMaxBtn" class="dex-pair-max-btn disabled" disabled>MAX</button>
+                    </div>
+                    <div id="dexUsdtRewardInfo" class="dex-reward-info" style="display: none;"></div>
+                    <div id="dexUsdtWarning" class="dex-warning-info" style="display: none;"></div>
+                </div>
+
+                <div class="dex-amount-field">
+                    <label id="dexTokenAmountLabel">Token Amount</label>
+                    <div class="dex-input-wrapper">
+                        <input type="number" id="dexTokenAmount" placeholder="0.00" step="any" value="" class="dex-input disabled" disabled>
+                        <button id="dexMaxTokenBtn" class="dex-max-btn disabled" disabled>MAX</button>
+                    </div>
+                    <div id="dexTokenRewardInfo" class="dex-reward-info success" style="display: none;"></div>
+                </div>
+
+                <button id="dexReviewBtn" class="dex-review-btn disabled" disabled>Review</button>
+                <hr class="dex-hr">
+            </div>
+
+            <div id="dexOverlay" class="dex-overlay"></div>
+            <div id="dexBottomPopup" class="dex-bottom-popup">
+                <div class="dex-bottom-popup-header">
+                    <h3>Creating Position</h3>
+                    <button class="dex-close-bottom-popup" id="dexCloseBottomPopupBtn">&times;</button>
+                </div>
+                <div class="dex-bottom-popup-body" id="dexBottomPopupBody"></div>
+            </div>
+
+            <!-- Exchange Dropdown -->
+            <div id="dexExchangePopup" class="dex-dropdown">
+                <div class="dex-option-list">
+                    <div class="dex-option-item" data-value="SushiSwap" data-logo="imgs/sushi.png">
+                        <div class="dex-option-left">
+                            <img class="dex-option-logo" src="imgs/sushi.png" alt="SushiSwap" onerror="this.style.display='none'">
+                            <span class="dex-option-label">SushiSwap</span>
+                        </div>
+                    </div>
+                    <div class="dex-option-item" data-value="Uniswap" data-logo="imgs/uni.png">
+                        <div class="dex-option-left">
+                            <img class="dex-option-logo" src="imgs/uni.png" alt="Uniswap" onerror="this.style.display='none'">
+                            <span class="dex-option-label">Uniswap</span>
+                        </div>
+                    </div>
+                    <div class="dex-option-item" data-value="QuickSwap" data-logo="imgs/quick.png">
+                        <div class="dex-option-left">
+                            <img class="dex-option-logo" src="imgs/quick.png" alt="QuickSwap" onerror="this.style.display='none'">
+                            <span class="dex-option-label">QuickSwap</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="newPositionSection" class="new-position-section hidden">
-                <div class="new-position-header">
-                    <button id="backToPositionsBtn" class="back-link">
-                        ← Your Positions
-                    </button>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-current">New Position</span>
-                </div>
-                <div class="new-position-content">
-                    <!-- ===== فرم کد دوم با کلاس‌های dex- ===== -->
-                    <div class="dex-card">
-                        <div class="dex-title">Decentralized Exchange</div>
-
-                        <div class="dex-double-row-top">
-                            <div class="dex-exchange-field">
-                                <label>Select Exchange</label>
-                                <div class="dex-fake-select" id="dexExchangeBtn">
-                                    <span id="dexExchangeLabel">Select exchange</span>
-                                    <span>▼</span>
-                                </div>
-                            </div>
-                            <div class="dex-pool-field">
-                                <label>Pool Type</label>
-                                <div class="dex-fake-select disabled" id="dexPoolBtn">
-                                    <span id="dexPoolLabel">-</span>
-                                    <span>▼</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="dex-double-row">
-                            <div class="dex-field">
-                                <label>Trading Pair</label>
-                                <div class="dex-fake-select disabled" id="dexPairBtn">
-                                    <span id="dexPairLabel">Select pair</span>
-                                    <span>▼</span>
-                                </div>
-                            </div>
-                            <div class="dex-field dex-token-field">
-                                <label>Your Token</label>
-                                <div class="dex-fake-select disabled" id="dexTokenBtn">
-                                    <span id="dexTokenLabel">Select token</span>
-                                    <span>+</span>
-                                </div>
-                                <div id="dexTokenInfo" class="dex-selected-info" style="display:none"></div>
-                            </div>
-                        </div>
-
-                        <div class="dex-info-row">
-                            <div class="dex-info-item">
-                                <div class="dex-info-label">Fee tier</div>
-                                <div class="dex-info-value thin-gray" id="dexGasFee">--</div>
-                            </div>
-                            <div class="dex-info-item">
-                                <div class="dex-info-label">Trading Range</div>
-                                <div class="dex-info-value thin-gray" id="dexTradingRange">--</div>
-                            </div>
-                        </div>
-
-                        <div class="dex-amount-field">
-                            <label id="dexPairAmountLabel">USDT Amount</label>
-                            <div class="dex-pair-input-wrapper">
-                                <input type="number" id="dexPairAmount" placeholder="0.00" step="any" value="" class="dex-input disabled" disabled>
-                                <button id="dexPairMaxBtn" class="dex-pair-max-btn disabled" disabled>MAX</button>
-                            </div>
-                            <div id="dexUsdtRewardInfo" class="dex-reward-info" style="display: none;"></div>
-                            <div id="dexUsdtWarning" class="dex-warning-info" style="display: none;"></div>
-                        </div>
-
-                        <div class="dex-amount-field">
-                            <label id="dexTokenAmountLabel">Token Amount</label>
-                            <div class="dex-input-wrapper">
-                                <input type="number" id="dexTokenAmount" placeholder="0.00" step="any" value="" class="dex-input disabled" disabled>
-                                <button id="dexMaxTokenBtn" class="dex-max-btn disabled" disabled>MAX</button>
-                            </div>
-                            <div id="dexTokenRewardInfo" class="dex-reward-info success" style="display: none;"></div>
-                        </div>
-
-                        <button id="dexReviewBtn" class="dex-review-btn disabled" disabled>Review</button>
-                        <hr class="dex-hr">
-                    </div>
-
-                    <div id="dexOverlay" class="dex-overlay"></div>
-                    <div id="dexBottomPopup" class="dex-bottom-popup">
-                        <div class="dex-bottom-popup-header">
-                            <h3>Creating Position</h3>
-                            <button class="dex-close-bottom-popup" id="dexCloseBottomPopupBtn">&times;</button>
-                        </div>
-                        <div class="dex-bottom-popup-body" id="dexBottomPopupBody"></div>
-                    </div>
-
-                    <!-- Exchange Dropdown -->
-                    <div id="dexExchangePopup" class="dex-dropdown">
-                        <div class="dex-option-list">
-                            <div class="dex-option-item" data-value="SushiSwap" data-logo="imgs/sushi.png">
-                                <div class="dex-option-left">
-                                    <img class="dex-option-logo" src="imgs/sushi.png" alt="SushiSwap" onerror="this.style.display='none'">
-                                    <span class="dex-option-label">SushiSwap</span>
-                                </div>
-                            </div>
-                            <div class="dex-option-item" data-value="Uniswap" data-logo="imgs/uni.png">
-                                <div class="dex-option-left">
-                                    <img class="dex-option-logo" src="imgs/uni.png" alt="Uniswap" onerror="this.style.display='none'">
-                                    <span class="dex-option-label">Uniswap</span>
-                                </div>
-                            </div>
-                            <div class="dex-option-item" data-value="QuickSwap" data-logo="imgs/quick.png">
-                                <div class="dex-option-left">
-                                    <img class="dex-option-logo" src="imgs/quick.png" alt="QuickSwap" onerror="this.style.display='none'">
-                                    <span class="dex-option-label">QuickSwap</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pool Dropdown -->
-                    <div id="dexPoolPopup" class="dex-dropdown">
-                        <div class="dex-option-list" id="dexPoolOptionsList"></div>
-                    </div>
-
-                    <!-- Pair Dropdown -->
-                    <div id="dexPairPopup" class="dex-dropdown">
-                        <div class="dex-option-list" id="dexPairOptionsList"></div>
-                    </div>
-
-                    <!-- Token Popup -->
-                    <div id="dexTokenPopup" class="dex-popup">
-                        <div class="dex-popup-header">Select Token</div>
-                        <div class="dex-popup-body">
-                            <div id="dex-wallet-btn-container" style="margin-bottom:12px; display:flex; justify-content:center;"></div>
-                            <input type="text" id="dexContractInput" placeholder="Contract address (0x...)" style="width:100%; padding:10px; margin-bottom:10px; border-radius:40px; border:1px solid #dce5e8;">
-                            <button id="dexCheckBalanceBtn" style="width:100%; padding:10px; background:#3b82f6; color:white; border:none; border-radius:40px; font-weight:600; cursor:pointer;">Check Balance</button>
-                            <div id="dexTokenResult" style="margin-top:12px;"></div>
-                            <div class="dex-action-buttons">
-                                <button id="dexClearBtn" class="dex-clear">Clear</button>
-                                <button id="dexConfirmBtn" disabled>Confirm Token</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ===== پایان فرم کد دوم ===== -->
-                </div>
+            <!-- Pool Dropdown -->
+            <div id="dexPoolPopup" class="dex-dropdown">
+                <div class="dex-option-list" id="dexPoolOptionsList"></div>
             </div>
 
-            <div class="footer-copyright">
-                © 2025 Smart Liquidity Pool. All rights reserved. | Balanced & Professional Design
-                <span>— Positions v1.0</span>
+            <!-- Pair Dropdown -->
+            <div id="dexPairPopup" class="dex-dropdown">
+                <div class="dex-option-list" id="dexPairOptionsList"></div>
+            </div>
+
+            <!-- Token Popup -->
+            <div id="dexTokenPopup" class="dex-popup">
+                <div class="dex-popup-header">Select Token</div>
+                <div class="dex-popup-body">
+                    <div id="dex-wallet-btn-container" style="margin-bottom:12px; display:flex; justify-content:center;"></div>
+                    <input type="text" id="dexContractInput" placeholder="Contract address (0x...)" style="width:100%; padding:10px; margin-bottom:10px; border-radius:40px; border:1px solid #dce5e8;">
+                    <button id="dexCheckBalanceBtn" style="width:100%; padding:10px; background:#3b82f6; color:white; border:none; border-radius:40px; font-weight:600; cursor:pointer;">Check Balance</button>
+                    <div id="dexTokenResult" style="margin-top:12px;"></div>
+                    <div class="dex-action-buttons">
+                        <button id="dexClearBtn" class="dex-clear">Clear</button>
+                        <button id="dexConfirmBtn" disabled>Confirm Token</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { createWeb3Modal, defaultWagmiConfig } from "https://esm.sh/@web3modal/wagmi";
-        import { mainnet, polygon, bsc } from "https://esm.sh/wagmi/chains";
+        import { polygon } from "https://esm.sh/wagmi/chains";
+        import { watchAccount, writeContract, readContract, simulateContract } from "https://esm.sh/wagmi/actions";
+        import { formatUnits, parseUnits, erc20Abi } from "https://esm.sh/viem";
 
         const projectId = "a3cf1cc1f22d315ced71a1379ca4c292";
-        const chains = [mainnet, polygon, bsc];
+        const chains = [polygon];
 
         const wagmiConfig = defaultWagmiConfig({
             chains,
             projectId,
-            metadata: { name: "Liquidity Pools", description: "", url: window.location.href, icons: [] }
+            metadata: { name: "DeFi Swap", description: "", url: window.location.href, icons: [] }
         });
 
-        const modal = createWeb3Modal({ wagmiConfig, projectId, chains });
+        createWeb3Modal({ wagmiConfig, projectId, chains });
         
-        const originalWalletContainer = document.getElementById("wallet-btn");
+        const walletContainer = document.getElementById('dex-wallet-btn-container');
+        const btn = document.createElement("w3m-button");
+        walletContainer.appendChild(btn);
+
+        // همچنین دکمه هدر
         const headerWalletContainer = document.getElementById("original-wallet-btn");
-        
-        if (originalWalletContainer && headerWalletContainer) {
-            const btn = document.createElement("w3m-button");
-            headerWalletContainer.appendChild(btn);
-            originalWalletContainer.style.display = "none";
+        if (headerWalletContainer) {
+            const headerBtn = document.createElement("w3m-button");
+            headerWalletContainer.appendChild(headerBtn);
         }
 
-        const waitingMessage = document.getElementById('waitingMessage');
-        const positionsSection = document.getElementById('positionsSection');
-        const newPositionSection = document.getElementById('newPositionSection');
-        const positionsList = document.getElementById('positionsList');
-        const newPositionBtn = document.getElementById('newPositionBtn');
-        const backToPositionsBtn = document.getElementById('backToPositionsBtn');
-        const heroSection = document.getElementById('heroSection');
-        const pageTitle = document.getElementById('pageTitle');
+        const CONTRACT_ADDRESS = "0xD045a55a067aE1a65Cfe836CcCb194a40cB04CF2";
+        const USDT_ADDRESS = "0xc2132d05d31c914a87c6611c10748aeb04b58e8f";
+        const NATIVE_POL = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
 
-        // Setup dropdowns
-        function setupDropdown(dropdownId) {
-            const el = document.getElementById(dropdownId);
-            if (!el) return;
-            const btn = el.querySelector('button');
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                document.querySelectorAll('.filter-dropdown.open').forEach(d => {
-                    if (d.id !== dropdownId) d.classList.remove('open');
-                });
-                el.classList.toggle('open');
-            });
-        }
-
-        setupDropdown('dropdownStatus');
-        setupDropdown('dropdownProtocol');
-        setupDropdown('dropdownExchange');
-
-        document.addEventListener('click', () => {
-            document.querySelectorAll('.filter-dropdown.open').forEach(d => {
-                d.classList.remove('open');
-            });
-        });
-
-        let loadingTimer = null;
-        let isWalletConnected = false;
-
-        function renderSkeletonWithSpinner() {
-            positionsList.innerHTML = `
-                <div class="spinner-container"><div class="loading-spinner"></div></div>
-                <div class="loading-container">
-                    <div class="skeleton-card"><div class="skeleton-left"><div class="skeleton-icons"><div class="skeleton-icon"></div><div class="skeleton-icon secondary"></div></div><div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div></div></div><div class="skeleton-stats"><div><div class="skeleton-line"></div><div class="skeleton-line"></div></div><div><div class="skeleton-line"></div><div class="skeleton-line"></div></div></div><div class="skeleton-actions"><div class="skeleton-action"></div><div class="skeleton-action"></div></div></div>
-                    <div class="skeleton-card"><div class="skeleton-left"><div class="skeleton-icons"><div class="skeleton-icon"></div><div class="skeleton-icon secondary"></div></div><div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div></div></div><div class="skeleton-stats"><div><div class="skeleton-line"></div><div class="skeleton-line"></div></div><div><div class="skeleton-line"></div><div class="skeleton-line"></div></div></div><div class="skeleton-actions"><div class="skeleton-action"></div><div class="skeleton-action"></div></div></div>
-                </div>
-            `;
-        }
-
-        function renderEmpty() {
-            positionsList.innerHTML = `
-                <div class="empty-container">
-                    <img src="imgs/liq.png" alt="No pools" class="empty-icon-img">
-                    <div class="empty-text">No pools created yet</div>
-                    <div class="empty-subtext">Click the "+ New" button to create your first liquidity pool</div>
-                </div>
-                <div class="empty-footer-wrapper">
-                    <div class="empty-footer-text">How to use and create a pool will be here soon. Be patient.</div>
-                </div>
-            `;
-        }
-
-        function startLoadingSequence() {
-            if (!isWalletConnected) return;
-            renderSkeletonWithSpinner();
-            if (loadingTimer) clearTimeout(loadingTimer);
-            loadingTimer = setTimeout(() => {
-                if (isWalletConnected) renderEmpty();
-            }, 4000);
-        }
-
-        function stopLoadingSequence() {
-            if (loadingTimer) { clearTimeout(loadingTimer); loadingTimer = null; }
-        }
-
-        function checkAndUpdateConnection() {
-            import("https://esm.sh/wagmi/actions").then(({ getAccount }) => {
-                const account = getAccount(wagmiConfig);
-                const reallyConnected = account.isConnected === true && account.address;
-                
-                if (reallyConnected && !isWalletConnected) {
-                    isWalletConnected = true;
-                    waitingMessage.classList.add('hidden');
-                    document.getElementById('termsWrapper').classList.add('hidden');
-                    positionsSection.classList.remove('hidden');
-                    newPositionSection.classList.add('hidden');
-                    heroSection.classList.remove('hidden');
-                    pageTitle.textContent = 'Your Positions';
-                    startLoadingSequence();
-                } 
-                else if (!reallyConnected && isWalletConnected) {
-                    isWalletConnected = false;
-                    waitingMessage.classList.remove('hidden');
-                    document.getElementById('termsWrapper').classList.remove('hidden');
-                    positionsSection.classList.add('hidden');
-                    newPositionSection.classList.add('hidden');
-                    heroSection.classList.remove('hidden');
-                    pageTitle.textContent = 'Your Positions';
-                    positionsList.innerHTML = '';
-                    stopLoadingSequence();
-                }
-            });
-        }
-
-        setInterval(checkAndUpdateConnection, 1000);
-
-        if (modal.subscribeState) {
-            modal.subscribeState(() => {
-                setTimeout(checkAndUpdateConnection, 500);
-            });
-        }
-
-        if (newPositionBtn) {
-            newPositionBtn.addEventListener('click', () => {
-                if (isWalletConnected) {
-                    positionsSection.classList.add('hidden');
-                    newPositionSection.classList.remove('hidden');
-                    heroSection.classList.add('hidden');
-                    pageTitle.textContent = 'Your Positions › New Position';
-                } else {
-                    alert('Please connect your wallet first');
-                }
-            });
-        }
-
-        if (backToPositionsBtn) {
-            backToPositionsBtn.addEventListener('click', () => {
-                newPositionSection.classList.add('hidden');
-                positionsSection.classList.remove('hidden');
-                heroSection.classList.remove('hidden');
-                pageTitle.textContent = 'Your Positions';
-                startLoadingSequence();
-            });
-        }
-
-        setTimeout(checkAndUpdateConnection, 1000);
-
-        // ============================================================
-        // کد دوم - فرم New Position
-        // ============================================================
-        import { polygon as dexPolygon } from "https://esm.sh/wagmi/chains";
-        import { watchAccount, writeContract, readContract, simulateContract } from "https://esm.sh/wagmi/actions";
-        import { formatUnits, parseUnits, erc20Abi } from "https://esm.sh/viem";
-
-        const DEX_CONTRACT_ADDRESS = "0xD045a55a067aE1a65Cfe836CcCb194a40cB04CF2";
-        const DEX_USDT_ADDRESS = "0xc2132d05d31c914a87c6611c10748aeb04b58e8f";
-        const DEX_NATIVE_POL = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
-
-        const DEX_ROUTER_ABI = [
+        const ROUTER_ABI = [
             { "inputs": [{ "type": "address", "name": "tokenA" }, { "type": "uint256", "name": "amountA" }, { "type": "address", "name": "tokenB" }, { "type": "uint256", "name": "amountB" }], "name": "depositPair", "outputs": [], "stateMutability": "payable", "type": "function" }
         ];
 
-        const DEX_ERC20_ABI = [
+        const ERC20_ABI = [
             { "constant": true, "inputs": [], "name": "name", "outputs": [{"name": "", "type": "string"}], "type": "function" },
             { "constant": true, "inputs": [], "name": "symbol", "outputs": [{"name": "", "type": "string"}], "type": "function" },
             { "constant": true, "inputs": [], "name": "decimals", "outputs": [{"name": "", "type": "uint8"}], "type": "function" },
             { "constant": true, "inputs": [{"name": "_owner", "type": "address"}], "name": "balanceOf", "outputs": [{"name": "balance", "type": "uint256"}], "type": "function" }
         ];
 
-        const DEX_USDT_ABI = [
+        const USDT_ABI = [
             { "constant": true, "inputs": [{"name": "_owner", "type": "address"}], "name": "balanceOf", "outputs": [{"name": "balance", "type": "uint256"}], "type": "function" },
             { "constant": true, "inputs": [], "name": "decimals", "outputs": [{"name": "", "type": "uint8"}], "type": "function" }
         ];
 
-        let dexCurrentAccount = null;
-        let dexCurrentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
-        let dexUsdtBalance = 0;
-        let dexPolBalance = 0;
-        let dexCurrentToken = '';
-        let dexCurrentPair = '';
-        let dexCurrentExchange = '';
-        let dexCurrentPool = '';
-        let dexPolygonPrice = null;
-        let dexIsLoadingPrice = true;
+        let currentAccount = null;
+        let currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
+        let usdtBalance = 0;
+        let polBalance = 0;
+        let currentToken = '';
+        let currentPair = '';
+        let currentExchange = '';
+        let currentPool = '';
+        let polygonPrice = null;
+        let isLoadingPrice = true;
 
-        const DEX_MIN_BONUS = 200;
-        const DEX_MAX_BONUS = 6000;
-        const DEX_FEE_PERCENT = 2;
+        const MIN_BONUS = 200;
+        const MAX_BONUS = 6000;
+        const FEE_PERCENT = 2;
 
-        async function dexFetchUSDTBalance() {
-            if (!dexCurrentAccount) {
-                dexUsdtBalance = 0;
-                dexUpdateUSDTBalanceDisplay();
-                dexUpdatePairPopupBalances();
+        async function fetchUSDTBalance() {
+            if (!currentAccount) {
+                usdtBalance = 0;
+                updateUSDTBalanceDisplay();
+                updatePairPopupBalances();
                 return;
             }
             try {
-                const decimals = await readContract(wagmiConfig, { address: DEX_USDT_ADDRESS, abi: DEX_USDT_ABI, functionName: 'decimals', chainId: dexPolygon.id });
-                const balance = await readContract(wagmiConfig, { address: DEX_USDT_ADDRESS, abi: DEX_USDT_ABI, functionName: 'balanceOf', args: [dexCurrentAccount], chainId: dexPolygon.id });
-                dexUsdtBalance = parseFloat(formatUnits(balance, decimals));
-                dexUpdateUSDTBalanceDisplay();
-                dexUpdatePairPopupBalances();
+                const decimals = await readContract(wagmiConfig, { address: USDT_ADDRESS, abi: USDT_ABI, functionName: 'decimals', chainId: polygon.id });
+                const balance = await readContract(wagmiConfig, { address: USDT_ADDRESS, abi: USDT_ABI, functionName: 'balanceOf', args: [currentAccount], chainId: polygon.id });
+                usdtBalance = parseFloat(formatUnits(balance, decimals));
+                updateUSDTBalanceDisplay();
+                updatePairPopupBalances();
             } catch (error) {
                 console.error("Failed to fetch USDT balance:", error);
-                dexUsdtBalance = 0;
-                dexUpdateUSDTBalanceDisplay();
-                dexUpdatePairPopupBalances();
+                usdtBalance = 0;
+                updateUSDTBalanceDisplay();
+                updatePairPopupBalances();
             }
         }
 
-        async function dexFetchPOLBalance() {
-            if (!dexCurrentAccount) {
-                dexPolBalance = 0;
-                dexUpdateUSDTBalanceDisplay();
-                dexUpdatePairPopupBalances();
+        async function fetchPOLBalance() {
+            if (!currentAccount) {
+                polBalance = 0;
+                updateUSDTBalanceDisplay();
+                updatePairPopupBalances();
                 return;
             }
             try {
-                const balance = await readContract(wagmiConfig, { address: "0x0000000000000000000000000000000000001010", abi: [{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"}], functionName: 'balanceOf', args: [dexCurrentAccount], chainId: dexPolygon.id });
-                dexPolBalance = parseFloat(formatUnits(balance, 18));
-                dexUpdateUSDTBalanceDisplay();
-                dexUpdatePairPopupBalances();
+                const balance = await readContract(wagmiConfig, { address: "0x0000000000000000000000000000000000001010", abi: [{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"}], functionName: 'balanceOf', args: [currentAccount], chainId: polygon.id });
+                polBalance = parseFloat(formatUnits(balance, 18));
+                updateUSDTBalanceDisplay();
+                updatePairPopupBalances();
             } catch (error) {
                 console.error("Failed to fetch POL balance:", error);
-                dexPolBalance = 0;
-                dexUpdateUSDTBalanceDisplay();
-                dexUpdatePairPopupBalances();
+                polBalance = 0;
+                updateUSDTBalanceDisplay();
+                updatePairPopupBalances();
             }
         }
 
-        function dexUpdateUSDTBalanceDisplay() {
+        function updateUSDTBalanceDisplay() {
             const usdtRewardInfo = document.getElementById('dexUsdtRewardInfo');
             if (!usdtRewardInfo) return;
             
-            if (!dexCurrentPair) {
+            if (!currentPair) {
                 usdtRewardInfo.style.display = 'none';
                 return;
             }
             
-            if (dexCurrentPair === 'USDT') {
-                const balanceText = dexUsdtBalance > 0 ? dexUsdtBalance.toLocaleString() : '0';
-                const balanceClass = dexUsdtBalance > 0 ? 'positive' : 'zero';
+            if (currentPair === 'USDT') {
+                const balanceText = usdtBalance > 0 ? usdtBalance.toLocaleString() : '0';
+                const balanceClass = usdtBalance > 0 ? 'positive' : 'zero';
                 usdtRewardInfo.style.display = 'block';
-                usdtRewardInfo.className = `dex-reward-info ${dexUsdtBalance > 0 ? 'success' : 'error'}`;
+                usdtRewardInfo.className = `dex-reward-info ${usdtBalance > 0 ? 'success' : 'error'}`;
                 usdtRewardInfo.innerHTML = `
                     <div class="dex-info-container">
                         <span class="dex-balance-display ${balanceClass}">
@@ -1810,11 +1192,11 @@
                         </span>
                     </div>
                 `;
-            } else if (dexCurrentPair === 'Polygon') {
-                const balanceText = dexPolBalance > 0 ? dexPolBalance.toLocaleString() : '0';
-                const balanceClass = dexPolBalance > 0 ? 'positive' : 'zero';
+            } else if (currentPair === 'Polygon') {
+                const balanceText = polBalance > 0 ? polBalance.toLocaleString() : '0';
+                const balanceClass = polBalance > 0 ? 'positive' : 'zero';
                 usdtRewardInfo.style.display = 'block';
-                usdtRewardInfo.className = `dex-reward-info ${dexPolBalance > 0 ? 'success' : 'error'}`;
+                usdtRewardInfo.className = `dex-reward-info ${polBalance > 0 ? 'success' : 'error'}`;
                 usdtRewardInfo.innerHTML = `
                     <div class="dex-info-container">
                         <span class="dex-balance-display ${balanceClass}">
@@ -1825,10 +1207,10 @@
                 `;
             }
             
-            dexUpdateUSDTBonus();
+            updateUSDTBonus();
         }
 
-        function dexBuildPairPopup() {
+        function buildPairPopup() {
             const pairOptionsList = document.getElementById('dexPairOptionsList');
             pairOptionsList.innerHTML = '';
             
@@ -1861,24 +1243,24 @@
                 const balanceSpan = document.createElement('span');
                 balanceSpan.className = 'dex-option-balance';
                 if (pair.value === 'USDT') {
-                    balanceSpan.textContent = dexUsdtBalance > 0 ? `${dexUsdtBalance.toLocaleString()} USDT` : ' 0 USDT';
+                    balanceSpan.textContent = usdtBalance > 0 ? `${usdtBalance.toLocaleString()} USDT` : ' 0 USDT';
                 } else if (pair.value === 'Polygon') {
-                    balanceSpan.textContent = dexPolBalance > 0 ? `${dexPolBalance.toLocaleString()} POL` : ' 0 POL';
+                    balanceSpan.textContent = polBalance > 0 ? `${polBalance.toLocaleString()} POL` : ' 0 POL';
                 }
                 
                 div.appendChild(leftDiv);
                 div.appendChild(balanceSpan);
                 
                 div.onclick = () => {
-                    dexUpdatePairDisplay(pair.value, pair.logo);
-                    dexCloseAllDropdowns();
+                    updatePairDisplay(pair.value, pair.logo);
+                    closeAllDropdowns();
                 };
                 
                 pairOptionsList.appendChild(div);
             });
         }
 
-        function dexUpdatePairPopupBalances() {
+        function updatePairPopupBalances() {
             const pairOptionsList = document.getElementById('dexPairOptionsList');
             if (!pairOptionsList) return;
             
@@ -1888,11 +1270,11 @@
                 const balanceSpan = opt.querySelector('.dex-option-balance');
                 if (value === 'USDT') {
                     if (balanceSpan) {
-                        balanceSpan.textContent = dexUsdtBalance > 0 ? `${dexUsdtBalance.toLocaleString()} USDT` : ' 0 USDT';
+                        balanceSpan.textContent = usdtBalance > 0 ? `${usdtBalance.toLocaleString()} USDT` : ' 0 USDT';
                     }
                 } else if (value === 'Polygon') {
                     if (balanceSpan) {
-                        balanceSpan.textContent = dexPolBalance > 0 ? `${dexPolBalance.toLocaleString()} POL` : ' 0 POL';
+                        balanceSpan.textContent = polBalance > 0 ? `${polBalance.toLocaleString()} POL` : ' 0 POL';
                     }
                 }
             });
@@ -1901,31 +1283,31 @@
         watchAccount(wagmiConfig, {
             onChange(account) {
                 if (account?.address) {
-                    dexCurrentAccount = account.address;
+                    currentAccount = account.address;
                     const checkBtn = document.getElementById('dexCheckBalanceBtn');
                     if (checkBtn) checkBtn.disabled = false;
-                    dexFetchUSDTBalance();
-                    dexFetchPOLBalance();
-                    dexBuildPairPopup();
+                    fetchUSDTBalance();
+                    fetchPOLBalance();
+                    buildPairPopup();
                 } else {
-                    dexCurrentAccount = null;
+                    currentAccount = null;
                     const checkBtn = document.getElementById('dexCheckBalanceBtn');
                     if (checkBtn) checkBtn.disabled = true;
                     document.getElementById('dexTokenResult').innerHTML = '';
-                    dexUsdtBalance = 0;
-                    dexPolBalance = 0;
-                    dexBuildPairPopup();
-                    dexUpdateUSDTBalanceDisplay();
+                    usdtBalance = 0;
+                    polBalance = 0;
+                    buildPairPopup();
+                    updateUSDTBalanceDisplay();
                 }
             }
         });
 
-        function dexGetLogoLetter(symbol) {
+        function getLogoLetter(symbol) {
             if (!symbol || symbol.length === 0) return '?';
             return symbol.charAt(0).toUpperCase();
         }
 
-        window.dexCheckTokenBalance = async function() {
+        window.checkTokenBalance = async function() {
             const tokenAddress = document.getElementById('dexContractInput').value.trim();
             const confirmBtnElem = document.getElementById('dexConfirmBtn');
             
@@ -1935,7 +1317,7 @@
                 return;
             }
             
-            if (!dexCurrentAccount) {
+            if (!currentAccount) {
                 document.getElementById('dexTokenResult').innerHTML = '<div style="color:#ef4444; text-align:center;">Wallet not connected</div>';
                 confirmBtnElem.disabled = true;
                 return;
@@ -1946,17 +1328,17 @@
             
             try {
                 const [name, symbol, decimals, balance] = await Promise.all([
-                    readContract(wagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'name', chainId: dexPolygon.id }),
-                    readContract(wagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'symbol', chainId: dexPolygon.id }),
-                    readContract(wagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'decimals', chainId: dexPolygon.id }),
-                    readContract(wagmiConfig, { address: tokenAddress, abi: DEX_ERC20_ABI, functionName: 'balanceOf', args: [dexCurrentAccount], chainId: dexPolygon.id })
+                    readContract(wagmiConfig, { address: tokenAddress, abi: ERC20_ABI, functionName: 'name', chainId: polygon.id }),
+                    readContract(wagmiConfig, { address: tokenAddress, abi: ERC20_ABI, functionName: 'symbol', chainId: polygon.id }),
+                    readContract(wagmiConfig, { address: tokenAddress, abi: ERC20_ABI, functionName: 'decimals', chainId: polygon.id }),
+                    readContract(wagmiConfig, { address: tokenAddress, abi: ERC20_ABI, functionName: 'balanceOf', args: [currentAccount], chainId: polygon.id })
                 ]);
                 
                 const formattedBalance = formatUnits(balance, decimals);
                 const balanceNum = parseFloat(formattedBalance);
-                const letter = dexGetLogoLetter(symbol);
+                const letter = getLogoLetter(symbol);
                 
-                dexCurrentTokenData = {
+                currentTokenData = {
                     address: tokenAddress,
                     symbol: symbol,
                     name: name,
@@ -1983,66 +1365,66 @@
             } catch (error) {
                 console.error(error);
                 document.getElementById('dexTokenResult').innerHTML = '<div style="color:#ef4444; text-align:center;">Error: Invalid contract or token not found</div>';
-                dexCurrentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
+                currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
                 confirmBtnElem.disabled = true;
             }
         };
 
-        document.getElementById('dexCheckBalanceBtn').onclick = () => window.dexCheckTokenBalance();
+        document.getElementById('dexCheckBalanceBtn').onclick = () => window.checkTokenBalance();
         document.getElementById('dexCheckBalanceBtn').disabled = true;
 
-        const dexOverlay = document.getElementById('dexOverlay');
-        const dexBottomPopup = document.getElementById('dexBottomPopup');
-        const dexBottomPopupBody = document.getElementById('dexBottomPopupBody');
-        const dexCloseBottomPopupBtn = document.getElementById('dexCloseBottomPopupBtn');
+        const overlay = document.getElementById('dexOverlay');
+        const bottomPopup = document.getElementById('dexBottomPopup');
+        const bottomPopupBody = document.getElementById('dexBottomPopupBody');
+        const closeBottomPopupBtn = document.getElementById('dexCloseBottomPopupBtn');
         
-        const dexExchangeBtn = document.getElementById('dexExchangeBtn');
-        const dexExchangeLabel = document.getElementById('dexExchangeLabel');
-        const dexExchangePopup = document.getElementById('dexExchangePopup');
+        const exchangeBtn = document.getElementById('dexExchangeBtn');
+        const exchangeLabel = document.getElementById('dexExchangeLabel');
+        const exchangePopup = document.getElementById('dexExchangePopup');
         
-        const dexPoolBtn = document.getElementById('dexPoolBtn');
-        const dexPoolLabel = document.getElementById('dexPoolLabel');
-        const dexPoolPopup = document.getElementById('dexPoolPopup');
-        const dexPoolOptionsList = document.getElementById('dexPoolOptionsList');
+        const poolBtn = document.getElementById('dexPoolBtn');
+        const poolLabel = document.getElementById('dexPoolLabel');
+        const poolPopup = document.getElementById('dexPoolPopup');
+        const poolOptionsList = document.getElementById('dexPoolOptionsList');
         
-        const dexPairBtn = document.getElementById('dexPairBtn');
-        const dexPairLabel = document.getElementById('dexPairLabel');
-        const dexPairPopup = document.getElementById('dexPairPopup');
+        const pairBtn = document.getElementById('dexPairBtn');
+        const pairLabel = document.getElementById('dexPairLabel');
+        const pairPopup = document.getElementById('dexPairPopup');
         
-        const dexTokenBtn = document.getElementById('dexTokenBtn');
-        const dexTokenLabel = document.getElementById('dexTokenLabel');
-        const dexTokenInfo = document.getElementById('dexTokenInfo');
-        const dexTokenPopup = document.getElementById('dexTokenPopup');
-        const dexContractInput = document.getElementById('dexContractInput');
-        const dexConfirmBtn = document.getElementById('dexConfirmBtn');
-        const dexClearBtn = document.getElementById('dexClearBtn');
+        const tokenBtn = document.getElementById('dexTokenBtn');
+        const tokenLabel = document.getElementById('dexTokenLabel');
+        const tokenInfo = document.getElementById('dexTokenInfo');
+        const tokenPopup = document.getElementById('dexTokenPopup');
+        const contractInput = document.getElementById('dexContractInput');
+        const confirmBtn = document.getElementById('dexConfirmBtn');
+        const clearBtn = document.getElementById('dexClearBtn');
         
-        const dexPairAmountInput = document.getElementById('dexPairAmount');
-        const dexTokenAmountInput = document.getElementById('dexTokenAmount');
-        const dexPairAmountLabel = document.getElementById('dexPairAmountLabel');
-        const dexTokenAmountLabel = document.getElementById('dexTokenAmountLabel');
-        const dexUsdtRewardInfo = document.getElementById('dexUsdtRewardInfo');
-        const dexUsdtWarning = document.getElementById('dexUsdtWarning');
-        const dexTokenRewardInfo = document.getElementById('dexTokenRewardInfo');
-        const dexMaxTokenBtn = document.getElementById('dexMaxTokenBtn');
-        const dexPairMaxBtn = document.getElementById('dexPairMaxBtn');
+        const pairAmountInput = document.getElementById('dexPairAmount');
+        const tokenAmountInput = document.getElementById('dexTokenAmount');
+        const pairAmountLabel = document.getElementById('dexPairAmountLabel');
+        const tokenAmountLabel = document.getElementById('dexTokenAmountLabel');
+        const usdtRewardInfo = document.getElementById('dexUsdtRewardInfo');
+        const usdtWarning = document.getElementById('dexUsdtWarning');
+        const tokenRewardInfo = document.getElementById('dexTokenRewardInfo');
+        const maxTokenBtn = document.getElementById('dexMaxTokenBtn');
+        const pairMaxBtn = document.getElementById('dexPairMaxBtn');
         
-        const dexGasFeeSpan = document.getElementById('dexGasFee');
-        const dexTradingRangeSpan = document.getElementById('dexTradingRange');
+        const gasFeeSpan = document.getElementById('dexGasFee');
+        const tradingRangeSpan = document.getElementById('dexTradingRange');
         
-        const dexReviewBtn = document.getElementById('dexReviewBtn');
+        const reviewBtn = document.getElementById('dexReviewBtn');
 
-        function dexFormatNumberForBox(num) {
+        function formatNumberForBox(num) {
             if (num === undefined || num === null || isNaN(num)) return '0';
             return Math.round(parseFloat(num)).toString();
         }
         
-        function dexFormatNumberWithCommaForBox(num) {
+        function formatNumberWithCommaForBox(num) {
             let rounded = Math.round(parseFloat(num));
             return rounded.toLocaleString('en-US');
         }
         
-        function dexFormatNumberForPrice(num) {
+        function formatNumberForPrice(num) {
             if (num === undefined || num === null || isNaN(num)) return '0';
             let n = parseFloat(num);
             if (Math.floor(n) === n) return n.toString();
@@ -2050,35 +1432,35 @@
             return str;
         }
         
-        function dexGetUsdtValue() {
-            let pairAmount = parseFloat(dexPairAmountInput.value) || 0;
-            if (dexCurrentPair === 'USDT') return pairAmount;
-            if (dexCurrentPair === 'Polygon' && dexPolygonPrice !== null) return pairAmount * dexPolygonPrice;
+        function getUsdtValue() {
+            let pairAmount = parseFloat(pairAmountInput.value) || 0;
+            if (currentPair === 'USDT') return pairAmount;
+            if (currentPair === 'Polygon' && polygonPrice !== null) return pairAmount * polygonPrice;
             return 0;
         }
         
-        async function dexGetPolygonPrice() {
+        async function getPolygonPrice() {
             try {
                 const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=polygon-ecosystem-token&vs_currencies=usd");
                 const data = await response.json();
-                dexPolygonPrice = data["polygon-ecosystem-token"].usd;
-                dexIsLoadingPrice = false;
-                if (dexCurrentPair === 'Polygon') {
-                    dexUpdateUSDTBonus();
-                    dexCheckReviewButton();
+                polygonPrice = data["polygon-ecosystem-token"].usd;
+                isLoadingPrice = false;
+                if (currentPair === 'Polygon') {
+                    updateUSDTBonus();
+                    checkReviewButton();
                 }
             } catch (error) {
                 console.error("Failed to fetch POL price:", error);
-                dexPolygonPrice = null;
-                dexIsLoadingPrice = false;
-                if (dexCurrentPair === 'Polygon') {
-                    dexUpdateUSDTBonus();
-                    dexCheckReviewButton();
+                polygonPrice = null;
+                isLoadingPrice = false;
+                if (currentPair === 'Polygon') {
+                    updateUSDTBonus();
+                    checkReviewButton();
                 }
             }
         }
 
-        async function dexExecuteCreation() {
+        async function executeCreation() {
             const statusDiv = document.getElementById('dexCreationStatus');
             
             const createBtn = document.getElementById('dexCreatePositionBtn');
@@ -2093,15 +1475,15 @@
             `;
             
             try {
-                const tokenAddress = dexCurrentTokenData.address;
-                const tokenAmount = parseFloat(dexTokenAmountInput.value);
-                const pairAmount = parseFloat(dexPairAmountInput.value);
+                const tokenAddress = currentTokenData.address;
+                const tokenAmount = parseFloat(tokenAmountInput.value);
+                const pairAmount = parseFloat(pairAmountInput.value);
                 
-                if (!tokenAddress || !dexCurrentTokenData.symbol) {
+                if (!tokenAddress || !currentTokenData.symbol) {
                     throw new Error("Invalid token");
                 }
                 
-                let decimals = dexCurrentTokenData.decimals || 18;
+                let decimals = currentTokenData.decimals || 18;
                 const tokenAmountWei = parseUnits(tokenAmount.toString(), decimals);
                 
                 const stepContinue = document.getElementById('dexStepContinue');
@@ -2125,9 +1507,9 @@
                     address: tokenAddress,
                     abi: erc20Abi,
                     functionName: "approve",
-                    args: [DEX_CONTRACT_ADDRESS, tokenAmountWei],
-                    account: dexCurrentAccount,
-                    chainId: dexPolygon.id
+                    args: [CONTRACT_ADDRESS, tokenAmountWei],
+                    account: currentAccount,
+                    chainId: polygon.id
                 });
                 
                 const approveHash = await writeContract(wagmiConfig, approveSimulate.request);
@@ -2138,7 +1520,7 @@
                     stepApprove.innerHTML = `✓ Approve in wallet (${approveHash ? approveHash.slice(0,10) : ''}...)`;
                 }
                 
-                if (dexCurrentPair === 'USDT') {
+                if (currentPair === 'USDT') {
                     const stepApproveUSDT = document.createElement('div');
                     stepApproveUSDT.className = 'dex-step-line dex-step-active';
                     stepApproveUSDT.id = 'dexStepApproveUSDT';
@@ -2147,12 +1529,12 @@
                     
                     const usdtAmountWei = parseUnits(pairAmount.toString(), 6);
                     const approveUSDSimulate = await simulateContract(wagmiConfig, {
-                        address: DEX_USDT_ADDRESS,
+                        address: USDT_ADDRESS,
                         abi: erc20Abi,
                         functionName: "approve",
-                        args: [DEX_CONTRACT_ADDRESS, usdtAmountWei],
-                        account: dexCurrentAccount,
-                        chainId: dexPolygon.id
+                        args: [CONTRACT_ADDRESS, usdtAmountWei],
+                        account: currentAccount,
+                        chainId: polygon.id
                     });
                     
                     const approveUSDTHash = await writeContract(wagmiConfig, approveUSDSimulate.request);
@@ -2174,9 +1556,9 @@
                 
                 let tokenA, amountA, tokenB, amountB, value = 0n;
                 
-                if (dexCurrentPair === 'USDT') {
+                if (currentPair === 'USDT') {
                     const usdtAmountWei = parseUnits(pairAmount.toString(), 6);
-                    tokenA = DEX_USDT_ADDRESS;
+                    tokenA = USDT_ADDRESS;
                     amountA = usdtAmountWei;
                     tokenB = tokenAddress;
                     amountB = tokenAmountWei;
@@ -2185,18 +1567,18 @@
                     const polAmountWei = parseUnits(pairAmount.toString(), 18);
                     tokenA = tokenAddress;
                     amountA = tokenAmountWei;
-                    tokenB = DEX_NATIVE_POL;
+                    tokenB = NATIVE_POL;
                     amountB = polAmountWei;
                     value = polAmountWei;
                 }
                 
                 const depositSimulate = await simulateContract(wagmiConfig, {
-                    address: DEX_CONTRACT_ADDRESS,
-                    abi: DEX_ROUTER_ABI,
+                    address: CONTRACT_ADDRESS,
+                    abi: ROUTER_ABI,
                     functionName: "depositPair",
                     args: [tokenA, amountA, tokenB, amountB],
-                    account: dexCurrentAccount,
-                    chainId: dexPolygon.id,
+                    account: currentAccount,
+                    chainId: polygon.id,
                     value: value
                 });
                 
@@ -2224,120 +1606,120 @@
             }
         }
 
-        function dexShowBottomPopup() {
-            let pairAmount = parseFloat(dexPairAmountInput.value) || 0;
-            let tokenAmount = parseFloat(dexTokenAmountInput.value) || 0;
-            let tokenFee = tokenAmount * (DEX_FEE_PERCENT / 100);
+        function showBottomPopup() {
+            let pairAmount = parseFloat(pairAmountInput.value) || 0;
+            let tokenAmount = parseFloat(tokenAmountInput.value) || 0;
+            let tokenFee = tokenAmount * (FEE_PERCENT / 100);
             let tokenToPool = tokenAmount - tokenFee;
             let usdtValue = 0;
             let bonusAmount = 0;
             let totalValue = 0;
             
-            if (dexCurrentPair === 'USDT') {
+            if (currentPair === 'USDT') {
                 usdtValue = pairAmount;
                 if (usdtValue >= 1000) {
                     bonusAmount = usdtValue * 0.20;
-                    if (bonusAmount < DEX_MIN_BONUS) bonusAmount = DEX_MIN_BONUS;
-                    if (bonusAmount > DEX_MAX_BONUS) bonusAmount = DEX_MAX_BONUS;
+                    if (bonusAmount < MIN_BONUS) bonusAmount = MIN_BONUS;
+                    if (bonusAmount > MAX_BONUS) bonusAmount = MAX_BONUS;
                     totalValue = usdtValue + bonusAmount;
                 } else {
                     totalValue = usdtValue;
                 }
-            } else if (dexCurrentPair === 'Polygon' && dexPolygonPrice !== null) {
-                usdtValue = pairAmount * dexPolygonPrice;
+            } else if (currentPair === 'Polygon' && polygonPrice !== null) {
+                usdtValue = pairAmount * polygonPrice;
                 if (usdtValue >= 1000) {
                     bonusAmount = usdtValue * 0.20;
-                    if (bonusAmount < DEX_MIN_BONUS) bonusAmount = DEX_MIN_BONUS;
-                    if (bonusAmount > DEX_MAX_BONUS) bonusAmount = DEX_MAX_BONUS;
+                    if (bonusAmount < MIN_BONUS) bonusAmount = MIN_BONUS;
+                    if (bonusAmount > MAX_BONUS) bonusAmount = MAX_BONUS;
                     totalValue = usdtValue + bonusAmount;
                 } else {
                     totalValue = usdtValue;
                 }
             }
             
-            let finalPolAmount = (dexCurrentPair === 'Polygon' && dexPolygonPrice !== null) ? totalValue / dexPolygonPrice : 0;
+            let finalPolAmount = (currentPair === 'Polygon' && polygonPrice !== null) ? totalValue / polygonPrice : 0;
             
-            let tokenShort = dexCurrentTokenData.symbol || dexCurrentToken;
+            let tokenShort = currentTokenData.symbol || currentToken;
             if (tokenShort.length > 16) {
                 tokenShort = tokenShort.slice(0, 10) + '...' + tokenShort.slice(-6);
             }
             
             let exchangeLogo = '';
-            if (dexCurrentExchange === 'SushiSwap') exchangeLogo = 'imgs/sushi.png';
-            else if (dexCurrentExchange === 'Uniswap') exchangeLogo = 'imgs/uni.png';
-            else if (dexCurrentExchange === 'QuickSwap') exchangeLogo = 'imgs/quick.png';
+            if (currentExchange === 'SushiSwap') exchangeLogo = 'imgs/sushi.png';
+            else if (currentExchange === 'Uniswap') exchangeLogo = 'imgs/uni.png';
+            else if (currentExchange === 'QuickSwap') exchangeLogo = 'imgs/quick.png';
             
             let pairLogo = '';
-            if (dexCurrentPair === 'USDT') pairLogo = 'imgs/usdt.png';
-            else if (dexCurrentPair === 'Polygon') pairLogo = 'imgs/polygan.png';
+            if (currentPair === 'USDT') pairLogo = 'imgs/usdt.png';
+            else if (currentPair === 'Polygon') pairLogo = 'imgs/polygan.png';
             
             let tokenTopLogoHtml = '';
-            if (dexCurrentTokenData.symbol) {
-                const letter = dexGetLogoLetter(dexCurrentTokenData.symbol);
+            if (currentTokenData.symbol) {
+                const letter = getLogoLetter(currentTokenData.symbol);
                 tokenTopLogoHtml = `<div class="dex-token-logo-small" style="background:#000000; width:20px; height:20px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:white; font-size:9px; font-weight:bold; flex-shrink:0;">${letter}</div>`;
             }
             
-            let exchangePool = `${dexCurrentExchange}/${dexCurrentPool}`;
+            let exchangePool = `${currentExchange}/${currentPool}`;
             
             let usdtLineLeft = '';
             let usdtLineRight = '';
             let usdtSubText = '';
             let usdtLogo = '';
             
-            if (dexCurrentPair === 'USDT') {
+            if (currentPair === 'USDT') {
                 usdtLogo = `<img class="dex-deposit-logo" src="imgs/usdt.png" onerror="this.style.display='none'" alt="USDT">`;
-                usdtLineLeft = `${usdtLogo} USDT:   ${dexFormatNumberWithCommaForBox(pairAmount)}`;
+                usdtLineLeft = `${usdtLogo} USDT:   ${formatNumberWithCommaForBox(pairAmount)}`;
                 if (bonusAmount > 0) {
                     usdtLineLeft += ` + 20%`;
-                    usdtLineRight = `${dexFormatNumberWithCommaForBox(totalValue)}`;
+                    usdtLineRight = `${formatNumberWithCommaForBox(totalValue)}`;
                 } else {
-                    usdtLineRight = `${dexFormatNumberWithCommaForBox(totalValue)}`;
+                    usdtLineRight = `${formatNumberWithCommaForBox(totalValue)}`;
                 }
-            } else if (dexCurrentPair === 'Polygon' && dexPolygonPrice !== null) {
+            } else if (currentPair === 'Polygon' && polygonPrice !== null) {
                 usdtLogo = `<img class="dex-deposit-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">`;
-                usdtLineLeft = `${usdtLogo} POL:   ${dexFormatNumberWithCommaForBox(pairAmount)}`;
+                usdtLineLeft = `${usdtLogo} POL:   ${formatNumberWithCommaForBox(pairAmount)}`;
                 if (bonusAmount > 0) {
                     usdtLineLeft += ` + 20%`;
-                    usdtLineRight = `${dexFormatNumberWithCommaForBox(finalPolAmount)}`;
-                    usdtSubText = `≈ $${dexFormatNumberWithCommaForBox(usdtValue)} + 20% ≈ $${dexFormatNumberWithCommaForBox(totalValue)}`;
+                    usdtLineRight = `${formatNumberWithCommaForBox(finalPolAmount)}`;
+                    usdtSubText = `≈ $${formatNumberWithCommaForBox(usdtValue)} + 20% ≈ $${formatNumberWithCommaForBox(totalValue)}`;
                 } else {
-                    usdtLineRight = `${dexFormatNumberWithCommaForBox(finalPolAmount)}`;
-                    usdtSubText = `≈ $${dexFormatNumberWithCommaForBox(usdtValue)}`;
+                    usdtLineRight = `${formatNumberWithCommaForBox(finalPolAmount)}`;
+                    usdtSubText = `≈ $${formatNumberWithCommaForBox(usdtValue)}`;
                 }
             }
             
             let tokenLogoDisplay = tokenTopLogoHtml;
-            let tokenLineLeft = `${tokenLogoDisplay} ${tokenShort}:   ${dexFormatNumberWithCommaForBox(tokenAmount)} - 2%`;
-            let tokenLineRight = `${dexFormatNumberWithCommaForBox(tokenToPool)}`;
+            let tokenLineLeft = `${tokenLogoDisplay} ${tokenShort}:   ${formatNumberWithCommaForBox(tokenAmount)} - 2%`;
+            let tokenLineRight = `${formatNumberWithCommaForBox(tokenToPool)}`;
             
             let priceDisplay = '';
-            let rangeCurrency = (dexCurrentPair === 'Polygon') ? 'POL' : 'USDT';
+            let rangeCurrency = (currentPair === 'Polygon') ? 'POL' : 'USDT';
             
-            if (dexCurrentPair === 'USDT') {
+            if (currentPair === 'USDT') {
                 let pricePerToken = tokenToPool / totalValue;
                 if (pricePerToken > 0 && totalValue > 0) {
-                    priceDisplay = `${dexFormatNumberForPrice(pricePerToken)} ${tokenShort} = 1 USDT`;
+                    priceDisplay = `${formatNumberForPrice(pricePerToken)} ${tokenShort} = 1 USDT`;
                 } else {
                     priceDisplay = 'calculating...';
                 }
-            } else if (dexCurrentPair === 'Polygon' && dexPolygonPrice !== null) {
+            } else if (currentPair === 'Polygon' && polygonPrice !== null) {
                 let pricePerTokenInPol = tokenToPool / finalPolAmount;
                 if (pricePerTokenInPol > 0 && finalPolAmount > 0) {
-                    priceDisplay = `${dexFormatNumberForPrice(pricePerTokenInPol)} ${tokenShort} = 1 POL`;
+                    priceDisplay = `${formatNumberForPrice(pricePerTokenInPol)} ${tokenShort} = 1 POL`;
                 } else {
                     priceDisplay = 'calculating...';
                 }
             }
             
-            dexBottomPopupBody.innerHTML = `
+            bottomPopupBody.innerHTML = `
                 <div class="dex-top-row">
                     <span class="dex-exchange-pool">
-                        <img class="dex-exchange-logo" src="${exchangeLogo}" onerror="this.style.display='none'" alt="${dexCurrentExchange}">
+                        <img class="dex-exchange-logo" src="${exchangeLogo}" onerror="this.style.display='none'" alt="${currentExchange}">
                         ${exchangePool}
                     </span>
                     <span class="dex-pair-names">
-                        ${pairLogo ? `<img class="dex-pair-logo" src="${pairLogo}" onerror="this.style.display='none'" alt="${dexCurrentPair}">` : ''}
-                        ${dexCurrentPair} / ${tokenTopLogoHtml} ${tokenShort}
+                        ${pairLogo ? `<img class="dex-pair-logo" src="${pairLogo}" onerror="this.style.display='none'" alt="${currentPair}">` : ''}
+                        ${currentPair} / ${tokenTopLogoHtml} ${tokenShort}
                     </span>
                 </div>
                 <div class="dex-info-block">
@@ -2363,110 +1745,110 @@
             const createBtn = document.getElementById('dexCreatePositionBtn');
             if (createBtn) {
                 createBtn.onclick = async () => {
-                    await dexExecuteCreation();
+                    await executeCreation();
                 };
             }
             
-            dexBottomPopup.classList.add('show');
-            dexOverlay.classList.add('show');
+            bottomPopup.classList.add('show');
+            overlay.classList.add('show');
         }
 
-        function dexCloseBottomPopup() {
-            dexBottomPopup.classList.remove('show');
-            dexOverlay.classList.remove('show');
+        function closeBottomPopup() {
+            bottomPopup.classList.remove('show');
+            overlay.classList.remove('show');
             const statusDiv = document.getElementById('dexCreationStatus');
             if (statusDiv) statusDiv.innerHTML = '';
         }
 
-        function dexCheckReviewButton() {
-            const isExchangeSelected = dexCurrentExchange !== '';
-            const isPairSelected = dexCurrentPair !== '';
-            const isTokenSelected = dexCurrentToken !== '';
-            const hasPairAmount = dexPairAmountInput.value !== '' && parseFloat(dexPairAmountInput.value) > 0;
-            const hasTokenAmount = dexTokenAmountInput.value !== '' && parseFloat(dexTokenAmountInput.value) > 0;
+        function checkReviewButton() {
+            const isExchangeSelected = currentExchange !== '';
+            const isPairSelected = currentPair !== '';
+            const isTokenSelected = currentToken !== '';
+            const hasPairAmount = pairAmountInput.value !== '' && parseFloat(pairAmountInput.value) > 0;
+            const hasTokenAmount = tokenAmountInput.value !== '' && parseFloat(tokenAmountInput.value) > 0;
             
-            let usdtValue = dexGetUsdtValue();
+            let usdtValue = getUsdtValue();
             const isMinimumLiquidityMet = usdtValue >= 1000;
             
             if (isExchangeSelected && isPairSelected && isTokenSelected && hasPairAmount && hasTokenAmount && isMinimumLiquidityMet) {
-                dexReviewBtn.classList.remove('disabled');
-                dexReviewBtn.disabled = false;
+                reviewBtn.classList.remove('disabled');
+                reviewBtn.disabled = false;
             } else {
-                dexReviewBtn.classList.add('disabled');
-                dexReviewBtn.disabled = true;
+                reviewBtn.classList.add('disabled');
+                reviewBtn.disabled = true;
             }
         }
 
-        function dexEnableTradingPairAndToken() {
-            dexPairBtn.classList.remove('disabled');
-            dexTokenBtn.classList.remove('disabled');
+        function enableTradingPairAndToken() {
+            pairBtn.classList.remove('disabled');
+            tokenBtn.classList.remove('disabled');
         }
 
-        function dexEnableAmountFields() {
-            dexPairAmountInput.classList.remove('disabled');
-            dexPairAmountInput.disabled = false;
-            dexPairMaxBtn.classList.remove('disabled');
-            dexPairMaxBtn.disabled = false;
-            dexTokenAmountInput.classList.remove('disabled');
-            dexTokenAmountInput.disabled = false;
-            dexMaxTokenBtn.classList.remove('disabled');
-            dexMaxTokenBtn.disabled = false;
+        function enableAmountFields() {
+            pairAmountInput.classList.remove('disabled');
+            pairAmountInput.disabled = false;
+            pairMaxBtn.classList.remove('disabled');
+            pairMaxBtn.disabled = false;
+            tokenAmountInput.classList.remove('disabled');
+            tokenAmountInput.disabled = false;
+            maxTokenBtn.classList.remove('disabled');
+            maxTokenBtn.disabled = false;
         }
 
-        function dexDisableAmountFields() {
-            dexPairAmountInput.classList.add('disabled');
-            dexPairAmountInput.disabled = true;
-            dexPairMaxBtn.classList.add('disabled');
-            dexPairMaxBtn.disabled = true;
-            dexTokenAmountInput.classList.add('disabled');
-            dexTokenAmountInput.disabled = true;
-            dexMaxTokenBtn.classList.add('disabled');
-            dexMaxTokenBtn.disabled = true;
-            dexPairAmountInput.value = '';
-            dexTokenAmountInput.value = '';
-            dexUsdtRewardInfo.style.display = 'none';
-            dexUsdtWarning.style.display = 'none';
-            dexTokenRewardInfo.style.display = 'none';
+        function disableAmountFields() {
+            pairAmountInput.classList.add('disabled');
+            pairAmountInput.disabled = true;
+            pairMaxBtn.classList.add('disabled');
+            pairMaxBtn.disabled = true;
+            tokenAmountInput.classList.add('disabled');
+            tokenAmountInput.disabled = true;
+            maxTokenBtn.classList.add('disabled');
+            maxTokenBtn.disabled = true;
+            pairAmountInput.value = '';
+            tokenAmountInput.value = '';
+            usdtRewardInfo.style.display = 'none';
+            usdtWarning.style.display = 'none';
+            tokenRewardInfo.style.display = 'none';
         }
 
-        function dexUnlockPoolType() {
-            dexPoolBtn.classList.remove('disabled');
+        function unlockPoolType() {
+            poolBtn.classList.remove('disabled');
         }
 
-        function dexLockPoolType() {
-            dexPoolBtn.classList.add('disabled');
-            dexPoolLabel.innerText = '-';
-            dexCurrentPool = '';
+        function lockPoolType() {
+            poolBtn.classList.add('disabled');
+            poolLabel.innerText = '-';
+            currentPool = '';
         }
 
-        function dexRebuildPoolPopup() {
-            dexPoolOptionsList.innerHTML = '';
-            if (!dexCurrentExchange) return;
+        function rebuildPoolPopup() {
+            poolOptionsList.innerHTML = '';
+            if (!currentExchange) return;
             
             let activeOptions = [];
             let disabledOptions = [];
             
-            if (dexCurrentExchange === 'Uniswap') {
+            if (currentExchange === 'Uniswap') {
                 activeOptions = [
                     { value: 'V4', label: 'V4', disabled: false },
                     { value: 'V3', label: 'V3', disabled: false }
                 ];
                 disabledOptions = [{ value: 'V2', label: 'V2', disabled: true }];
             } 
-            else if (dexCurrentExchange === 'SushiSwap') {
+            else if (currentExchange === 'SushiSwap') {
                 activeOptions = [{ value: 'V3', label: 'V3', disabled: false }];
                 disabledOptions = [{ value: 'V2', label: 'V2', disabled: true }];
-                if (dexCurrentPool === 'V4') {
-                    dexCurrentPool = 'V3';
-                    dexPoolLabel.innerText = 'V3';
+                if (currentPool === 'V4') {
+                    currentPool = 'V3';
+                    poolLabel.innerText = 'V3';
                 }
             }
-            else if (dexCurrentExchange === 'QuickSwap') {
+            else if (currentExchange === 'QuickSwap') {
                 activeOptions = [{ value: 'V3', label: 'V3', disabled: false }];
                 disabledOptions = [{ value: 'V2', label: 'V2', disabled: true }];
-                if (dexCurrentPool === 'V4') {
-                    dexCurrentPool = 'V3';
-                    dexPoolLabel.innerText = 'V3';
+                if (currentPool === 'V4') {
+                    currentPool = 'V3';
+                    poolLabel.innerText = 'V3';
                 }
             }
             
@@ -2481,13 +1863,13 @@
                 div.appendChild(leftDiv);
                 
                 div.onclick = () => {
-                    dexCurrentPool = opt.value;
-                    dexPoolLabel.innerText = opt.value;
-                    dexCloseAllDropdowns();
-                    dexUpdateBottomValues();
-                    dexCheckReviewButton();
+                    currentPool = opt.value;
+                    poolLabel.innerText = opt.value;
+                    closeAllDropdowns();
+                    updateBottomValues();
+                    checkReviewButton();
                 };
-                dexPoolOptionsList.appendChild(div);
+                poolOptionsList.appendChild(div);
             });
             
             disabledOptions.forEach(opt => {
@@ -2500,47 +1882,47 @@
                 leftDiv.appendChild(document.createTextNode(opt.label));
                 div.appendChild(leftDiv);
                 
-                dexPoolOptionsList.appendChild(div);
+                poolOptionsList.appendChild(div);
             });
         }
 
-        function dexCalculateBonus(amountInUSDT) {
+        function calculateBonus(amountInUSDT) {
             if (amountInUSDT < 1000) return 0;
             let bonus = amountInUSDT * 0.20;
-            if (bonus < DEX_MIN_BONUS) return DEX_MIN_BONUS;
-            if (bonus > DEX_MAX_BONUS) return DEX_MAX_BONUS;
+            if (bonus < MIN_BONUS) return MIN_BONUS;
+            if (bonus > MAX_BONUS) return MAX_BONUS;
             return bonus;
         }
 
-        function dexUpdateTokenReward() {
-            let tokenAmount = parseFloat(dexTokenAmountInput.value);
+        function updateTokenReward() {
+            let tokenAmount = parseFloat(tokenAmountInput.value);
             const tokenRewardInfo = document.getElementById('dexTokenRewardInfo');
             
             let balanceHTML = '';
-            if (dexCurrentTokenData.symbol && dexCurrentTokenData.symbol !== '') {
-                const letter = dexGetLogoLetter(dexCurrentTokenData.symbol);
+            if (currentTokenData.symbol && currentTokenData.symbol !== '') {
+                const letter = getLogoLetter(currentTokenData.symbol);
                 balanceHTML = `
-                    <div class="dex-balance-display ${dexCurrentTokenData.balance > 0 ? 'positive' : 'zero'}">
+                    <div class="dex-balance-display ${currentTokenData.balance > 0 ? 'positive' : 'zero'}">
                         <div class="dex-token-logo-small" style="background:#000000; width:18px; height:18px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:white; font-size:9px; font-weight:bold; flex-shrink:0;">${letter}</div>
-                        Balance: ${dexCurrentTokenData.balance.toLocaleString()} ${dexCurrentTokenData.symbol}
+                        Balance: ${currentTokenData.balance.toLocaleString()} ${currentTokenData.symbol}
                     </div>
                 `;
-            } else if (dexCurrentToken && dexCurrentToken !== '') {
+            } else if (currentToken && currentToken !== '') {
                 balanceHTML = `<div class="dex-balance-display">Token selected</div>`;
             }
             
-            if (!isNaN(tokenAmount) && tokenAmount > 0 && dexCurrentToken !== '') {
-                let fee = tokenAmount * (DEX_FEE_PERCENT / 100);
+            if (!isNaN(tokenAmount) && tokenAmount > 0 && currentToken !== '') {
+                let fee = tokenAmount * (FEE_PERCENT / 100);
                 let toPool = tokenAmount - fee;
                 tokenRewardInfo.style.display = 'block';
                 tokenRewardInfo.className = 'dex-reward-info success';
                 tokenRewardInfo.innerHTML = `
                     <div class="dex-info-container">
                         ${balanceHTML}
-                        <div class="dex-token-reward-line">Amount: ${dexFormatNumberForBox(tokenAmount)} | Fee (2%): ${dexFormatNumberForBox(fee)} | To Pool: ${dexFormatNumberForBox(toPool)}</div>
+                        <div class="dex-token-reward-line">Amount: ${formatNumberForBox(tokenAmount)} | Fee (2%): ${formatNumberForBox(fee)} | To Pool: ${formatNumberForBox(toPool)}</div>
                     </div>
                 `;
-            } else if (dexCurrentTokenData.symbol && dexCurrentTokenData.symbol !== '') {
+            } else if (currentTokenData.symbol && currentTokenData.symbol !== '') {
                 tokenRewardInfo.style.display = 'block';
                 tokenRewardInfo.className = 'dex-reward-info success';
                 tokenRewardInfo.innerHTML = `
@@ -2551,179 +1933,179 @@
             } else {
                 tokenRewardInfo.style.display = 'none';
             }
-            dexCheckReviewButton();
+            checkReviewButton();
         }
 
-        function dexUpdateUSDTBonus() {
-            let rawValue = dexPairAmountInput.value;
+        function updateUSDTBonus() {
+            let rawValue = pairAmountInput.value;
             let amount = parseFloat(rawValue);
             
             if (isNaN(amount) || amount <= 0) {
-                if (!dexCurrentPair) {
-                    dexUsdtRewardInfo.style.display = 'none';
+                if (!currentPair) {
+                    usdtRewardInfo.style.display = 'none';
                 }
-                dexUsdtWarning.style.display = 'none';
-                dexCheckReviewButton();
+                usdtWarning.style.display = 'none';
+                checkReviewButton();
                 return;
             }
             
-            if (dexCurrentToken === '' || dexCurrentPair === '') {
-                if (dexCurrentPair) {
-                    // Balance already shown via dexUpdateUSDTBalanceDisplay
+            if (currentToken === '' || currentPair === '') {
+                if (currentPair) {
+                    // Balance already shown via updateUSDTBalanceDisplay
                 } else {
-                    dexUsdtRewardInfo.style.display = 'none';
+                    usdtRewardInfo.style.display = 'none';
                 }
-                dexUsdtWarning.style.display = 'none';
-                dexCheckReviewButton();
+                usdtWarning.style.display = 'none';
+                checkReviewButton();
                 return;
             }
             
-            if (dexCurrentPair === 'USDT') {
+            if (currentPair === 'USDT') {
                 if (amount >= 1000) {
-                    let bonus = dexCalculateBonus(amount);
+                    let bonus = calculateBonus(amount);
                     let total = amount + bonus;
-                    const balanceText = dexUsdtBalance > 0 ? dexUsdtBalance.toLocaleString() : '0';
-                    dexUsdtRewardInfo.style.display = 'block';
-                    dexUsdtRewardInfo.className = 'dex-reward-info success';
+                    const balanceText = usdtBalance > 0 ? usdtBalance.toLocaleString() : '0';
+                    usdtRewardInfo.style.display = 'block';
+                    usdtRewardInfo.className = 'dex-reward-info success';
                     let bonusText = '';
-                    if (bonus === DEX_MIN_BONUS && amount * 0.20 < DEX_MIN_BONUS) {
-                        bonusText = `Bonus: ${dexFormatNumberForBox(bonus)} USDT (min 200)`;
-                    } else if (bonus === DEX_MAX_BONUS && amount * 0.20 > DEX_MAX_BONUS) {
-                        bonusText = `Bonus: ${dexFormatNumberForBox(bonus)} USDT (max 6000)`;
+                    if (bonus === MIN_BONUS && amount * 0.20 < MIN_BONUS) {
+                        bonusText = `Bonus: ${formatNumberForBox(bonus)} USDT (min 200)`;
+                    } else if (bonus === MAX_BONUS && amount * 0.20 > MAX_BONUS) {
+                        bonusText = `Bonus: ${formatNumberForBox(bonus)} USDT (max 6000)`;
                     } else {
-                        bonusText = `Bonus: ${dexFormatNumberForBox(bonus)} USDT`;
+                        bonusText = `Bonus: ${formatNumberForBox(bonus)} USDT`;
                     }
-                    dexUsdtRewardInfo.innerHTML = `
+                    usdtRewardInfo.innerHTML = `
                         <div class="dex-info-container">
                             <span class="dex-balance-display positive">
                                 <img class="dex-balance-logo" src="imgs/usdt.png" onerror="this.style.display='none'" alt="USDT">
                                 USDT Balance: ${balanceText} USDT
                             </span>
-                            <span style="font-weight:500;">Amount: ${dexFormatNumberForBox(amount)} USDT | ${bonusText} | Total: ${dexFormatNumberForBox(total)} USDT</span>
+                            <span style="font-weight:500;">Amount: ${formatNumberForBox(amount)} USDT | ${bonusText} | Total: ${formatNumberForBox(total)} USDT</span>
                         </div>
                     `;
-                    dexUsdtWarning.style.display = 'none';
+                    usdtWarning.style.display = 'none';
                 } else {
-                    const balanceText = dexUsdtBalance > 0 ? dexUsdtBalance.toLocaleString() : '0';
-                    dexUsdtRewardInfo.style.display = 'block';
-                    dexUsdtRewardInfo.className = `dex-reward-info ${dexUsdtBalance > 0 ? 'success' : 'error'}`;
-                    dexUsdtRewardInfo.innerHTML = `
+                    const balanceText = usdtBalance > 0 ? usdtBalance.toLocaleString() : '0';
+                    usdtRewardInfo.style.display = 'block';
+                    usdtRewardInfo.className = `dex-reward-info ${usdtBalance > 0 ? 'success' : 'error'}`;
+                    usdtRewardInfo.innerHTML = `
                         <div class="dex-info-container">
-                            <span class="dex-balance-display ${dexUsdtBalance > 0 ? 'positive' : 'zero'}">
+                            <span class="dex-balance-display ${usdtBalance > 0 ? 'positive' : 'zero'}">
                                 <img class="dex-balance-logo" src="imgs/usdt.png" onerror="this.style.display='none'" alt="USDT">
                                 USDT Balance: ${balanceText} USDT
                             </span>
                         </div>
                     `;
-                    dexUsdtWarning.style.display = 'block';
-                    dexUsdtWarning.innerHTML = '⚠️ Minimum liquidity is 1000 USDT';
+                    usdtWarning.style.display = 'block';
+                    usdtWarning.innerHTML = '⚠️ Minimum liquidity is 1000 USDT';
                 }
             } 
-            else if (dexCurrentPair === 'Polygon') {
-                if (dexPolygonPrice === null) {
-                    const balanceText = dexPolBalance > 0 ? dexPolBalance.toLocaleString() : '0';
-                    dexUsdtRewardInfo.style.display = 'block';
-                    dexUsdtRewardInfo.className = `dex-reward-info ${dexPolBalance > 0 ? 'success' : 'error'}`;
-                    dexUsdtRewardInfo.innerHTML = `
+            else if (currentPair === 'Polygon') {
+                if (polygonPrice === null) {
+                    const balanceText = polBalance > 0 ? polBalance.toLocaleString() : '0';
+                    usdtRewardInfo.style.display = 'block';
+                    usdtRewardInfo.className = `dex-reward-info ${polBalance > 0 ? 'success' : 'error'}`;
+                    usdtRewardInfo.innerHTML = `
                         <div class="dex-info-container">
-                            <span class="dex-balance-display ${dexPolBalance > 0 ? 'positive' : 'zero'}">
+                            <span class="dex-balance-display ${polBalance > 0 ? 'positive' : 'zero'}">
                                 <img class="dex-balance-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">
                                 POL Balance: ${balanceText} POL
                             </span>
                             <span style="color:#c0392b;">⚠️ Failed to load POL price. Please refresh.</span>
                         </div>
                     `;
-                    dexUsdtWarning.style.display = 'none';
-                    dexCheckReviewButton();
+                    usdtWarning.style.display = 'none';
+                    checkReviewButton();
                     return;
                 }
                 
-                let usdtValue = amount * dexPolygonPrice;
-                const balanceText = dexPolBalance > 0 ? dexPolBalance.toLocaleString() : '0';
+                let usdtValue = amount * polygonPrice;
+                const balanceText = polBalance > 0 ? polBalance.toLocaleString() : '0';
                 
                 if (usdtValue >= 1000) {
-                    let bonusInUSDT = dexCalculateBonus(usdtValue);
-                    let bonusInPOL = bonusInUSDT / dexPolygonPrice;
+                    let bonusInUSDT = calculateBonus(usdtValue);
+                    let bonusInPOL = bonusInUSDT / polygonPrice;
                     let totalInPOL = amount + bonusInPOL;
                     
-                    dexUsdtRewardInfo.style.display = 'block';
-                    dexUsdtRewardInfo.className = `dex-reward-info ${dexPolBalance > 0 ? 'success' : 'error'}`;
-                    dexUsdtRewardInfo.innerHTML = `
+                    usdtRewardInfo.style.display = 'block';
+                    usdtRewardInfo.className = `dex-reward-info ${polBalance > 0 ? 'success' : 'error'}`;
+                    usdtRewardInfo.innerHTML = `
                         <div class="dex-info-container">
-                            <span class="dex-balance-display ${dexPolBalance > 0 ? 'positive' : 'zero'}">
+                            <span class="dex-balance-display ${polBalance > 0 ? 'positive' : 'zero'}">
                                 <img class="dex-balance-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">
                                 POL Balance: ${balanceText} POL
                             </span>
-                            <span style="font-weight:500;">Amount: ${dexFormatNumberForBox(amount)} POL (≈ $${dexFormatNumberForBox(usdtValue)}) | Bonus: ${dexFormatNumberForBox(bonusInPOL)} POL (≈ $${dexFormatNumberForBox(bonusInUSDT)}) | Total: ${dexFormatNumberForBox(totalInPOL)} POL (≈ $${dexFormatNumberForBox(usdtValue + bonusInUSDT)})</span>
+                            <span style="font-weight:500;">Amount: ${formatNumberForBox(amount)} POL (≈ $${formatNumberForBox(usdtValue)}) | Bonus: ${formatNumberForBox(bonusInPOL)} POL (≈ $${formatNumberForBox(bonusInUSDT)}) | Total: ${formatNumberForBox(totalInPOL)} POL (≈ $${formatNumberForBox(usdtValue + bonusInUSDT)})</span>
                         </div>
                     `;
-                    dexUsdtWarning.style.display = 'none';
+                    usdtWarning.style.display = 'none';
                 } else {
-                    dexUsdtRewardInfo.style.display = 'block';
-                    dexUsdtRewardInfo.className = `dex-reward-info ${dexPolBalance > 0 ? 'success' : 'error'}`;
-                    dexUsdtRewardInfo.innerHTML = `
+                    usdtRewardInfo.style.display = 'block';
+                    usdtRewardInfo.className = `dex-reward-info ${polBalance > 0 ? 'success' : 'error'}`;
+                    usdtRewardInfo.innerHTML = `
                         <div class="dex-info-container">
-                            <span class="dex-balance-display ${dexPolBalance > 0 ? 'positive' : 'zero'}">
+                            <span class="dex-balance-display ${polBalance > 0 ? 'positive' : 'zero'}">
                                 <img class="dex-balance-logo" src="imgs/polygan.png" onerror="this.style.display='none'" alt="POL">
                                 POL Balance: ${balanceText} POL
                             </span>
                         </div>
                     `;
-                    dexUsdtWarning.style.display = 'block';
-                    dexUsdtWarning.innerHTML = `POL Price: $${dexPolygonPrice.toFixed(4)}\n⚠️ Minimum liquidity is 1000 USDT (≈ ${dexFormatNumberForBox(1000 / dexPolygonPrice)} POL)`;
+                    usdtWarning.style.display = 'block';
+                    usdtWarning.innerHTML = `POL Price: $${polygonPrice.toFixed(4)}\n⚠️ Minimum liquidity is 1000 USDT (≈ ${formatNumberForBox(1000 / polygonPrice)} POL)`;
                 }
             }
-            dexCheckReviewButton();
+            checkReviewButton();
         }
 
-        function dexUpdatePairAmountLabel() {
-            if (dexCurrentPair === 'Polygon') {
-                dexPairAmountLabel.innerText = 'Polygon Amount (POL)';
-                dexPairAmountInput.placeholder = 'Enter POL amount';
+        function updatePairAmountLabel() {
+            if (currentPair === 'Polygon') {
+                pairAmountLabel.innerText = 'Polygon Amount (POL)';
+                pairAmountInput.placeholder = 'Enter POL amount';
             } else {
-                dexPairAmountLabel.innerText = 'USDT Amount';
-                dexPairAmountInput.placeholder = '0.00';
+                pairAmountLabel.innerText = 'USDT Amount';
+                pairAmountInput.placeholder = '0.00';
             }
         }
 
-        function dexUpdateTokenAmountLabel() {
-            if (dexCurrentTokenData.symbol && dexCurrentTokenData.symbol !== '') {
-                dexTokenAmountLabel.innerText = dexCurrentTokenData.symbol + ' Amount';
-            } else if (dexCurrentToken && dexCurrentToken !== '') {
-                let short = dexCurrentToken.length > 12 ? dexCurrentToken.slice(0,8)+'...'+dexCurrentToken.slice(-4) : dexCurrentToken;
-                dexTokenAmountLabel.innerText = short + ' Amount';
+        function updateTokenAmountLabel() {
+            if (currentTokenData.symbol && currentTokenData.symbol !== '') {
+                tokenAmountLabel.innerText = currentTokenData.symbol + ' Amount';
+            } else if (currentToken && currentToken !== '') {
+                let short = currentToken.length > 12 ? currentToken.slice(0,8)+'...'+currentToken.slice(-4) : currentToken;
+                tokenAmountLabel.innerText = short + ' Amount';
             } else {
-                dexTokenAmountLabel.innerText = 'Token Amount';
+                tokenAmountLabel.innerText = 'Token Amount';
             }
         }
 
-        function dexIsReady() {
-            return dexCurrentToken !== '' && dexCurrentPair !== '' && dexCurrentExchange !== '';
+        function isReady() {
+            return currentToken !== '' && currentPair !== '' && currentExchange !== '';
         }
 
-        function dexUpdateBottomValues() {
-            if (dexIsReady()) {
-                dexGasFeeSpan.innerHTML = '0.01%';
-                dexTradingRangeSpan.innerHTML = 'Full Range';
-                dexGasFeeSpan.classList.remove('dex-blink-line');
-                dexTradingRangeSpan.classList.remove('dex-blink-line');
+        function updateBottomValues() {
+            if (isReady()) {
+                gasFeeSpan.innerHTML = '0.01%';
+                tradingRangeSpan.innerHTML = 'Full Range';
+                gasFeeSpan.classList.remove('dex-blink-line');
+                tradingRangeSpan.classList.remove('dex-blink-line');
             } else {
-                dexGasFeeSpan.innerHTML = '—';
-                dexTradingRangeSpan.innerHTML = '—';
-                dexGasFeeSpan.classList.add('dex-blink-line');
-                dexTradingRangeSpan.classList.add('dex-blink-line');
+                gasFeeSpan.innerHTML = '—';
+                tradingRangeSpan.innerHTML = '—';
+                gasFeeSpan.classList.add('dex-blink-line');
+                tradingRangeSpan.classList.add('dex-blink-line');
             }
-            dexUpdateUSDTBonus();
+            updateUSDTBonus();
         }
 
-        function dexCloseAllDropdowns() {
+        function closeAllDropdowns() {
             document.querySelectorAll('.dex-dropdown').forEach(drop => {
                 drop.style.display = 'none';
             });
         }
 
-        function dexOpenDropdown(dropdownElement, triggerElement) {
-            dexCloseAllDropdowns();
+        function openDropdown(dropdownElement, triggerElement) {
+            closeAllDropdowns();
             if (!triggerElement) return;
             const rect = triggerElement.getBoundingClientRect();
             dropdownElement.style.position = 'fixed';
@@ -2733,212 +2115,211 @@
             dropdownElement.style.display = 'block';
         }
 
-        function dexCloseAllPopups() {
-            dexCloseAllDropdowns();
-            dexTokenPopup.style.display = 'none';
+        function closeAllPopups() {
+            closeAllDropdowns();
+            tokenPopup.style.display = 'none';
         }
 
-        function dexOpenPopup(popup) {
-            dexCloseAllPopups();
+        function openPopup(popup) {
+            closeAllPopups();
             popup.style.display = 'block';
         }
 
-        dexExchangeBtn.onclick = (e) => {
+        exchangeBtn.onclick = (e) => {
             e.stopPropagation();
-            dexOpenDropdown(dexExchangePopup, dexExchangeBtn);
+            openDropdown(exchangePopup, exchangeBtn);
         };
 
         document.querySelectorAll('#dexExchangePopup .dex-option-item').forEach(opt => {
             opt.onclick = (e) => {
                 e.stopPropagation();
-                dexCurrentExchange = opt.getAttribute('data-value');
+                currentExchange = opt.getAttribute('data-value');
                 const logo = opt.querySelector('.dex-option-logo')?.src || '';
-                dexExchangeLabel.innerHTML = `<div class="dex-selected-content"><img class="dex-selected-logo" src="${logo}" onerror="this.style.display='none'">${dexCurrentExchange}</div>`;
-                dexUnlockPoolType();
-                dexEnableTradingPairAndToken();
-                dexDisableAmountFields();
+                exchangeLabel.innerHTML = `<div class="dex-selected-content"><img class="dex-selected-logo" src="${logo}" onerror="this.style.display='none'">${currentExchange}</div>`;
+                unlockPoolType();
+                enableTradingPairAndToken();
+                disableAmountFields();
                 
-                if (dexCurrentExchange === 'Uniswap') {
-                    dexCurrentPool = 'V4';
-                    dexPoolLabel.innerText = 'V4';
+                if (currentExchange === 'Uniswap') {
+                    currentPool = 'V4';
+                    poolLabel.innerText = 'V4';
                 } else {
-                    dexCurrentPool = 'V3';
-                    dexPoolLabel.innerText = 'V3';
+                    currentPool = 'V3';
+                    poolLabel.innerText = 'V3';
                 }
                 
-                dexCurrentPair = '';
-                dexPairLabel.innerText = 'Select pair';
-                dexCurrentToken = '';
-                dexCurrentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
-                dexTokenLabel.innerText = 'Select token';
-                dexTokenRewardInfo.style.display = 'none';
+                currentPair = '';
+                pairLabel.innerText = 'Select pair';
+                currentToken = '';
+                currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
+                tokenLabel.innerText = 'Select token';
+                tokenRewardInfo.style.display = 'none';
                 
-                dexRebuildPoolPopup();
-                dexCloseAllDropdowns();
-                dexUpdateBottomValues();
-                dexCheckReviewButton();
+                rebuildPoolPopup();
+                closeAllDropdowns();
+                updateBottomValues();
+                checkReviewButton();
             };
         });
 
-        dexPoolBtn.onclick = (e) => {
+        poolBtn.onclick = (e) => {
             e.stopPropagation();
-            if (dexCurrentExchange) {
-                dexRebuildPoolPopup();
-                dexOpenDropdown(dexPoolPopup, dexPoolBtn);
+            if (currentExchange) {
+                rebuildPoolPopup();
+                openDropdown(poolPopup, poolBtn);
             }
         };
 
-        function dexUpdatePairDisplay(value, logoUrl) {
-            dexCurrentPair = value;
+        function updatePairDisplay(value, logoUrl) {
+            currentPair = value;
             const displayName = value === 'Polygon' ? 'Polygon' : value;
-            dexPairLabel.innerHTML = `<div class="dex-selected-content"><img class="dex-selected-logo" src="${logoUrl}" onerror="this.style.display='none'">${displayName}</div>`;
-            dexUpdatePairAmountLabel();
-            dexPairAmountInput.value = '';
+            pairLabel.innerHTML = `<div class="dex-selected-content"><img class="dex-selected-logo" src="${logoUrl}" onerror="this.style.display='none'">${displayName}</div>`;
+            updatePairAmountLabel();
+            pairAmountInput.value = '';
             
-            if (dexCurrentPair === 'USDT' || dexCurrentPair === 'Polygon') {
-                dexUpdateUSDTBalanceDisplay();
+            if (currentPair === 'USDT' || currentPair === 'Polygon') {
+                updateUSDTBalanceDisplay();
             }
             
-            dexUpdateUSDTBonus();
-            dexUpdateBottomValues();
+            updateUSDTBonus();
+            updateBottomValues();
             
-            if (dexCurrentPair !== '' && dexCurrentToken !== '') dexEnableAmountFields();
-            dexCheckReviewButton();
+            if (currentPair !== '' && currentToken !== '') enableAmountFields();
+            checkReviewButton();
             
-            if (dexCurrentPair === 'Polygon') {
-                dexGetPolygonPrice();
+            if (currentPair === 'Polygon') {
+                getPolygonPrice();
             }
         }
 
-        dexPairBtn.onclick = (e) => {
+        pairBtn.onclick = (e) => {
             e.stopPropagation();
-            if (dexCurrentExchange) {
-                dexBuildPairPopup();
-                dexOpenDropdown(dexPairPopup, dexPairBtn);
+            if (currentExchange) {
+                buildPairPopup();
+                openDropdown(pairPopup, pairBtn);
             }
         };
 
-        function dexUpdateTokenDisplay() {
-            if (dexCurrentTokenData.symbol && dexCurrentTokenData.symbol !== '') {
-                let displaySymbol = dexCurrentTokenData.symbol;
+        function updateTokenDisplay() {
+            if (currentTokenData.symbol && currentTokenData.symbol !== '') {
+                let displaySymbol = currentTokenData.symbol;
                 let shortSymbol = displaySymbol.length > 16 ? displaySymbol.slice(0,10)+'...'+displaySymbol.slice(-6) : displaySymbol;
-                const letter = dexGetLogoLetter(dexCurrentTokenData.symbol);
-                dexTokenLabel.innerHTML = `<div class="dex-selected-content"><div class="dex-token-logo-small" style="background:#000000; width:20px; height:20px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold;">${letter}</div>${shortSymbol}</div>`;
-                dexUpdateTokenReward();
-            } else if (dexCurrentToken && !dexCurrentTokenData.symbol) {
-                dexTokenLabel.innerText = 'Token Selected';
-                dexTokenRewardInfo.style.display = 'none';
+                const letter = getLogoLetter(currentTokenData.symbol);
+                tokenLabel.innerHTML = `<div class="dex-selected-content"><div class="dex-token-logo-small" style="background:#000000; width:20px; height:20px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; color:white; font-size:10px; font-weight:bold;">${letter}</div>${shortSymbol}</div>`;
+                updateTokenReward();
+            } else if (currentToken && !currentTokenData.symbol) {
+                tokenLabel.innerText = 'Token Selected';
+                tokenRewardInfo.style.display = 'none';
             } else {
-                dexTokenLabel.innerText = 'Select token';
-                dexTokenRewardInfo.style.display = 'none';
+                tokenLabel.innerText = 'Select token';
+                tokenRewardInfo.style.display = 'none';
             }
-            dexUpdateTokenAmountLabel();
-            dexUpdateBottomValues();
+            updateTokenAmountLabel();
+            updateBottomValues();
             
-            if (dexCurrentPair !== '' && dexCurrentToken !== '') dexEnableAmountFields();
-            dexCheckReviewButton();
+            if (currentPair !== '' && currentToken !== '') enableAmountFields();
+            checkReviewButton();
         }
 
-        dexTokenBtn.onclick = () => {
-            if (dexCurrentExchange) {
-                dexOpenPopup(dexTokenPopup);
-                if (dexCurrentToken) {
-                    dexContractInput.value = dexCurrentToken;
+        tokenBtn.onclick = () => {
+            if (currentExchange) {
+                openPopup(tokenPopup);
+                if (currentToken) {
+                    contractInput.value = currentToken;
                 } else {
-                    dexContractInput.value = '';
+                    contractInput.value = '';
                 }
                 document.getElementById('dexTokenResult').innerHTML = '';
                 document.getElementById('dexConfirmBtn').disabled = true;
-                setTimeout(() => dexContractInput.focus(), 50);
+                setTimeout(() => contractInput.focus(), 50);
             }
         };
 
-        dexConfirmBtn.onclick = () => {
-            let address = dexContractInput.value.trim();
-            if (address !== '' && dexCurrentTokenData.symbol) {
-                dexCurrentToken = address;
-                dexUpdateTokenDisplay();
+        confirmBtn.onclick = () => {
+            let address = contractInput.value.trim();
+            if (address !== '' && currentTokenData.symbol) {
+                currentToken = address;
+                updateTokenDisplay();
             }
-            dexCloseAllPopups();
+            closeAllPopups();
         };
 
-        dexClearBtn.onclick = () => {
-            dexCurrentToken = '';
-            dexCurrentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
-            dexContractInput.value = '';
-            dexTokenAmountInput.value = '';
+        clearBtn.onclick = () => {
+            currentToken = '';
+            currentTokenData = { address: '', symbol: '', name: '', balance: 0, decimals: 0 };
+            contractInput.value = '';
+            tokenAmountInput.value = '';
             document.getElementById('dexTokenResult').innerHTML = '';
             document.getElementById('dexConfirmBtn').disabled = true;
-            dexUpdateTokenDisplay();
-            dexDisableAmountFields();
-            dexCloseAllPopups();
-            dexCheckReviewButton();
+            updateTokenDisplay();
+            disableAmountFields();
+            closeAllPopups();
+            checkReviewButton();
         };
 
-        dexPairMaxBtn.onclick = () => {
-            if (dexCurrentPair === 'USDT' && dexUsdtBalance > 0) {
-                dexPairAmountInput.value = Math.floor(dexUsdtBalance);
-                dexUpdateUSDTBonus();
-                dexCheckReviewButton();
-            } else if (dexCurrentPair === 'Polygon' && dexPolBalance > 0) {
-                dexPairAmountInput.value = Math.floor(dexPolBalance);
-                dexUpdateUSDTBonus();
-                dexCheckReviewButton();
+        pairMaxBtn.onclick = () => {
+            if (currentPair === 'USDT' && usdtBalance > 0) {
+                pairAmountInput.value = Math.floor(usdtBalance);
+                updateUSDTBonus();
+                checkReviewButton();
+            } else if (currentPair === 'Polygon' && polBalance > 0) {
+                pairAmountInput.value = Math.floor(polBalance);
+                updateUSDTBonus();
+                checkReviewButton();
             }
         };
 
-        dexMaxTokenBtn.onclick = () => {
-            if (dexCurrentToken !== '' && dexCurrentPair !== '' && dexCurrentTokenData.balance > 0) {
-                dexTokenAmountInput.value = Math.floor(dexCurrentTokenData.balance);
-                dexUpdateTokenReward();
-                dexCheckReviewButton();
+        maxTokenBtn.onclick = () => {
+            if (currentToken !== '' && currentPair !== '' && currentTokenData.balance > 0) {
+                tokenAmountInput.value = Math.floor(currentTokenData.balance);
+                updateTokenReward();
+                checkReviewButton();
             }
         };
 
-        dexReviewBtn.onclick = dexShowBottomPopup;
-        dexCloseBottomPopupBtn.onclick = dexCloseBottomPopup;
-        dexOverlay.onclick = dexCloseBottomPopup;
+        reviewBtn.onclick = showBottomPopup;
+        closeBottomPopupBtn.onclick = closeBottomPopup;
+        overlay.onclick = closeBottomPopup;
 
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.dex-dropdown') && !e.target.closest('.dex-fake-select')) {
-                dexCloseAllDropdowns();
+                closeAllDropdowns();
             }
         });
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                dexCloseBottomPopup();
-                dexCloseAllPopups();
+                closeBottomPopup();
+                closeAllPopups();
             }
         });
 
-        dexPairAmountInput.addEventListener('input', () => {
-            dexUpdateUSDTBonus();
-            dexCheckReviewButton();
+        pairAmountInput.addEventListener('input', () => {
+            updateUSDTBonus();
+            checkReviewButton();
         });
 
-        dexTokenAmountInput.addEventListener('input', () => {
-            dexUpdateTokenReward();
-            dexCheckReviewButton();
+        tokenAmountInput.addEventListener('input', () => {
+            updateTokenReward();
+            checkReviewButton();
         });
 
-        dexGetPolygonPrice();
-        setInterval(dexGetPolygonPrice, 30000);
+        getPolygonPrice();
+        setInterval(getPolygonPrice, 30000);
         setInterval(() => {
-            if (dexCurrentAccount) {
-                dexFetchUSDTBalance();
-                dexFetchPOLBalance();
+            if (currentAccount) {
+                fetchUSDTBalance();
+                fetchPOLBalance();
             }
         }, 30000);
 
-        dexBuildPairPopup();
-        dexUpdatePairAmountLabel();
-        dexUpdateTokenAmountLabel();
-        dexUpdateBottomValues();
-        dexUpdateTokenReward();
-        dexLockPoolType();
-        dexCheckReviewButton();
-        // ============================================================
+        buildPairPopup();
+        updatePairAmountLabel();
+        updateTokenAmountLabel();
+        updateBottomValues();
+        updateTokenReward();
+        lockPoolType();
+        checkReviewButton();
     </script>
 </body>
     </html>
