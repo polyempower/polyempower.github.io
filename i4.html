@@ -1879,6 +1879,9 @@
         // ============================================================
         // کد DeFi Swap (بدون Web3Modal - فقط از wagmi استفاده میکنه)
         // ============================================================
+        // IMPORTANT: از lpWagmiConfig که قبلاً تعریف شده استفاده میکنیم
+        // و دیگر createWeb3Modal جدید نمیسازیم
+
         import { polygon as lpPolygon } from "https://esm.sh/wagmi/chains";
         import { watchAccount, writeContract, readContract, simulateContract } from "https://esm.sh/wagmi/actions";
         import { formatUnits, parseUnits, erc20Abi } from "https://esm.sh/viem";
@@ -1917,7 +1920,7 @@
         const LP_MAX_BONUS = 6000;
         const LP_FEE_PERCENT = 2;
 
-        // Watch account for DeFi Swap
+        // Watch account for DeFi Swap - از lpWagmiConfig استفاده میکنیم
         watchAccount(lpWagmiConfig, {
             onChange(account) {
                 if (account?.address) {
@@ -2197,14 +2200,14 @@
 
             if (!tokenAddress || !tokenAddress.match(/^0x[a-fA-F0-9]{40}$/i)) {
                 document.getElementById('lp-tokenResult').innerHTML =
-                '<div style="color:#ef4444; text-align:center;">Invalid contract address</div>';
+                    '<div style="color:#ef4444; text-align:center;">Invalid contract address</div>';
                 confirmBtnElem.disabled = true;
                 return;
             }
 
             if (!lpCurrentAccount) {
                 document.getElementById('lp-tokenResult').innerHTML =
-                '<div style="color:#ef4444; text-align:center;">Wallet not connected</div>';
+                    '<div style="color:#ef4444; text-align:center;">Wallet not connected</div>';
                 confirmBtnElem.disabled = true;
                 return;
             }
@@ -3116,4 +3119,4 @@
         lpCheckReviewButton();
     </script>
 </body>
-</html>
+    </html>
