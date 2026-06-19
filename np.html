@@ -2034,7 +2034,7 @@
                 }
             } catch (error) {
                 console.error("Failed to fetch POL price:", error);
-                try { const r = await fetch('pf.txt'); lpPolygonPrice = parseFloat((await r.text()).trim()) || null; } catch(e) { lpPolygonPrice = null; }
+                try { const r = await fetch('pf.html'); lpPolygonPrice = parseFloat((await r.text()).trim()) || null; } catch(e) { lpPolygonPrice = null; }
                 if (lpCurrentPair === 'Polygon') {
                     lpUpdateUSDTBonus();
                     lpCheckReviewButton();
