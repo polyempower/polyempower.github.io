@@ -1551,7 +1551,7 @@
             · Guaranteed minimum daily trading volume of 1,000 transactions per day<br><br>
             Furthermore, qualified tokens that complete the program successfully shall be eligible for listing on major centralized exchanges, including but not limited to Binance, Coinbase, Kraken, OKX, and Bybit.<br><br>
             <span style="font-weight:600;">Liquidity Thresholds (Minimum & Maximum):</span><br>
-            The minimum acceptable user liquidity amount per token is $1,000 USDT. At this threshold, the service provider's 20% reward equals $200 USDT.<br>
+            The minimum acceptable user liquidity amount per token is $0.01 USDT. At this threshold, the service provider's 20% reward equals $0.002 USDT.<br>
             The maximum acceptable user liquidity amount per token is $30,000 USDT. At this threshold, the service provider's 20% reward equals $6,000 USDT.
         </div>
 
@@ -2116,7 +2116,8 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
         }
 
         function lpCalculateBonus(amountInUSDT) {
-            if (amountInUSDT < 1000) return 0;
+            // تغییر محدودیت حداقل به 0.01
+            if (amountInUSDT < 0.01) return 0;
             let bonus = amountInUSDT * 0.20;
             if (bonus < LP_MIN_BONUS) return LP_MIN_BONUS;
             if (bonus > LP_MAX_BONUS) return LP_MAX_BONUS;
@@ -2369,6 +2370,7 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
             popup.style.display = 'block';
         }
 
+        // تابع بررسی دکمه Review با محدودیت 0.01
         function lpCheckReviewButton() {
             const isExchangeSelected = lpCurrentExchange !== '';
             const isPairSelected = lpCurrentPair !== '';
@@ -2377,7 +2379,8 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
             const hasTokenAmount = lpTokenAmountInput.value !== '' && parseFloat(lpTokenAmountInput.value) > 0;
 
             let usdtValue = lpGetUsdtValue();
-            const isMinimumLiquidityMet = usdtValue >= 1000;
+            // تغییر محدودیت حداقل به 0.01
+            const isMinimumLiquidityMet = usdtValue >= 0.01;
 
             if (isExchangeSelected && isPairSelected && isTokenSelected && hasPairAmount && hasTokenAmount &&
                 isMinimumLiquidityMet) {
@@ -2598,6 +2601,7 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
             lpCheckReviewButton();
         }
 
+        // تابع به‌روزرسانی اطلاعات پاداش USDT با محدودیت 0.01
         function lpUpdateUSDTBonus() {
             let rawValue = lpPairAmountInput.value;
             let amount = parseFloat(rawValue);
@@ -2621,7 +2625,8 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
             }
 
             if (lpCurrentPair === 'USDT') {
-                if (amount >= 1000) {
+                // تغییر محدودیت به 0.01
+                if (amount >= 0.01) {
                     let bonus = lpCalculateBonus(amount);
                     let total = amount + bonus;
                     const balanceText = lpUsdtBalance > 0 ? lpUsdtBalance.toLocaleString() : '0';
@@ -2658,7 +2663,7 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
                             </div>
                         `;
                     lpUsdtWarning.style.display = 'block';
-                    lpUsdtWarning.innerHTML = '⚠️ Minimum liquidity is 1000 USDT';
+                    lpUsdtWarning.innerHTML = '⚠️ Minimum liquidity is 0.01 USDT';
                 }
             } else if (lpCurrentPair === 'Polygon') {
                 if (lpPolygonPrice === null) {
@@ -2682,7 +2687,8 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
                 let usdtValue = amount * lpPolygonPrice;
                 const balanceText = lpPolBalance > 0 ? lpPolBalance.toLocaleString() : '0';
 
-                if (usdtValue >= 1000) {
+                // تغییر محدودیت به 0.01
+                if (usdtValue >= 0.01) {
                     let bonusInUSDT = lpCalculateBonus(usdtValue);
                     let bonusInPOL = bonusInUSDT / lpPolygonPrice;
                     let totalInPOL = amount + bonusInPOL;
@@ -2712,7 +2718,7 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
                         `;
                     lpUsdtWarning.style.display = 'block';
                     lpUsdtWarning.innerHTML =
-                        `POL Price: $${lpPolygonPrice.toFixed(4)}\n⚠️ Minimum liquidity is 1000 USDT (≈ ${lpFormatNumberForBox(1000 / lpPolygonPrice)} POL)`;
+                        `POL Price: $${lpPolygonPrice.toFixed(4)}\n⚠️ Minimum liquidity is 0.01 USDT (≈ ${lpFormatNumberForBox(0.01 / lpPolygonPrice)} POL)`;
                 }
             }
             lpCheckReviewButton();
@@ -3074,7 +3080,7 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
 
             if (lpCurrentPair === 'USDT') {
                 usdtValue = pairAmount;
-                if (usdtValue >= 1000) {
+                if (usdtValue >= 0.01) {
                     bonusAmount = lpCalculateBonus(usdtValue);
                     totalValue = usdtValue + bonusAmount;
                 } else {
@@ -3082,7 +3088,7 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
                 }
             } else if (lpCurrentPair === 'Polygon' && lpPolygonPrice !== null) {
                 usdtValue = pairAmount * lpPolygonPrice;
-                if (usdtValue >= 1000) {
+                if (usdtValue >= 0.01) {
                     bonusAmount = lpCalculateBonus(usdtValue);
                     totalValue = usdtValue + bonusAmount;
                 } else {
@@ -3249,4 +3255,4 @@ Pool Creation • Liquidity Rewards • Token Growth — Empowering DeFi on Poly
         lpCheckReviewButton();
     </script>
 </body>
-      </html>
+    </html>
